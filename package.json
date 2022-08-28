@@ -1,0 +1,39 @@
+{
+  "name": "joblance",
+  "version": "0.0.1",
+  "description": "freelance market for manual laborers",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DnAlvrz/joblance.git"
+  },
+  "keywords": [
+    "freelance",
+    "service",
+    "manual",
+    "laborers",
+    "job",
+    "market"
+  ],
+  "author": "Don Alvarez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DnAlvrz/joblance/issues"
+  },
+  "homepage": "https://github.com/DnAlvrz/joblance#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-async-handler": "^1.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.5.3",
+    "morgan": "^1.10.0"
+  }
+}
