@@ -1,0 +1,25 @@
+POST http://localhost:8080/api/auth/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "firstname": "user",
+  "lastname": "test",
+  "email": "test3@example.com",
+  "password": "123"
+}
+
+### Login request
+POST http://localhost:8080/api/auth/login HTTP/1.1
+Content-Type: application/json
+
+
+{
+  "email": "test3@example.com",
+  "password": "123"
+}
+
+
+### Protected route test
+GET http://localhost:8080/api/protected HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMGM4NWI4ZTg4NzRmNWJhYjM4NjRhZCIsIm5hbWUiOiJ1c2VyIHRlc3QiLCJpYXQiOjE2NjE3NjUwOTAsImV4cCI6MTY2NDM1NzA5MH0.PakffYPIlChTjiY4por5mbqAu24SZBoFv7vy-OiTZqc
+###
