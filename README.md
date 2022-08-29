@@ -1,3 +1,3 @@
 Joblance
 
-freelance market for manual laborers
+Freelance job market for manual laborers
