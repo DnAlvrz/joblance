@@ -12,6 +12,7 @@ const errorHandler = require('./middleware/error');
 const authRouters = require('./routes/auth');
 const jobRouter = require('./routes/jobs');
 const jobPhotoRouter = require('./routes/jobPhoto');
+const offerRouter = require('./routes/offer');
 
 
 connectDatabase();
@@ -28,9 +29,11 @@ app.get('/test', (req, res)=> {
   res.sendFile(path.resolve('test.html'));
 })
 app.use('/api/auth', authRouters);
+app.use('/api/users', jobRouter);
 app.use('/api/jobs', passport.authenticate('jwt', {session:false}), jobRouter);
-app.use('/api/jobs/:jobId/photos', passport.authenticate('jwt', {session:false}), jobPhotoRouter);
 app.use('/api/jobs/:jobID/contracts', passport.authenticate('jwt', {session:false}), jobPhotoRouter);
+app.use('/api/jobs/:jobID/offers', passport.authenticate('jwt', {session:false}), offerRouter);
+app.use('/api/jobs/:jobId/photos', passport.authenticate('jwt', {session:false}), jobPhotoRouter);
 app.use(errorHandler);
 
 

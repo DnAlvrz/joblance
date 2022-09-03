@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {addContract} = require('../controllers/contracts');
+const {addContract, deleteContract, toggleContract} = require('../controllers/contracts');
 
 
 module.exports = router;

@@ -6,9 +6,12 @@ test.html
 test/
 .env
 .http
+Bugs.md
 Checklist-Backend.md
 Checklist-Frontend.md
-TODO.md
-Bugs.md
+Reviews.md
 Tags.md
+Test.md
+TODO.md
+
 .http

@@ -8,6 +8,10 @@ const contractSchema = new mongoose.Schema({
   talent: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
+  },
+  isOpen: {
+    type: Boolean,
+    default: true,
   }
 }, {timestamps: true});
 

@@ -2,7 +2,7 @@ const asyncHandler = require('express-async-handler');
 const Job = require('../models/Job');
 
 const getJob = asyncHandler(async (req, res) => {
-  const jobs = await Job.find({},{createdAt:0, updatedAt:0, __v:0});
+  const jobs = await Job.find({isOpen:true},{createdAt:0, updatedAt:0, __v:0});
   res.status(200).json(jobs);
 });
 
