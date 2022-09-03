@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const jobSchema = new mongoose.Schema({
+  isOpen: {
+    type: Boolean,
+    default: true
+  },
   title: {
     type: String,
     required: [true, 'Please enter the title of the project']
@@ -29,9 +33,9 @@ const jobSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please enter the duration of the project']
   },
-  contractors: [{
+  contracts: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'Contract'
   }],
   photos: [
     {
@@ -42,10 +46,14 @@ const jobSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
-  }
+  },
+  offers: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Offer'
+  }]
 },
 {
   timestamps: true
-})
+});
 
 module.exports = new mongoose.model('Job', jobSchema);

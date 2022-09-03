@@ -18,11 +18,22 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please enter a password.']
   },
+  profession: [{
+    type: String,
+    required: [true, 'Please enter a profession.'],
+  }],
   role: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Role'
-  }
-
+  },
+  jobs: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Job'
+  }],
+  contracts: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Contract'
+  }]
 }, {
   timestamps: true
 });
