@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const {
-  getJob,
+  getJobs,
   createJob,
   uploadJobPhotos,
   updateJob,
@@ -10,7 +10,7 @@ const {
 } = require('../controllers/jobs')
 
 
-router.route('/').get(getJob).post(createJob);
+router.route('/').get(getJobs).post(createJob);
 router.route('/:id').put(updateJob).delete(deleteJob);
 router.route('/view/:id').get(viewJob)
 
