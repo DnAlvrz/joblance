@@ -1,10 +1,13 @@
 const mongoose = require('mongoose');
 
 const ratingSchema = new mongoose.Schema({
+<<<<<<< HEAD
   contract: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Contract',
   },
+=======
+>>>>>>> 21e3407def93f6b044e7b693ec9a5208961c3421
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
