@@ -15,7 +15,7 @@ const {
 
 router.get('/', listPhotos);
 
-router.post('/',
+router.post('/:jobId',
   fileUpload({createParentPath:true}),
   filespayload,
   fileSizeLimiter,
@@ -23,6 +23,6 @@ router.post('/',
   uploadJobPhotos
 );
 
-router.delete('/:photoId', deletePhoto);
+router.delete('/:jobId/remove/:photoId', deletePhoto);
 
-module.exports = router;
+module.exports = router;                

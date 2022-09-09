@@ -12,7 +12,11 @@ const errorHandler = require('./middleware/error');
 const authRouters = require('./routes/auth');
 const jobRouter = require('./routes/jobs');
 const jobPhotoRouter = require('./routes/jobPhoto');
+const contractRouter = require('./routes/contracts')
 const offerRouter = require('./routes/offer');
+const ratingRouter = require('./routes/rating')
+const userRouter = require('./routes/client');
+
 
 
 connectDatabase();
@@ -26,14 +30,20 @@ app.use(passport.initialize());
 require('./config/passport')
 
 app.get('/test', (req, res)=> {
-  res.sendFile(path.resolve('test.html'));
+  res.sendFile(path.resolve('test/test.html'));
 })
-app.use('/api/auth', authRouters);
-app.use('/api/users', jobRouter);
-app.use('/api/jobs', passport.authenticate('jwt', {session:false}), jobRouter);
-app.use('/api/jobs/:jobID/contracts', passport.authenticate('jwt', {session:false}), jobPhotoRouter);
-app.use('/api/jobs/:jobID/offers', passport.authenticate('jwt', {session:false}), offerRouter);
-app.use('/api/jobs/:jobId/photos', passport.authenticate('jwt', {session:false}), jobPhotoRouter);
+app.use('/api/v1/auth', authRouters);
+// app.use('/api/v1/users/clt', userRouter);
+// app.use('/api/v1/users/tlt', userRouter);
+
+app.use('/api/v1/jobs/', passport.authenticate('jwt', {session:false}), jobRouter);
+app.use('/api/v1/jobs/contracts/', passport.authenticate('jwt', {session:false}), contractRouter);
+app.use('/api/v1/jobs/contracts/ratings/', passport.authenticate('jwt', {session:false}), ratingRouter);
+app.use('/api/v1/jobs/offers/', passport.authenticate('jwt', {session:false}), offerRouter);
+app.use('/api/v1/jobs/photos/', passport.authenticate('jwt', {session:false}), jobPhotoRouter);
+
+// rating
+// testimonials
 app.use(errorHandler);
 
 

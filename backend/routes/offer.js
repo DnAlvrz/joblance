@@ -1,13 +1,12 @@
 const router = require('express').Router();
-const { listOffer, getOffer, addOffer, updateOffer, deleteOffer } = require('../controllers/offer');
+const { listOffers, getOffer, addOffer, updateOffer, deleteOffer } = require('../controllers/offer');
+const Offer = require('../models/Offer')
 
-router.get('/', listOffer);
-router.post('/', addOffer);
-router.get('/:offerId', getOffer);
-router.put('/:offerId', updateOffer);
-router.delete('/:offerId', deleteOffer);
-
-
-
+router.route('/').get(listOffers)
+router.route('/:jobId').post(addOffer);
+router.route('/:offerId')
+  .get(getOffer)
+  .put(updateOffer)
+  .delete(deleteOffer);
 
 module.exports = router;

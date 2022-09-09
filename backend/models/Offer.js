@@ -1,9 +1,13 @@
 const mongoose = require('mongoose');
 
 const offerSchema = new mongoose.Schema({
-  user: {
+  talent: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
+  },
+  job:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref:'Job'
   },
   text: {
     type: String,

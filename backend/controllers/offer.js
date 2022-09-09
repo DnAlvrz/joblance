@@ -1,8 +1,18 @@
 const asyncHandler = require('express-async-handler');
 const Offer = require('../models/Offer');
+const User = require('../models/User');
+const Job = require('../models/Job');
 
-const listOffer = asyncHandler(async (req, res) => {
-  const offers = await Offers.find();
+
+const listOffers = asyncHandler(async (req, res) => {
+  const offers = await Offer.find({},{ updatedAt:0, __v:0}).populate({
+    path:'job', 
+    select:'title budget location', 
+    populate:{ 
+      path: 'user', 
+      select:' firstname lastname',
+    }
+  });
   res.status(200).json(offers);
 });
 
@@ -18,10 +28,11 @@ const getOffer = asyncHandler(async (req, res) => {
 
 const addOffer = asyncHandler(async (req, res) => {
   const jobId = req.params.jobId;
-  const {text, talentId} = req.body;
+  const {text} = req.body;
   const job = await Job.findById( { _id: jobId } );
-  const talent = await User.findById({_id:talentId})
-  if(!text || !talentId) {
+  const talent = await User.findById({_id:req.user.id})
+
+  if(!text) {
     res.status(400);
     throw new Error('Text and Talent are required');
   }
@@ -34,7 +45,7 @@ const addOffer = asyncHandler(async (req, res) => {
     throw new Error('User not found');
   }
 
-  const offer = new Offer({
+  const offer = await Offer.create({
     job:job._id,
     text,
     user: talent._id
@@ -79,7 +90,7 @@ const deleteOffer = asyncHandler(async (req, res) => {
 });
 
 module.exports = {
-  listOffer,
+  listOffers,
   getOffer,
   addOffer,
   updateOffer,

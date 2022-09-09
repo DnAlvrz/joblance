@@ -1,22 +1,35 @@
 const asyncHandler = require('express-async-handler');
 const Contract = require('../models/Contract');
 const User = require('../models/User');
+const Job = require('../models/Job');
+
+// only admin middleware
+const listContracts = asyncHandler(async (req, res) => {
+  const contracts = await Contract.find();
+  res.status(200).json(contracts)
+});
+
 
 const addContract = asyncHandler(async (req, res) => {
-  const jobId = req.params.jobId;
+  const {talentId, jobId} = req.body;
+  if(!jobId || !talentId) {
+    res.status(400)
+    throw new Error('Please fill in all fields')
+  }
   const job = await Job.findById( { _id: jobId } );
 
   if(!job){
     res.status(404);
     throw new Error('Job not found');
   }
-  
-  if(req.user._id.toString() !== job.user.id) {
+  console.log(req.user.id)
+  console.log(job.user._id)
+  if(req.user.id !== job.user._id.toString()) {
     res.status(403);
     throw new Error('User is not authorized');
   }
 
-  const talentId=req.body.talentId;
+  
   const talent = await User.findById( { _id: talentId});
   if(!talent){
     res.status(404);
@@ -27,11 +40,13 @@ const addContract = asyncHandler(async (req, res) => {
     job: job._id,
     talent: talent._id,
    });
+
    if(!contract) {
     res.status(400);
     throw new Error('Contract not created');
    }
-   res.statusCode(201).json(contract);
+
+   res.status(201).json(contract);
 });
 
 const deleteContract = asyncHandler(async (req, res) => {
@@ -41,8 +56,8 @@ const deleteContract = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error('Contract not found');
   }
-  await contractId.remove();
-  res.statusCode(204).json({id:contractId});
+  await contract.remove();
+  res.status(200).json({id:contractId});
 });
 
 const toggleContract = asyncHandler(async (req, res) => {
@@ -54,9 +69,12 @@ const toggleContract = asyncHandler(async (req, res) => {
   }
   contract.isOpen = !contract.isOpen;
   await contract.save();
-  res.statusCode(200).json(contract);
+  res.status(200).json(contract);
 });
 
 module.exports = {
   addContract,
+  listContracts,
+  toggleContract,
+  deleteContract
 }

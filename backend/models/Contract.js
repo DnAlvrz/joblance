@@ -9,6 +9,10 @@ const contractSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
+  rating: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Rating',
+  },
   isOpen: {
     type: Boolean,
     default: true,

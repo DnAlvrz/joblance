@@ -1,15 +1,17 @@
 const asyncHandler = require('express-async-handler');
 const Job = require('../models/Job');
 
-const getJob = asyncHandler(async (req, res) => {
-  const jobs = await Job.find({isOpen:true},{createdAt:0, updatedAt:0, __v:0});
+const listJobs = asyncHandler(async (req, res) => {
+  console.log('list jobs')
+  const jobs = await Job.find({isOpen:true},{ contracts:0, updatedAt:0, __v:0, offers:0, isOpen:0});
   res.status(200).json(jobs);
 });
 
 
 const viewJob = asyncHandler(async (req, res) => {
+  console.log('view jobs')
   const id = req.params.id;
-  const job = await Job.findOne({id}, {createdAt:0, updatedAt:0, __v:0});
+  const job = await Job.findOne({id}, { contracts:0, updatedAt:0, __v:0, offers:0, isOpen:0});
   res.status(200).json(job);
 });
 
@@ -67,13 +69,13 @@ const createJob = asyncHandler( async(req, res) => {
 
 const updateJob = asyncHandler(async (req, res) => {
   const id = req.params.id;
-  const jobMatch = await Job.findOne({id});
+  const job = await Job.findOne({id});
 
-  if(!jobMatch) {
+  if(!job) {
     res.status(400);
     throw new Error('Job not found');
   }
-  if (jobMatch.user._id.toString() !== req.user.id) {
+  if (job.user._id.toString() !== req.user.id) {
     res.status(401)
     throw new Error('User not authorized')
   }
@@ -82,7 +84,7 @@ const updateJob = asyncHandler(async (req, res) => {
     new: true,
   });
 
-  res.status(204).json(updatedJob);
+  res.status(201).json(job);
 });
 
 const deleteJob = asyncHandler(async (req, res) => {
@@ -93,6 +95,7 @@ const deleteJob = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error('Job not found');
   }
+
   if (jobMatch.user._id.toString() !== req.user.id) {
     res.status(401);
     throw new Error('User not authorized');
@@ -104,7 +107,7 @@ const deleteJob = asyncHandler(async (req, res) => {
 
 
 module.exports = {
-  getJob,
+  listJobs,
   createJob,
   updateJob,
   deleteJob,
