@@ -1,14 +1,9 @@
 const asyncHandler = require('express-async-handler');
 const Job = require('../models/Job');
 
-<<<<<<< HEAD
 const listJobs = asyncHandler(async (req, res) => {
   console.log('list jobs')
   const jobs = await Job.find({isOpen:true},{ contracts:0, updatedAt:0, __v:0, offers:0, isOpen:0});
-=======
-const getJobs = asyncHandler(async (req, res) => {
-  const jobs = await Job.find({isOpen:true},{createdAt:0, updatedAt:0, __v:0});
->>>>>>> 21e3407def93f6b044e7b693ec9a5208961c3421
   res.status(200).json(jobs);
 });
 
@@ -112,11 +107,7 @@ const deleteJob = asyncHandler(async (req, res) => {
 
 
 module.exports = {
-<<<<<<< HEAD
   listJobs,
-=======
-  getJobs,
->>>>>>> 21e3407def93f6b044e7b693ec9a5208961c3421
   createJob,
   updateJob,
   deleteJob,
