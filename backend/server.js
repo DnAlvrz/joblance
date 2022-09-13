@@ -17,15 +17,13 @@ const offerRouter = require('./routes/offer');
 const ratingRouter = require('./routes/rating')
 const userRouter = require('./routes/client');
 
-
-
 connectDatabase();
+app.use(cors());
 app.disable('x-powered-by');
 app.use(morgan('dev'));
 
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({ extended: true, limit: '50mb', parameterLimit:100000}));
-app.use(cors());
 app.use(passport.initialize());
 require('./config/passport')
 
@@ -33,9 +31,6 @@ app.get('/test', (req, res)=> {
   res.sendFile(path.resolve('test/test.html'));
 })
 app.use('/api/v1/auth', authRouters);
-// app.use('/api/v1/users/clt', userRouter);
-// app.use('/api/v1/users/tlt', userRouter);
-
 app.use('/api/v1/jobs/', passport.authenticate('jwt', {session:false}), jobRouter);
 app.use('/api/v1/jobs/contracts/', passport.authenticate('jwt', {session:false}), contractRouter);
 app.use('/api/v1/jobs/contracts/ratings/', passport.authenticate('jwt', {session:false}), ratingRouter);

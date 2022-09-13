@@ -4,14 +4,16 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const registerUser = asyncHandler(async(req, res)=> {
-  const {firstname, lastname, email, password }  = req.body;
- 
-  if(!firstname || !lastname || !email || !password) {
+  console.log(req.body)
+  const {firstname, lastname, email, password, address, phone }  = req.body;
+  
+  if(!firstname || !lastname || !email || !password || !address || !phone) {
     res.status(400)
     throw new Error('Please fill in all fields.');
   }
 
   const userExists = await User.findOne({email});
+
   if(userExists) {
     res.status(400)
     throw new Error('User already exits. Try again with a different email.')
@@ -24,7 +26,10 @@ const registerUser = asyncHandler(async(req, res)=> {
     firstname,
     lastname,
     email,
-    password: hashedPassword
+    password: hashedPassword,
+    phone,
+    address,
+
   });
 
   if (user) {
@@ -35,13 +40,15 @@ const registerUser = asyncHandler(async(req, res)=> {
         id: user._id,
         firstname: user.firstname,
         lastname: user.lastname,
-        email: user.email
+        email: user.email,
+        token: generateToken(user._id, firstname, lastname)
       }
     });
   } else {
     res.status(400);
     throw new Error('Invalid user data');
   }
+
 });
 
 
