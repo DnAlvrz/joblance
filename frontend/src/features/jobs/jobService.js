@@ -14,14 +14,14 @@ const createJob = async(jobData, token) => {
 };
 
 
-const getJobs = async(token) => {
+const getJobs = async(token, page) => {
   const config = {
     headers: {
       Authorization: token
     }
   };
 
-  const response = await axios.get(`${API_URL}`, config);
+  const response = await axios.get(`${API_URL}/?page=${page}&limit=10`, config);
   return response.data;
 
 };

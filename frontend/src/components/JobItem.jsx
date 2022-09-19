@@ -1,12 +1,11 @@
 import React from 'react'
 import {Item, Label} from 'semantic-ui-react';
-function JobItem() {
+function JobItem({job}) {
   return (
     <Item>
     <Item.Image src='/square-image.png' />
-    
     <Item.Content>
-      <Item.Header as='a'>Sample job</Item.Header>
+      <Item.Header as='a'>{job.title}</Item.Header>
       <Item.Meta>
         <span className='cinema'>Test Address</span>
       </Item.Meta>

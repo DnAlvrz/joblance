@@ -6,7 +6,9 @@ const listJobs = asyncHandler(async (req, res) => {
   const  limit  = parseInt(req.query.limit) || 50;
   const offset = page > 1 ? (page -1) * limit : 0;
   const jobs = await Job.find({isOpen:true},{ contracts:0, updatedAt:0, __v:0, offers:0, isOpen:0}).skip(offset).limit(limit);
-  res.status(200).json(jobs);
+  const jobsCount = await Job.count({isOpen:true})
+  console.log(jobsCount);
+  res.status(200).json({jobs, jobsCount});
 });
 
 

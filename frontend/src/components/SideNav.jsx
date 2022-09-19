@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import {Menu} from 'semantic-ui-react'
-import {Link, useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 
 function SideNav() {
   const navigate = useNavigate();

@@ -9,8 +9,7 @@ import Header from './components/Header';
 import NotFound from './pages/NotFound';
 import Job from './pages/Job';
 import JobList from './pages/JobList';
-import AppSidebar from './components/AppSidebar';
-import { Container, Sidebar, Segment, Grid} from "semantic-ui-react";
+import { Container, Grid} from "semantic-ui-react";
 import {ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import SideNav from "./components/SideNav";

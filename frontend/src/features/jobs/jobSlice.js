@@ -4,6 +4,7 @@ import jobService from './jobService'
 
 const initialState = {
   jobs: [],
+  count: null,
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -20,9 +21,9 @@ export const create = createAsyncThunk('jobs/create', async (jobData, thunkAPI) 
   }
 });
 
-export const getOpenJobs = createAsyncThunk('jobs/getOpenJobs', async (data, thunkAPI) => {
-  const{page} = data
+export const getOpenJobs = createAsyncThunk('jobs/getOpenJobs', async (page, thunkAPI) => {
   try {
+
     const userToken = thunkAPI.getState().auth.user.token
     return await jobService.getJobs(userToken, page);
   } catch (error) {
@@ -61,7 +62,8 @@ export const jobSlice = createSlice({
       .addCase(getOpenJobs.fulfilled, (state, action)=> {
         state.isLoading=false
         state.isSuccess = true
-        state.jobs = action.payload
+        state.jobs = action.payload.jobs
+        state.count = action.payload.jobsCount
       })
       .addCase(getOpenJobs.rejected, (state, action)=> {
         state.isLoading=false;
