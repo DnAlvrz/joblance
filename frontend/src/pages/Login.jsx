@@ -43,7 +43,7 @@ function Login() {
     }
 
     if(isSuccess || user){
-      navigate('/dashboard')
+      navigate('/jobs')
     }
 
     dispatch(reset());

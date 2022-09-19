@@ -13,11 +13,12 @@ const registerUser = async (userData) => {
 const loginUser = async(userCredentials) => {
   const response = await axios.post(`${API_URL}login`, userCredentials, {'Content-Type':'application/json'});
   if(response.data) {
-    localStorage.setItem('user', JSON.stringify(response.data));
+    localStorage.setItem('user', JSON.stringify(response.data.user));
     return response.data;
   }
 }
-const logoutUser = async ()=> {
+
+const logoutUser = async () => {
   localStorage.removeItem('user');
 }
 
