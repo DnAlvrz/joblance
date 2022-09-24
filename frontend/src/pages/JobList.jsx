@@ -1,8 +1,8 @@
 import {useEffect, useState} from 'react'
 import { useSelector, useDispatch} from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import {Item, Message,Container, Dimmer, Loader, Pagination} from 'semantic-ui-react'
-import {toast} from 'react-toastify'
+import {Item, Message, Container, Dimmer, Loader, Pagination} from 'semantic-ui-react'
+import { toast } from 'react-toastify'
 import {getOpenJobs, reset} from '../features/jobs/jobSlice'
 import JobItem from '../components/JobItem'
 
@@ -19,7 +19,7 @@ function JobList() {
   const pageChange = (event, data)=>{
     console.log(data.activePage)
     setActivePage(data.activePage);
-    dispatch(getOpenJobs(data.activePage));
+    dispatch(getOpenJobs(activePage));
   }
 
   useEffect( () => {
@@ -38,13 +38,12 @@ function JobList() {
   return (
     <>
     <Message  size='large'>
-      <Dimmer active={isLoading}>
-        <Loader>Loading</Loader>
+      <Dimmer active={isLoading} inverted>
+        <Loader inverted>Loading</Loader>
       </Dimmer>
-    
       <Message.Header>Available Jobs</Message.Header>
       <Item.Group divided> 
-      {jobs.map(job =>  <JobItem job={job} />)}
+      {jobs.map(job =>  <JobItem key={job._id} job={job}/>)}
       </Item.Group>
       <Container text>
         <Pagination defaultActivePage={1} totalPages={count/10} onPageChange={pageChange} />

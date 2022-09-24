@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const registerUser = asyncHandler(async(req, res)=> {
-  console.log(req.body)
   const {firstname, lastname, email, password, address, phone }  = req.body;
   
   if(!firstname || !lastname || !email || !password || !address || !phone) {

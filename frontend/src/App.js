@@ -13,6 +13,7 @@ import { Container, Grid} from "semantic-ui-react";
 import {ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import SideNav from "./components/SideNav";
+import PostJob from "./pages/PostJob";
 
 function App() {
   const {user} = useSelector((state)=> state.auth);
@@ -37,6 +38,7 @@ function App() {
                   <Route path="/jobs">
                     <Route index element={<JobList/>} />
                     <Route path=":id" element={<Job/>} />
+                    <Route path="post" element={<PostJob/>} />
                   </Route>
                   <Route path="*" element={<NotFound/>} />
                 </Routes>
@@ -55,6 +57,7 @@ function App() {
                 <Route path="/jobs">
                   <Route index element={<JobList/>} />
                   <Route path=":id" element={<Job/>} />
+                  <Route path="post" element={<PostJob/>} />
                 </Route>
                 <Route path="*" element={<NotFound/>} />
               </Routes>

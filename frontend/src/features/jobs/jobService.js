@@ -13,6 +13,15 @@ const createJob = async(jobData, token) => {
   return response.data;
 };
 
+const addJobPhoto = async(jobId, jobPhotos, token) => {
+  const config = {
+    headers: {
+      Authorization: token
+    }
+  };
+  const response = await axios.post(`${API_URL}photos/${jobId}`, jobPhotos, config);
+  return response.data;
+}
 
 const getJobs = async(token, page) => {
   const config = {
@@ -20,7 +29,6 @@ const getJobs = async(token, page) => {
       Authorization: token
     }
   };
-
   const response = await axios.get(`${API_URL}/?page=${page}&limit=10`, config);
   return response.data;
 
@@ -47,6 +55,7 @@ const deleteJob = async (jobId, token) => {
 
 const jobService = {
   createJob,
+  addJobPhoto,
   getJobs,
   updateJob,
   deleteJob,

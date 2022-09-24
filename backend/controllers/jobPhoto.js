@@ -6,7 +6,6 @@ const Job = require('../models/Job');
 const fs = require('fs');
 
 const uploadJobPhotos = asyncHandler( async(req, res) => {
-  console.log(req.params.jobId)
   const id = req.params.jobId;
   const job = await Job.findOne( { id } );
   
@@ -34,9 +33,9 @@ const uploadJobPhotos = asyncHandler( async(req, res) => {
         path: filepath,
       });
       job.photos.push(photo._id)
-      await job.save();
     });
   });
+  await job.save();
   if(errFiles.length > 0){
     res.status(500);
     throw new Error(`Something went wrong while uploading ${errFiles}.`.replaceAll(',', ', '))
