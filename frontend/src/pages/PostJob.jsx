@@ -30,8 +30,8 @@ function PostJob() {
     
   useEffect(() => {
     if(isSuccess ) {
-      navigate('/jobs')
       dispatch(reset())
+      navigate('/jobs')
     }
     if(isError) {
       toast.error(message);
@@ -89,8 +89,8 @@ function PostJob() {
           <Grid.Column width={16}>
             <Divider horizontal> Job Post</Divider>
             {
-              page === 1 ? <JobForm onChange={onChange} formData={formData}/> : 
-              page === 2 ? <Map setCoords={setCoords} coords={coords}/> : 
+              page === 1 ? <JobForm onChange={onChange} formData={formData} /> : 
+              page === 2 ? <Map setCoords={setCoords} coords={coords} /> : 
               page === 3 ? <JobPhoto onFileChange={onFileChange} /> :<></>
             }
           </Grid.Column>
