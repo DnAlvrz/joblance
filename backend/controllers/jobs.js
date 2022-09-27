@@ -5,9 +5,8 @@ const listJobs = asyncHandler(async (req, res) => {
   const  page  = parseInt(req.query.page) || 1;
   const  limit  = parseInt(req.query.limit) || 50;
   const offset = page > 1 ? (page -1) * limit : 0;
-  const jobs = await Job.find({isOpen:true},{ contracts:0, updatedAt:0, __v:0, offers:0, isOpen:0}).skip(offset).limit(limit);
+  const jobs = await Job.find({isOpen:true},{ contracts: 0, updatedAt: 0, __v: 0, offers: 0, isOpen: 0}).skip(offset).limit(limit);
   const jobsCount = await Job.count({isOpen:true})
-  console.log(jobsCount);
   res.status(200).json({jobs, jobsCount});
 });
 
@@ -25,7 +24,7 @@ const createJob = asyncHandler( async(req, res) => {
     description,
     location, 
     lat, 
-    long,
+    lng,
     budget,
     duration
   } = req.body;
@@ -34,7 +33,7 @@ const createJob = asyncHandler( async(req, res) => {
       !description || 
       !location || 
       !lat || 
-      !long || 
+      !lng || 
       !budget || 
       !duration
     ) {
@@ -47,7 +46,7 @@ const createJob = asyncHandler( async(req, res) => {
     description,
     location,
     lat,
-    long,
+    long:lng,
     budget,
     duration,
     user: req.user._id

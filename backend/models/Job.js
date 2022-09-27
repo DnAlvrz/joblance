@@ -5,6 +5,10 @@ const jobSchema = new mongoose.Schema({
     type: Boolean,
     default: true
   },
+  isVerified: {
+    type: Boolean,
+    default: false
+  },
   title: {
     type: String,
     required: [true, 'Please enter the title of the project']

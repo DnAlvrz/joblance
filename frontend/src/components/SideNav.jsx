@@ -1,52 +1,66 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import {Menu} from 'semantic-ui-react'
-import {useNavigate} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 
 function SideNav() {
   const navigate = useNavigate();
   const [activeItem, setActiveItem] = useState('')
 
   const handleItemClick = (e) => {
-    navigate('/jobs')
-      setActiveItem(e.target.name)
+
   }
+  useEffect(()=> {
+
+  }, [activeItem]) 
   return (
     
     <Menu vertical>
         <Menu.Item>
           <Menu.Header>Jobs</Menu.Header>
           <Menu.Menu>
-
+            <Link to= '/jobs'>
             <Menu.Item
+              as='span'
               name='Jobs'
               active={activeItem === 'Jobs'}
               onClick={ handleItemClick}
             />
-
-            <Menu.Item
-              name='Post Job'
-              active={activeItem === 'Post Job'}
-              onClick={ handleItemClick}
-            />
+            </Link>
+            <Link to= '/user/jobs'>
+              <Menu.Item
+                as='span'
+                name='My Jobs'
+                active={activeItem === ' jobs'}
+                onClick={ handleItemClick}
+              />
+            </Link>
+            <Link to= '/jobs/post'>
+              <Menu.Item
+                as='span'
+                name='Post Job'
+                active={activeItem === 'Post Job'}
+                onClick={ handleItemClick}
+              />
+            </Link>
           </Menu.Menu>
         </Menu.Item>
 
         <Menu.Item>
-          <Menu.Header>CMS Solutions</Menu.Header>
+          <Menu.Header>Talents</Menu.Header>
 
           <Menu.Menu>
             <Menu.Item
-              name='rails'
+              name='Search'
               active={activeItem === 'rails'}
               onClick={ handleItemClick}
             />
             <Menu.Item
-              name='python'
+              name='View'
               active={activeItem === 'python'}
               onClick={ handleItemClick}
             />
             <Menu.Item
-              name='php'
+              name='Invite'
               active={activeItem === 'php'}
               onClick={ handleItemClick}
             />
@@ -54,7 +68,7 @@ function SideNav() {
         </Menu.Item>
 
         <Menu.Item>
-          <Menu.Header>Hosting</Menu.Header>
+          <Menu.Header>Contracts</Menu.Header>
 
           <Menu.Menu>
             <Menu.Item

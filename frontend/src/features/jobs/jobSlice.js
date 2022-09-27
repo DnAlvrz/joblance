@@ -11,10 +11,12 @@ const initialState = {
   message: ''
 };
 
-export const create = createAsyncThunk('jobs/create', async (jobData, thunkAPI) => {
+export const createJob = createAsyncThunk('jobs/create', async (jobData, thunkAPI) => {
   try {
     const userToken = thunkAPI.getState().auth.user.token;
-    return await jobService.createJob(jobData, userToken)
+    const responseData = await jobService.createJob(jobData.jobDetails, userToken);
+    const jobPhoto = await jobService.addJobPhoto(responseData.id, jobData.photos, userToken);
+    return responseData;
   } catch (error){
     const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
     return thunkAPI.rejectWithValue(message);
@@ -41,15 +43,14 @@ export const jobSlice = createSlice({
   extraReducers : (builder)=> {
     builder
       // Create
-      .addCase(create.pending, (state)=> {state.isLoading=true})
-      .addCase(create.fulfilled, (state, action)=> {
+      .addCase(createJob.pending, (state)=> {state.isLoading=true})
+      .addCase(createJob.fulfilled, (state, action)=> {
         state.isLoading=false
         state.isSuccess = true;
         state.isError = false
-        
         state.jobs.push(action.payload)
       })
-      .addCase(create.rejected, (state, action)=> {
+      .addCase(createJob.rejected, (state, action)=> {
         state.isLoading=false;
         state.isError = true;
         state.isSuccess=false;

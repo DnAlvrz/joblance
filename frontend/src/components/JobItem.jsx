@@ -1,18 +1,27 @@
 import React from 'react'
-import {Item, Label} from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import {Item, Label, Button, Icon} from 'semantic-ui-react';
 function JobItem({job}) {
   return (
     <Item>
     <Item.Image src='/square-image.png' />
     <Item.Content>
-      <Item.Header as='a'>{job.title}</Item.Header>
+      <Item.Header>{job.title}</Item.Header>
       <Item.Meta>
-        <span className='cinema'>Test Address</span>
+        <span className='price'>{job.budget}</span>
+        <span className='stay'>{job.duration}</span>
+        <p className='cinema'>{job.location}</p>
       </Item.Meta>
-      <Item.Description>asdasdas</Item.Description>
+      <Item.Description>{job.description}</Item.Description>
       <Item.Extra>
         <Label>Construction</Label>
         <Label icon='globe' content='Mason' />
+        <Link to={`/jobs/${job._id}`}>
+          <Button primary floated='right'>
+              View Details
+              <Icon name='right chevron' />
+          </Button>
+        </Link>
       </Item.Extra>
     </Item.Content>
   </Item>
