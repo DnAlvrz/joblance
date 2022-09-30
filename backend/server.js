@@ -37,8 +37,6 @@ app.use('/api/v1/jobs/contracts/ratings/', passport.authenticate('jwt', {session
 app.use('/api/v1/jobs/offers/', passport.authenticate('jwt', {session:false}), offerRouter);
 app.use('/api/v1/jobs/photos/', passport.authenticate('jwt', {session:false}), jobPhotoRouter);
 
-// rating
-// testimonials
 app.use(errorHandler);
 
 
