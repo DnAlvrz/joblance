@@ -1,37 +1,50 @@
-import React from 'react'
-import { useParams } from 'react-router-dom'
-import {Item, Label} from 'semantic-ui-react';
+
+import { useParams, useNavigate} from 'react-router-dom'
 import { useSelector, useDispatch} from 'react-redux'
 import {useState, useEffect} from 'react'
+import {Grid, Message} from 'semantic-ui-react';
 import { reset} from '../features/auth/authSlice';
+import Map from '../components/Map'
 
-function Job() {
-  // const {id} = useParams(); 
+ // const {id} = useParams();
+function Job({job}) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const {user} = useSelector((state) => state.auth);
+  const [coords, setCoords] = useState({
+    lat:job.lat,
+    lng:job.lang
+  });
+
 
   useEffect (() => {
-
+    if(!user) {
+      navigate('/login')
+    }
     return () => {
       dispatch(reset())
     }
-  }, [dispatch]);
+  }, [user, navigate, dispatch]);
 
   return (
-    <Item>
-      <Item.Image src='/square-image.png' />
-      
-      <Item.Content>
-        <Item.Header as='a'>Sample job</Item.Header>
-        <Item.Meta>
-          <span className='cinema'>Test Address</span>
-        </Item.Meta>
-        <Item.Description>asdasdas</Item.Description>
-        <Item.Extra>
-          <Label>Construction</Label>
-          <Label icon='globe' content='Mason' />
-        </Item.Extra>
-      </Item.Content>
-    </Item>
+    <>
+    <Grid>
+      <Grid.Row>
+        <Grid.Column>
+        <Message >
+
+        </Message>
+        </Grid.Column>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column>
+        <Message >
+          <Map coords={coords}/>
+        </Message>
+        </Grid.Column>
+      </Grid.Row>
+   </Grid>
+   </>
   )
 }
 

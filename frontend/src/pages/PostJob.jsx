@@ -2,7 +2,7 @@ import {toast} from 'react-toastify'
 import {useNavigate} from 'react-router-dom';
 import { useState , useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import { Message, Grid, Button, Icon, Divider, Dimmer, Loader } from 'semantic-ui-react';
+import { Message, Grid, Button, Icon, Divider, Dimmer, Loader,Form } from 'semantic-ui-react';
 import PostStep from '../components/PostStep';
 import JobForm from '../components/JobForm';
 import JobPhoto from '../components/JobPhoto';
@@ -90,7 +90,16 @@ function PostJob() {
             <Divider horizontal> Job Post</Divider>
             {
               page === 1 ? <JobForm onChange={onChange} formData={formData} /> : 
-              page === 2 ? <Map setCoords={setCoords} coords={coords} /> : 
+              page === 2 ?
+            <>      
+              <Form>
+              <Form.Group widths='equal'>
+                <Form.Input fluid label='Latitude'  readOnly value={coords.lat} />
+                <Form.Input fluid label='Longitude' readOnly value={coords.lng}/>
+              </Form.Group>
+            </Form>
+            <Map setCoords={setCoords} coords={coords} />
+            </>  : 
               page === 3 ? <JobPhoto onFileChange={onFileChange} /> :<></>
             }
           </Grid.Column>

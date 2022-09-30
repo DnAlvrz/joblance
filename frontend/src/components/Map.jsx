@@ -70,13 +70,6 @@ function Map({onMarkerChange, setCoords, coords}) {
   
   return isLoaded ? (
     <>
-      <Form>
-        <Form.Group widths='equal'>
-          <Form.Input fluid label='Latitude'  readOnly value={coords.lat} />
-          <Form.Input fluid label='Longitude' readOnly value={coords.lng}/>
-        </Form.Group>
-      </Form>
-
       <GoogleMap
           mapContainerStyle={containerStyle}
           center={currentPosition}
