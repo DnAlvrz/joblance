@@ -11,18 +11,17 @@ function JobList() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [activePage, setActivePage] = useState(1)
-  
+
   const {user} = useSelector((state)=> state.auth)
 
   const {jobs, isLoading, isError, message, count} = useSelector((state) => state.jobs);
 
-  const pageChange = (event, data)=>{
-    console.log(data.activePage)
+  const pageChange = (event, data) => {
     setActivePage(data.activePage);
     dispatch(getOpenJobs(activePage));
   }
 
-  useEffect( () => {
+  useEffect(() => {
     if(isError){
       toast.error(message)
     }
@@ -42,7 +41,7 @@ function JobList() {
         <Loader inverted>Loading</Loader>
       </Dimmer>
       <Message.Header>Available Jobs</Message.Header>
-      <Item.Group divided> 
+      <Item.Group divided>
       {jobs.map(job =>  <JobItem key={job._id} job={job}/>)}
       </Item.Group>
       <Container text>

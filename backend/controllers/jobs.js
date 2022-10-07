@@ -12,7 +12,6 @@ const listJobs = asyncHandler(async (req, res) => {
 
 
 const viewJob = asyncHandler(async (req, res) => {
-  console.log('view jobs')
   const id = req.params.id;
   const job = await Job.findOne({id}, { contracts:0, updatedAt:0, __v:0, offers:0, isOpen:0});
   res.status(200).json(job);

@@ -40,7 +40,6 @@ const updateJob = async(jobId, token,jobData)=> {
       Authorization: `Bearer ${token}`
     }
   };
-  console.log(config)
 
 };
 
@@ -50,8 +49,17 @@ const deleteJob = async (jobId, token) => {
       Authorization: `Bearer ${token}`
     }
   };
-  console.log(config)
 };
+
+const getJob = async (jobId, token) => {
+  const config = {
+    headers: {
+      Authorization: token
+    }
+  };
+  const response = await axios.get(`${API_URL}/view/${jobId}`, config);
+  return response.data;
+}
 
 const jobService = {
   createJob,
@@ -59,6 +67,7 @@ const jobService = {
   getJobs,
   updateJob,
   deleteJob,
+  getJob
 }
 
 export default jobService;
