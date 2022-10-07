@@ -92,7 +92,7 @@ function PostJob() {
               page === 1 ? <JobForm onChange={onChange} formData={formData} /> : 
               page === 2 ?
             <>      
-            <Form>
+              <Form>
               <Form.Group widths='equal'>
                 <Form.Input fluid label='Latitude'  readOnly value={coords.lat} />
                 <Form.Input fluid label='Longitude' readOnly value={coords.lng}/>
@@ -121,7 +121,7 @@ function PostJob() {
               <>
                 <Button primary onClick={onSubmit} disabled={page < 2}>
                   Submit
-                </Button>
+                  </Button>
               </>
             )}
           </Grid.Column>

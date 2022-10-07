@@ -24,7 +24,7 @@ function App() {
       <Header />
         { user ? ( 
           <Container >
-          <Grid stackable >
+          <Grid >
             <Grid.Row>
               <Grid.Column width={3}>
                 <SideNav />

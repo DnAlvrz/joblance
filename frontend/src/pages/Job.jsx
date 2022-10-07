@@ -1,73 +1,51 @@
+
 import { useParams, useNavigate} from 'react-router-dom'
 import { useSelector, useDispatch} from 'react-redux'
 import {useState, useEffect} from 'react'
-import {Grid, Message, Dimmer, Item, Loader} from 'semantic-ui-react';
-import {getJob,reset} from '../features/jobs/jobSlice';
-
+import {Grid, Message} from 'semantic-ui-react';
+import { reset} from '../features/auth/authSlice';
 import Map from '../components/Map'
-import { toast } from 'react-toastify';
 
-
-function Job() {
-  const {id} = useParams();
+ // const {id} = useParams();
+function Job({job}) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {user} = useSelector((state) => state.auth);
   const [coords, setCoords] = useState({
-    lat:0,
-    lng:0
+    lat:job.lat,
+    lng:job.lang
   });
 
-  const {jobs, isLoading, isError, message}  = useSelector((state)=> state.jobs)
 
-  // GEt job
   useEffect (() => {
-    if(isError){
-      toast.error('message')
-    }
     if(!user) {
       navigate('/login')
     }
-    if(jobs[0]) {
-      setCoords((prevState)=> ({...prevState, lat:jobs[0].lat, lng:jobs[0].long}))
+    return () => {
+      dispatch(reset())
     }
-    // TODO: set job to localstorage for persistence
-    dispatch(getJob(id));
-    return ()=> {
-      dispatch(reset)
-    }
-
-  }, [id, user, navigate, dispatch]);
-
-  if(isLoading) {
-    return
-    <>
-    <Dimmer active={isLoading} inverted>
-      <Loader inverted>Loading</Loader>
-    </Dimmer>
-    </>
-  }
+  }, [user, navigate, dispatch]);
 
   return (
     <>
-      <Message >
-        <Grid >
-          <Grid.Row columns={3} divided>
-            <Grid.Column width={10}>
-              <h1>Title: {jobs[0].title }</h1>
-            </Grid.Column>
-            <Grid.Column>
-              <h1>Title: {jobs[0].title }</h1>
-            </Grid.Column>
-            <Grid.Column>
-              <h1>Title: {jobs[0].title }</h1>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-        <Map draggable={false} height='300px' zoom={11} width='400px' coords={coords} setCoords={setCoords}/>
-      </Message>
-    </>
+    <Grid>
+      <Grid.Row>
+        <Grid.Column>
+        <Message >
+
+        </Message>
+        </Grid.Column>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column>
+        <Message >
+          <Map coords={coords}/>
+        </Message>
+        </Grid.Column>
+      </Grid.Row>
+   </Grid>
+   </>
   )
 }
 
-export default Job;
+export default Job

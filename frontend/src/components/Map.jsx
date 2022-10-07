@@ -2,12 +2,9 @@ import {useEffect, useState, useRef, useCallback} from 'react'
 import { GoogleMap, useJsApiLoader, MarkerF } from '@react-google-maps/api';
 import { Dimmer, Loader, Form } from 'semantic-ui-react';
 
-function Map({setCoords,draggable, coords, width, height, zoom}) {
+function Map({onMarkerChange, setCoords, coords}) {
   const[map, setMap] = useState(null);
-  const [currentPosition, setCurrentPosition] = useState({
-    lat: coords.lat,
-    lng:coords.lng
-  });
+  const [currentPosition, setCurrentPosition] = useState();
   const [markerPosition, setMarkerPosition]= useState();
   const markerRef = useRef(null);
   const mapRef = useRef(null);
@@ -18,8 +15,8 @@ function Map({setCoords,draggable, coords, width, height, zoom}) {
   });
 
   const containerStyle = {
-    width: width || '850px',
-    height: height || '400px'
+    width: '850px',
+    height: '400px'
   };
 
   const onLoad = useCallback(function callback(map) {
@@ -35,20 +32,18 @@ function Map({setCoords,draggable, coords, width, height, zoom}) {
 
 
   useEffect (() => {
-    if(!coords) {
-      if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          setCurrentPosition({
-              lat:position.coords.latitude,
-              lng: position.coords.longitude
-          })
-          setCoords((prevState)=>
-           ({...prevState, ...currentPosition})
-          );
-        });
-      } else {
-        console.log("Not Available");
-      }
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        setCurrentPosition({
+            lat:position.coords.latitude,
+            lng: position.coords.longitude
+        })
+        setCoords((prevState)=> 
+         ({...prevState, ...currentPosition})
+        );
+      });
+    } else {
+      console.log("Not Available");
     }
   }, []);
 
@@ -61,36 +56,36 @@ function Map({setCoords,draggable, coords, width, height, zoom}) {
 
   function onDragEnd(...args) {
     setCurrentPosition((prevState)=> ({
-      ...prevState,
+      ...prevState, 
       lat: markerRef.current.position.lat(),
       lng: markerRef.current.position.lng()
-    }));
+    }));  
     setCoords((prevState)=> ({
       ...prevState,
       lat: markerRef.current.position.lat(),
       lng: markerRef.current.position.lng()
     }));
+    console.log(coords)
   }
-
+  
   return isLoaded ? (
     <>
       <GoogleMap
           mapContainerStyle={containerStyle}
           center={currentPosition}
-          zoom={zoom || 9}
+          zoom={9}
           onLoad={onLoad}
           onUnmount={onUnmount}
         >
           <MarkerF
             onLoad={onMarkerLoad}
             position={markerPosition ? markerPosition : currentPosition}
-            draggable={draggable}
+            draggable={true}
             onDragEnd={onDragEnd}
         />
       </GoogleMap>
     </>
-    ) :
-    <>
+    ) : <>
       <Dimmer active={isLoaded} inverted>
         <Loader inverted>Loading</Loader>
       </Dimmer>
