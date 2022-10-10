@@ -1,51 +1,61 @@
-
 import { useParams, useNavigate} from 'react-router-dom'
 import { useSelector, useDispatch} from 'react-redux'
 import {useState, useEffect} from 'react'
-import {Grid, Message} from 'semantic-ui-react';
-import { reset} from '../features/auth/authSlice';
-import Map from '../components/Map'
+import {Grid, Message, Dimmer, Item, Loader} from 'semantic-ui-react';
+import {getJob} from '../features/jobs/jobSlice';
 
- // const {id} = useParams();
-function Job({job}) {
+import Map from '../components/Map'
+import { toast } from 'react-toastify';
+
+
+function Job() {
+  let {id} = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {user} = useSelector((state) => state.auth);
-  const [coords, setCoords] = useState({
-    lat:job.lat,
-    lng:job.lang
-  });
+  const {job, isLoading, isError, message,} = useSelector((state) => state.jobs);
 
-
+  // GEt job
   useEffect (() => {
+    if(isError){
+      toast.error(message)
+    }
     if(!user) {
       navigate('/login')
     }
-    return () => {
-      dispatch(reset())
-    }
-  }, [user, navigate, dispatch]);
+    dispatch(getJob(id));
+  }, [id, user, navigate, dispatch]);
+
+  if(isLoading) {
+    return(
+    <>
+    <Dimmer active={isLoading} inverted>
+      <Loader inverted>Loading</Loader>
+    </Dimmer>
+    </>
+    )
+  }
 
   return (
     <>
-    <Grid>
-      <Grid.Row>
-        <Grid.Column>
-        <Message >
-
-        </Message>
-        </Grid.Column>
-      </Grid.Row>
-      <Grid.Row>
-        <Grid.Column>
-        <Message >
-          <Map coords={coords}/>
-        </Message>
-        </Grid.Column>
-      </Grid.Row>
-   </Grid>
-   </>
+      <Message >
+        <Grid >
+          <Grid.Row columns={3  } divided>
+            <Grid.Column width={10}>
+              <h1>Title: {job.title}</h1>
+            </Grid.Column>
+            <Grid.Column>
+              <h1>Title:</h1>
+            </Grid.Column>
+            <Grid.Column>
+              <h1>Title: </h1>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+        <Map draggable={false} height='300px' width='400px' coords={{lat:job.lat, lng:job.long}}/>
+      </Message>
+    </>
   )
 }
 
-export default Job
+export default Job;

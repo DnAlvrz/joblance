@@ -1,27 +1,24 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import {Item, Label, Button, Icon} from 'semantic-ui-react';
+import {Item, Grid, Label, Button, Icon} from 'semantic-ui-react';
 function JobItem({job}) {
   return (
-    <Item>
-    <Item.Image src='/square-image.png' />
+    <Item >
+    <Item.Image  size='tiny' src='/square-image.png' />
     <Item.Content>
+    <Link to={`/jobs/${job._id}`}>
       <Item.Header>{job.title}</Item.Header>
+    </Link>
       <Item.Meta>
-        <span className='price'>{job.budget}</span>
-        <span className='stay'>{job.duration}</span>
-        <p className='cinema'>{job.location}</p>
+
+      <span className='price'> ₱ {job.budget} <Label color='green' size='mini' floated='right'>{job.duration}</Label>
+</span>
+        <p className='cinema'> <Icon  name='location arrow' /> {job.location}</p>
       </Item.Meta>
-      <Item.Description>{job.description}</Item.Description>
       <Item.Extra>
-        <Label>Construction</Label>
-        <Label icon='globe' content='Mason' />
-        <Link to={`/jobs/${job._id}`}>
-          <Button primary floated='right'>
-              View Details
-              <Icon name='right chevron' />
-          </Button>
-        </Link>
+        <Label color='blue'>Construction</Label>
+        <Label color='red' icon='globe' content='Mason' />
+
       </Item.Extra>
     </Item.Content>
   </Item>

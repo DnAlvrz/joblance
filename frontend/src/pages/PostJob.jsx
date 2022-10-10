@@ -14,7 +14,7 @@ function PostJob() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [photos, setPhotos] = useState();
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(1);
   const [coords, setCoords] = useState({
     lat:0.0,
     lng:0.0
@@ -27,20 +27,30 @@ function PostJob() {
     duration: '',
   });
   const {isSuccess, isLoading, isError, message} = useSelector((state) => state.jobs);
-    
+
   useEffect(() => {
-    if(isSuccess ) {
-      dispatch(reset())
+    if(isSuccess) {
       navigate('/jobs')
     }
     if(isError) {
       toast.error(message);
+      dispatch(reset())
     }
     if(!user){
+      console.log('no user')
       navigate('/login')
     }
-    dispatch(reset())
-  }, [user, navigate, dispatch, isSuccess, isError, message]);
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        setCoords((prevState)=>
+         ({...prevState, lat:position.coords.latitude, lng: position.coords.longitude})
+        );
+      });
+    } else {
+      toast.error("Enable Location");
+    }
+
+  }, [user, navigate, dispatch, message]);
 
   const onChange = (e) => {
     setFormData((prevState)=>({
@@ -58,8 +68,7 @@ function PostJob() {
   };
 
   const onSubmit = (e) => {
-    e.preventDefault(); 
-
+    e.preventDefault();
     const jobDetails = {
       ...formData,
       ...coords,
@@ -71,7 +80,9 @@ function PostJob() {
         jobDetails,
         photos
       }
-      dispatch(createJob(job));  
+      dispatch(reset());
+      dispatch(createJob(job));
+
     }
 
   }
@@ -89,17 +100,17 @@ function PostJob() {
           <Grid.Column width={16}>
             <Divider horizontal> Job Post</Divider>
             {
-              page === 1 ? <JobForm onChange={onChange} formData={formData} /> : 
+              page === 1 ? <JobForm onChange={onChange} formData={formData} /> :
               page === 2 ?
-            <>      
+            <>
               <Form>
               <Form.Group widths='equal'>
                 <Form.Input fluid label='Latitude'  readOnly value={coords.lat} />
                 <Form.Input fluid label='Longitude' readOnly value={coords.lng}/>
               </Form.Group>
             </Form>
-            <Map setCoords={setCoords} coords={coords} />
-            </>  : 
+            <Map setCoords={setCoords} coords={coords} draggable={true}/>
+            </>  :
               page === 3 ? <JobPhoto onFileChange={onFileChange} /> :<></>
             }
           </Grid.Column>

@@ -15,7 +15,7 @@ const jobPhotoRouter = require('./routes/jobPhoto');
 const contractRouter = require('./routes/contracts')
 const offerRouter = require('./routes/offer');
 const ratingRouter = require('./routes/rating')
-const userRouter = require('./routes/client');
+const userRouter = require('./routes/user');
 
 connectDatabase();
 app.use(cors());
@@ -31,6 +31,7 @@ app.get('/test', (req, res)=> {
   res.sendFile(path.resolve('test/test.html'));
 })
 app.use('/api/v1/auth', authRouters);
+app.use('/api/v1/users',passport.authenticate('jwt', {session:false}), userRouter);
 app.use('/api/v1/jobs/', passport.authenticate('jwt', {session:false}), jobRouter);
 app.use('/api/v1/jobs/contracts/', passport.authenticate('jwt', {session:false}), contractRouter);
 app.use('/api/v1/jobs/contracts/ratings/', passport.authenticate('jwt', {session:false}), ratingRouter);

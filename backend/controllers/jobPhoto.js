@@ -7,14 +7,15 @@ const fs = require('fs');
 
 const uploadJobPhotos = asyncHandler( async(req, res) => {
   const id = req.params.jobId;
-  const job = await Job.findOne( { id } );
-  
+  const job = await Job.findOne( { _id:id } );
+
   if(!job) {
     res.status(404)
     throw new Error('Job not found')
   }
 
-  if(job.user._id.toString() !== req.user.id) {
+  if(job.user._id.toString() !== req.user._id.toString()) {
+    console.log(job.user._id.toString(), req.user._id)
     res.status(401);
     throw new Error('Unauthorized')
   }
@@ -23,7 +24,7 @@ const uploadJobPhotos = asyncHandler( async(req, res) => {
 
   Object.keys(files).forEach(async (key) => {
     const filepath = path.join(__dirname, '../../','files', files[key].name);
-    files[key].mv(filepath, async (err) => { 
+    files[key].mv(filepath, async (err) => {
       if(err){
         errFiles.push(files[key].name);
         return;
@@ -55,7 +56,7 @@ const deletePhoto =  asyncHandler(async (req, res) => {
     res.status(404)
     throw new Error('Photo not found');
   }
-  
+
   if(!job){
     res.status(404)
     throw new Error('Job not found');

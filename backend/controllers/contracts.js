@@ -22,21 +22,19 @@ const addContract = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error('Job not found');
   }
-  console.log(req.user.id)
-  console.log(job.user._id)
+
   if(req.user.id !== job.user._id.toString()) {
     res.status(403);
     throw new Error('User is not authorized');
   }
 
-  
   const talent = await User.findById( { _id: talentId});
   if(!talent){
     res.status(404);
     throw new Error('User not found');
   }
 
-  const contract = await Contract.create({ 
+  const contract = await Contract.create({
     job: job._id,
     talent: talent._id,
    });

@@ -2,6 +2,16 @@ import axios from "axios";
 
 const API_URL = '/api/v1/jobs/';
 
+const getJob = async (token, jobId ) => {
+  const config = {
+    headers: {
+      Authorization: token
+    }
+  };
+  const response = await axios.get(`${API_URL}view/${jobId}`, config);
+  return response.data;
+};
+
 const createJob = async(jobData, token) => {
   const config = {
     headers: {
@@ -59,6 +69,7 @@ const jobService = {
   getJobs,
   updateJob,
   deleteJob,
+  getJob,
 }
 
 export default jobService;
