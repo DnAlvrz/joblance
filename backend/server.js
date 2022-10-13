@@ -18,6 +18,7 @@ const ratingRouter = require('./routes/rating')
 const userRouter = require('./routes/user');
 
 connectDatabase();
+require('./models/Application');
 app.use(cors());
 app.disable('x-powered-by');
 app.use(morgan('dev'));
