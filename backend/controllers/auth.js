@@ -32,6 +32,7 @@ const registerUser = asyncHandler(async(req, res)=> {
   });
 
   if (user) {
+    const token = `Bearer` + await generateToken(user._id, firstname, lastname);
     res.status(201).json({
       success: true,
       message: 'Successfully registered! Please log in to your account.',
@@ -40,7 +41,7 @@ const registerUser = asyncHandler(async(req, res)=> {
         firstname: user.firstname,
         lastname: user.lastname,
         email: user.email,
-        token: generateToken(user._id, firstname, lastname)
+        token: token
       }
     });
   } else {
