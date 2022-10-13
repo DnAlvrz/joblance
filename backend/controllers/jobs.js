@@ -39,7 +39,6 @@ const createJob = asyncHandler( async(req, res) => {
     res.status(400);
     throw new Error('Please fill in all fields');
   }
-  console.log(req.user)
 
   const job = await Job.create( {
     title,

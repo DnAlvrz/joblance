@@ -15,7 +15,6 @@ const uploadJobPhotos = asyncHandler( async(req, res) => {
   }
 
   if(job.user._id.toString() !== req.user._id.toString()) {
-    console.log(job.user._id.toString(), req.user._id)
     res.status(401);
     throw new Error('Unauthorized')
   }

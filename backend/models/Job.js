@@ -54,7 +54,11 @@ const jobSchema = new mongoose.Schema({
   offers: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Offer'
-  }]
+  }],
+  applications: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Application'
+  }],
 },
 {
   timestamps: true

@@ -1,7 +1,7 @@
 import { useParams, useNavigate} from 'react-router-dom'
 import { useSelector, useDispatch} from 'react-redux'
 import {useState, useEffect} from 'react'
-import {Grid, Message, Dimmer, Item, Loader} from 'semantic-ui-react';
+import {Grid, Message, Dimmer, Item, Loader, GridRow} from 'semantic-ui-react';
 import {getJob} from '../features/jobs/jobSlice';
 
 import Map from '../components/Map'
@@ -38,22 +38,33 @@ function Job() {
 
   return (
     <>
-      <Message >
-        <Grid >
-          <Grid.Row columns={3  } divided>
-            <Grid.Column width={10}>
-              <h1>Title: {job.title}</h1>
-            </Grid.Column>
-            <Grid.Column>
-              <h1>Title:</h1>
-            </Grid.Column>
-            <Grid.Column>
-              <h1>Title: </h1>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-        <Map draggable={false} height='300px' width='400px' coords={{lat:job.lat, lng:job.long}}/>
-      </Message>
+      <Grid>
+        <Grid.Row>
+          <Grid.Column columns={8} width={10}>
+            <Message >
+              <Grid >
+                <Grid.Row divided>
+                  <Grid.Column width={10}>
+                    <h1>Title: {job.title}</h1>
+                  </Grid.Column>
+                  <Grid.Column>
+                    <h3>Budget: ₱ {job.budget}</h3>
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
+              <h1>{job.description} </h1>
+              <Map draggable={false} height='300px' width='400px' coords={{lat:job.lat, lng:job.long}}/>
+            </Message>
+          </Grid.Column>
+          <Grid.Column width={6}>
+           <Message  >
+              <h4> Apply for job </h4>
+
+            </Message>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+
     </>
   )
 }

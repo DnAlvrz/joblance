@@ -23,7 +23,7 @@ const addContract = asyncHandler(async (req, res) => {
     throw new Error('Job not found');
   }
 
-  if(req.user.id !== job.user._id.toString()) {
+  if(req.user._id !== job.user._id.toString()) {
     res.status(403);
     throw new Error('User is not authorized');
   }
