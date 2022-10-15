@@ -11,9 +11,9 @@ function SideNav() {
   }
   useEffect(()=> {
 
-  }, [activeItem]) 
+  }, [activeItem])
   return (
-    
+
     <Menu vertical>
         <Menu.Item>
           <Menu.Header>Jobs</Menu.Header>
@@ -26,7 +26,7 @@ function SideNav() {
               onClick={ handleItemClick}
             />
             </Link>
-            <Link to= '/user/jobs'>
+            <Link to= '/jobs/user'>
               <Menu.Item
                 as='span'
                 name='My Jobs'

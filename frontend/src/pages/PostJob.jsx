@@ -10,6 +10,8 @@ import Map from '../components/Map';
 import {createJob, reset} from '../features/jobs/jobSlice'
 
 function PostJob() {
+  const {isSuccess, isLoading, isError, message} = useSelector((state) => state.jobs);
+
   const {user} = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -26,7 +28,6 @@ function PostJob() {
     location: '',
     duration: '',
   });
-  const {isSuccess, isLoading, isError, message} = useSelector((state) => state.jobs);
 
   useEffect(() => {
     if(isSuccess) {
@@ -69,10 +70,12 @@ function PostJob() {
 
   const onSubmit = (e) => {
     e.preventDefault();
+
     const jobDetails = {
       ...formData,
       ...coords,
     };
+
     if(!jobDetails || !photos || !coords){
       toast.error('Please fill in all fields, Select Correct Location and add Photos')
     } else {
@@ -82,9 +85,7 @@ function PostJob() {
       }
       dispatch(reset());
       dispatch(createJob(job));
-
     }
-
   }
 
   return (
@@ -132,7 +133,7 @@ function PostJob() {
               <>
                 <Button primary onClick={onSubmit} disabled={page < 2}>
                   Submit
-                  </Button>
+                </Button>
               </>
             )}
           </Grid.Column>

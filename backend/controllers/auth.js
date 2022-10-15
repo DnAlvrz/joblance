@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken');
 
 const registerUser = asyncHandler(async(req, res)=> {
   const {firstname, lastname, email, password, address, phone }  = req.body;
-  
   if(!firstname || !lastname || !email || !password || !address || !phone) {
     res.status(400)
     throw new Error('Please fill in all fields.');
@@ -20,7 +19,7 @@ const registerUser = asyncHandler(async(req, res)=> {
 
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
-  
+
   const user = await User.create({
     firstname,
     lastname,
@@ -32,7 +31,7 @@ const registerUser = asyncHandler(async(req, res)=> {
   });
 
   if (user) {
-    const token = `Bearer` + await generateToken(user._id, firstname, lastname);
+    const token = `Bearer ` + await generateToken(user._id, firstname, lastname);
     res.status(201).json({
       success: true,
       message: 'Successfully registered! Please log in to your account.',
@@ -48,7 +47,6 @@ const registerUser = asyncHandler(async(req, res)=> {
     res.status(400);
     throw new Error('Invalid user data');
   }
-
 });
 
 

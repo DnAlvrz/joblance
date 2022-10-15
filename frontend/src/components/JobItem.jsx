@@ -1,7 +1,13 @@
 import React from 'react'
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import {Item, Grid, Label, Button, Icon} from 'semantic-ui-react';
+import {Item, Label, Icon} from 'semantic-ui-react';
 function JobItem({job}) {
+
+  useEffect(()=> {
+
+  });
+
   return (
     <Item >
     <Item.Image  size='tiny' src='/square-image.png' />

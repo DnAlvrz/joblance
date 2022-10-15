@@ -44,13 +44,22 @@ const getJobs = async(token, page) => {
 
 };
 
+const getUserJobs = async (token) => {
+  const config = {
+    headers: {
+      Authorization: token
+    }
+  };
+  const response = await axios.get(`${API_URL}user`, config);
+  return response.data
+}
+
 const updateJob = async(jobId, token,jobData)=> {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`
     }
   };
-  console.log(config)
 
 };
 
@@ -70,6 +79,7 @@ const jobService = {
   updateJob,
   deleteJob,
   getJob,
+  getUserJobs
 }
 
 export default jobService;

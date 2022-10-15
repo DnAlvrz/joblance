@@ -1,6 +1,6 @@
 import {useEffect, useState, useRef, useCallback} from 'react'
 import { GoogleMap, useJsApiLoader, MarkerF } from '@react-google-maps/api';
-import { Dimmer, Loader, Form } from 'semantic-ui-react';
+import { Dimmer, Loader } from 'semantic-ui-react';
 
 function Map({setCoords,draggable, coords, width, height, zoom}) {
   const[map, setMap] = useState(null);
@@ -11,6 +11,7 @@ function Map({setCoords,draggable, coords, width, height, zoom}) {
   const [markerPosition, setMarkerPosition]= useState();
   const markerRef = useRef(null);
   const mapRef = useRef(null);
+
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -24,8 +25,9 @@ function Map({setCoords,draggable, coords, width, height, zoom}) {
 
   const onLoad = useCallback(function callback(map) {
     const bounds = new window.google.maps.LatLngBounds(currentPosition);
+    geocodeLatLng();
     map.fitBounds(bounds);
-    setMap(map)
+    setMap(map);
     mapRef.current = map;
   }, [currentPosition]);
 
@@ -33,9 +35,19 @@ function Map({setCoords,draggable, coords, width, height, zoom}) {
     setMap(null)
   }, []);
 
+  const geocodeLatLng = () => {
+    var requestOptions = {
+      method: 'GET',
+    };
+    fetch(`https://api.geoapify.com/v1/geocode/reverse?lat=${coords.lat}&lon=${coords.lng}&apiKey=${process.env.REACT_APP_REVERSE_GEOCODING_API_KEY}`, requestOptions)
+      .then(response => response.json())
+      .then(result =>{
+        alert(`${result.features[0].properties.street } ${result.features[0].properties.city}`)
+      })
+      .catch(error => alert('error', error));
+  }
 
   useEffect (() => {
-    console.log(coords)
     if(!coords) {
       if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -51,7 +63,7 @@ function Map({setCoords,draggable, coords, width, height, zoom}) {
         console.log("Not Available");
       }
     }
-  }, []);
+  }, [coords, currentPosition, setCoords]);
 
   const onMarkerLoad = useCallback(
     marker => {
@@ -81,13 +93,13 @@ function Map({setCoords,draggable, coords, width, height, zoom}) {
           zoom= {9}
           onLoad={onLoad}
           onUnmount={onUnmount}
-        >
-          <MarkerF
-            onLoad={onMarkerLoad}
-            position={markerPosition ? markerPosition : currentPosition}
-            draggable={draggable}
-            onDragEnd={onDragEnd}
-        />
+      >
+      <MarkerF
+        onLoad={onMarkerLoad}
+        position={markerPosition ? markerPosition : currentPosition}
+        draggable={draggable}
+        onDragEnd={onDragEnd}
+      />
       </GoogleMap>
     </>
     ) :

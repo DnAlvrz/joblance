@@ -46,7 +46,7 @@ const createJob = asyncHandler( async(req, res) => {
     location,
     lat,
     long:lng,
-    budget,
+    budget: budget.toLocaleString(),
     duration,
     user: req.user._id
   });
@@ -107,11 +107,23 @@ const deleteJob = asyncHandler(async (req, res) => {
   res.status(204).json({id:req.params.id});
 });
 
+const getUserJobs = asyncHandler(async (req, res) => {
+  // const user = await User.findById({_id:req.user.id});
+  if(req.user.id){
+    const jobs = await Job.find({user:req.user.id}).populate('contracts').populate('offers').populate('applications');
+    res.status(200).json(jobs);
+  } else {
+    res.status(404);
+    throw new Error('User not found')
+  }
+});
+
 
 module.exports = {
   listJobs,
   createJob,
   updateJob,
   deleteJob,
-  viewJob
+  viewJob,
+  getUserJobs
 };

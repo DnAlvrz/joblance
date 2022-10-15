@@ -30,7 +30,7 @@ const jobSchema = new mongoose.Schema({
     required: [true, 'Please enter the longitude of the project']
   },
   budget : {
-    type: Number,
+    type: String,
     required: [true, 'Please enter the budget of the project']
   },
   duration: {
@@ -41,12 +41,10 @@ const jobSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Contract'
   }],
-  photos: [
-    {
+  photos: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'JobPhoto'
-    }
-  ],
+  }],
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'

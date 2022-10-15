@@ -14,19 +14,20 @@ import {ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import SideNav from "./components/SideNav";
 import PostJob from "./pages/PostJob";
+import UserJobs from "./pages/UserJobs";
 
 function App() {
   const {user} = useSelector((state)=> state.auth);
   return (
     <>
-      <ToastContainer /> 
+      <ToastContainer />
       <Router>
       <Header />
-        { user ? ( 
+        { user ? (
           <Container >
           <Grid >
-            <Grid.Row>
-              <Grid.Column width={3}>
+            <Grid.Row centered>
+              <Grid.Column width={3} only='large screen'>
                 <SideNav />
               </Grid.Column>
               <Grid.Column width={13}>
@@ -39,6 +40,7 @@ function App() {
                     <Route index element={<JobList/>} />
                     <Route path=":id" element={<Job/>} />
                     <Route path="post" element={<PostJob/>} />
+                    <Route path="user" element={<UserJobs/>} />
                   </Route>
                   <Route path="*" element={<NotFound/>} />
                 </Routes>
@@ -47,7 +49,7 @@ function App() {
           </Grid>
           </Container>
         )
-          : ( 
+          : (
             <Container >
               <Routes>
                 <Route path="/" element={<Index/>} />

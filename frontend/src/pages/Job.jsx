@@ -1,11 +1,13 @@
 import { useParams, useNavigate} from 'react-router-dom'
 import { useSelector, useDispatch} from 'react-redux'
-import {useState, useEffect} from 'react'
-import {Grid, Message, Dimmer, Item, Loader, GridRow} from 'semantic-ui-react';
+import { useEffect} from 'react'
+import {Grid, Dimmer, Loader, Divider, Header, Segment} from 'semantic-ui-react';
 import {getJob} from '../features/jobs/jobSlice';
 
 import Map from '../components/Map'
 import { toast } from 'react-toastify';
+import ApplicationForm from '../components/ApplicationForm';
+import Comments from '../components/Comments';
 
 
 function Job() {
@@ -35,35 +37,44 @@ function Job() {
     </>
     )
   }
-
   return (
     <>
-      <Grid>
+    <Segment>
+      <Grid stackable>
         <Grid.Row>
-          <Grid.Column columns={8} width={10}>
-            <Message >
-              <Grid >
-                <Grid.Row divided>
-                  <Grid.Column width={10}>
-                    <h1>Title: {job.title}</h1>
+          <Grid.Column  width={11}>
+            <Header as='h1'>{job.title}</Header>
+              <Divider fitted />
+              <Grid>
+                <Grid.Row style={{paddingTop:'30px'}}>
+                  <Grid.Column floated='left' width={5}>
+                    <Header sub>₱ {job.budget} <span> · {job.duration}</span></Header>
                   </Grid.Column>
+                  <Grid.Column floated='right' width={6}>
+                    <Header sub>{job.location}</Header>
+                  </Grid.Column>
+                </Grid.Row>
+                <Grid.Row style={{marginBottom:'30px'}}>
                   <Grid.Column>
-                    <h3>Budget: ₱ {job.budget}</h3>
+                    {job.description}
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
-              <h1>{job.description} </h1>
-              <Map draggable={false} height='300px' width='400px' coords={{lat:job.lat, lng:job.long}}/>
-            </Message>
+              <Map draggable={false} height='300px' width='100%' coords={{lat:job.lat, lng:job.long}}/>
           </Grid.Column>
-          <Grid.Column width={6}>
-           <Message  >
-              <h4> Apply for job </h4>
-
-            </Message>
+          <Grid.Column width={5}>
+            <ApplicationForm />
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row centered>
+          <Grid.Column  width={11}>
+            <Comments/>
           </Grid.Column>
         </Grid.Row>
       </Grid>
+
+      </Segment>
+
 
     </>
   )
