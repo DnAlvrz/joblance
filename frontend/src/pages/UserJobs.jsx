@@ -12,6 +12,9 @@ function UserJobs() {
   const {jobs, isLoading, isError, message} = useSelector((state)=> state.jobs);
 
   useEffect(()=> {
+    if(isError) {
+      toast.error(message);
+    }
     dispatch(getUserJob());
     console.log(jobs)
   },[dispatch, navigate])
