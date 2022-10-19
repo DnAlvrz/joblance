@@ -1,12 +1,12 @@
 const router = require('express').Router();
 
 const {
-  getConversation,
+  getConversations,
   createConversation
 } = require('../controllers/conversation')
 
 // Get conversation of a user
-router.get('/', getConversation);
+router.get('/:userId', getConversations);
 
 // Create conversation
 router.post('/', createConversation);
