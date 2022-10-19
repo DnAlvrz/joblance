@@ -3,8 +3,8 @@ import { useSelector, useDispatch} from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import {Item, Message, Container, Dimmer, Loader, Pagination} from 'semantic-ui-react'
 import { toast } from 'react-toastify'
-import {getOpenJobs, reset} from '../features/jobs/jobSlice'
-import JobItem from '../components/JobItem'
+import {getOpenJobs, reset} from '../../features/jobs/jobSlice'
+import JobItem from '../../components/JobItem'
 
 
 function JobList() {

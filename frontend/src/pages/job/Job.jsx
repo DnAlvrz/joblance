@@ -2,12 +2,12 @@ import { useParams, useNavigate} from 'react-router-dom'
 import { useSelector, useDispatch} from 'react-redux'
 import { useEffect} from 'react'
 import {Grid, Dimmer, Loader, Divider, Header, Segment} from 'semantic-ui-react';
-import {getJob} from '../features/jobs/jobSlice';
+import {getJob} from '../../features/jobs/jobSlice';
 
-import Map from '../components/Map'
+import Map from '../../components/Map'
 import { toast } from 'react-toastify';
-import ApplicationForm from '../components/ApplicationForm';
-import Comments from '../components/Comments';
+import ApplicationForm from '../../components/ApplicationForm';
+import Comments from '../../components/Comments';
 
 
 function Job() {

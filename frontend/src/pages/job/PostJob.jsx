@@ -3,11 +3,11 @@ import {useNavigate} from 'react-router-dom';
 import { useState , useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { Message, Grid, Button, Icon, Divider, Dimmer, Loader,Form } from 'semantic-ui-react';
-import PostStep from '../components/PostStep';
-import JobForm from '../components/JobForm';
-import JobPhoto from '../components/JobPhoto';
-import Map from '../components/Map';
-import {createJob, reset} from '../features/jobs/jobSlice'
+import PostStep from '../../components/PostStep';
+import JobForm from '../../components/JobForm';
+import JobPhoto from '../../components/JobPhoto';
+import Map from '../../components/Map';
+import {createJob, reset} from '../../features/jobs/jobSlice'
 
 function PostJob() {
   const {isSuccess, isLoading, isError, message} = useSelector((state) => state.jobs);

@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 import {useState, useEffect} from 'react'
 import { useSelector, useDispatch} from 'react-redux'
 import { useNavigate} from 'react-router-dom'
-import {register, reset} from '../features/auth/authSlice'
+import {register, reset} from '../../features/auth/authSlice'
 
 
 function Register() {
@@ -36,7 +36,7 @@ function Register() {
   const {user, isLoading, isError, isSuccess, message} = useSelector((state)=> state.auth);
 
   useEffect(()=> {
-    
+
     if(isError){
       toast.error(message);
     }
@@ -77,7 +77,7 @@ function Register() {
 
   return (
     <>
-  
+
     <Dimmer active={isLoading}>
       <Loader>Loading</Loader>
     </Dimmer>
@@ -116,8 +116,8 @@ function Register() {
             <Form.Input name='password' onChange={onChange} label='Password' type='password' />
             <Form.Input label='Confirm password' onChange={onChange} type='password' name='password2'/>
           </Form.Group>
-          <Form.Checkbox  inline label='I agree to the terms and conditions' 
-            checked={isChecked} 
+          <Form.Checkbox  inline label='I agree to the terms and conditions'
+            checked={isChecked}
             onClick={(e) => {setIsChecked(!isChecked)}}
           />
           <Button textAlign='left' style={{ width: '100%' }}  loading={isLoading} positive>Submit</Button>

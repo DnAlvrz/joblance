@@ -4,7 +4,7 @@ import {toast} from 'react-toastify'
 import {useState, useEffect} from 'react'
 import { useSelector, useDispatch} from 'react-redux'
 import { useNavigate} from 'react-router-dom'
-import {login, reset} from '../features/auth/authSlice'
+import {login, reset} from '../../features/auth/authSlice'
 
 function Login() {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ function Login() {
 
   const onChange = (e) => {
     setFormData(prevState =>({
-      ...prevState, 
+      ...prevState,
       [e.target.name]: e.target.value
     }));
   }
@@ -57,20 +57,20 @@ function Login() {
         <Loader>Loading</Loader>
     </Dimmer>
     <Grid textAlign='center' style={{ height: '80vh' }} verticalAlign='middle'>
-      
+
       <Grid.Column style={{ maxWidth: 450 }}>
         <Header as='h2' color='teal' textAlign='center'>
           <Image src='/favicons/android-chrome-192x192.png' /> Log-in to your account
         </Header>
         <Form size='large' onSubmit={onSubmit}>
           <Segment stacked>
-            <Form.Input 
-              fluid 
-              icon='user' 
-              iconPosition='left' 
-              onChange={onChange} 
-              placeholder='E-mail address' 
-              name='email' 
+            <Form.Input
+              fluid
+              icon='user'
+              iconPosition='left'
+              onChange={onChange}
+              placeholder='E-mail address'
+              name='email'
               value={email}
             />
             <Form.Input
@@ -80,7 +80,7 @@ function Login() {
               placeholder='Password'
               name='password'
               value={password}
-              onChange={onChange} 
+              onChange={onChange}
               type='password'
             />
             <Button color='teal' fluid size='large'>

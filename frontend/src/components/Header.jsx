@@ -1,21 +1,21 @@
-// import { FaSignInAlt, FaUser, FaSignOutAlt} from 'react-icons/fa'
+ // import { FaSignInAlt, FaUser, FaSignOutAlt} from 'react-icons/fa'
 import {Link, useNavigate} from 'react-router-dom' //useNavigate
 import {useDispatch, useSelector} from 'react-redux';
 import {logout, reset} from '../features/auth/authSlice'
-import { Button, Menu, Container } from 'semantic-ui-react'
+import { Button, Menu, Container, Icon } from 'semantic-ui-react'
 
 
 function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {user} = useSelector((state) => state.auth);
-  
+
   const onLogout = () => {
-    
+
     dispatch(logout());
     dispatch(reset());
     navigate('/login')
-    
+
   };
   return (
     <>
@@ -61,7 +61,16 @@ function Header() {
             <>
               <Link to='/'>
                 <Menu.Item>
-                <Button onClick={onLogout}>Logout</Button>
+                  <Button.Group>
+                    <Link to='/chat'>
+                    <Button>
+                    <Icon name='mail' /> Messages</Button>
+                    </Link>
+                    <Button.Or />
+                    <Link to='/'>
+                    <Button onClick={onLogout}>Logout</Button>
+                    </Link>
+                  </Button.Group>
                 </Menu.Item>
               </Link>
             </>

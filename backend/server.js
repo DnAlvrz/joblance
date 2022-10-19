@@ -16,6 +16,7 @@ const contractRouter = require('./routes/contracts')
 const offerRouter = require('./routes/offer');
 const ratingRouter = require('./routes/rating')
 const userRouter = require('./routes/user');
+const chatRouter = require('./routes/conversation')
 
 connectDatabase();
 require('./models/Application');
@@ -32,6 +33,7 @@ app.get('/test', (req, res)=> {
   res.sendFile(path.resolve('test/test.html'));
 })
 app.use('/api/v1/auth', authRouters);
+app.use('/api/v1/chat', chatRouter);
 app.use('/api/v1/users',passport.authenticate('jwt', {session:false}), userRouter);
 app.use('/api/v1/jobs/', passport.authenticate('jwt', {session:false}), jobRouter);
 app.use('/api/v1/jobs/contracts/', passport.authenticate('jwt', {session:false}), contractRouter);
