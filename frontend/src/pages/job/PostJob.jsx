@@ -83,8 +83,8 @@ function PostJob() {
         jobDetails,
         photos
       }
-      dispatch(reset());
       dispatch(createJob(job));
+      dispatch(reset());
     }
   }
 
