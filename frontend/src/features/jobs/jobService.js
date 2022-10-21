@@ -57,7 +57,7 @@ const getUserJobs = async (token) => {
 const updateJob = async(jobId, token,jobData)=> {
   const config = {
     headers: {
-      Authorization: `Bearer ${token}`
+      Authorization: token
     }
   };
 
@@ -66,10 +66,9 @@ const updateJob = async(jobId, token,jobData)=> {
 const deleteJob = async (jobId, token) => {
   const config = {
     headers: {
-      Authorization: `Bearer ${token}`
+      Authorization: token
     }
   };
-  console.log(config)
 };
 
 const jobService = {

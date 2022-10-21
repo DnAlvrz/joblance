@@ -1,7 +1,17 @@
 import React from 'react'
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux'
 import './conversation.css'
 
-function Conversation() {
+function Conversation({conversation}) {
+  const {user}  = useSelector((state)=> state.auth);
+  const getSender = (member)=> {
+    return member._id !== user.id
+  }
+  const sender = conversation.members.filter(getSender)[0]
+
+  useEffect(()=> {
+  }, [user, conversation])
   return (
     <>
       <div className="conversation">
@@ -10,7 +20,7 @@ function Conversation() {
           alt="John Doe"
           className='conversationImage'
         />
-        <span className="conversationName">John Doe</span>
+        <span className="conversationName">{sender.firstname} {sender.lastname}</span>
       </div>
     </>
   )
