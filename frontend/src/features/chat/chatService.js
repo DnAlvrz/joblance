@@ -10,6 +10,7 @@ const getUserConversations = async(token, userId) => {
   const response = await axios.get(`${API_URL}${userId}`,config);
   return response.data;
 }
+
 const sendUserMessage =  async (token, msgData) => {
   const config = {
     headers: {

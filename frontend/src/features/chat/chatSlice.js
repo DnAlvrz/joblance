@@ -13,14 +13,26 @@ const initialState = {
 export const getConversations = createAsyncThunk('chat/getConversations', async(userId,thunkAPI)=> {
   try {
     const userToken = thunkAPI.getState().auth.user.token;
-
-    const responseData = await chatService.getUserConversations(userToken, userId);
-    return responseData;
+    return await chatService.getUserConversations(userToken, userId);
   } catch (error) {
-    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    const message = (
+      error.response && error.response.data &&error.response.data.message) ||
+      error.message || error.toString();
     return thunkAPI.rejectWithValue(message);
   }
 
+});
+
+export const sendUserMessage = createAsyncThunk('chat/sendUserMessage', async (msgData, thunkAPI)=> {
+  try {
+    const userToken = thunkAPI.getState().auth.user.token;
+    return await chatService.sendUserMessage(userToken, msgData);
+  } catch (error) {
+    const message = (
+      error.response && error.response.data && error.response.data.message) ||
+      error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
 });
 
 
@@ -40,6 +52,17 @@ export const chatSlice = createSlice({
         state.conversations = action.payload;
       })
       .addCase(getConversations.rejected, (state, action)=> {
+        state.isLoading=false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      // sendMessage
+      .addCase(sendUserMessage.pending, (state)=> {state.isLoading=true})
+      .addCase(sendUserMessage.fulfilled, (state, action)=> {
+        state.isLoading=false;
+        state.isSuccess=true;
+      })
+      .addCase(sendUserMessage.rejected, (state, action)=> {
         state.isLoading=false;
         state.isError = true;
         state.message = action.payload;

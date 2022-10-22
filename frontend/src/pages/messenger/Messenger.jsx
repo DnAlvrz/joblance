@@ -1,66 +1,90 @@
 import React from 'react'
 import "./messenger.css"
-import Conversation from '../../components/conversations/Conversation'
+
 import Message from '../../components/message/Message'
 import Online from '../../components/online/Online'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import axios from 'axios'
-import {getConversations} from '../../features/chat/chatSlice';
+import {sendUserMessage, reset} from '../../features/chat/chatSlice';
 import {toast} from 'react-toastify';
 import {Dimmer, Loader}from 'semantic-ui-react';
+import { useRef } from 'react'
+import {io} from 'socket.io-client';
+import ConversationList from '../../components/conversations/ConversationList'
+import MessageList from '../../components/message/MessageList'
+import ChatInput from '../../components/ChatInput'
 
 function Messenger() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+
   const {user} = useSelector((state)=> state.auth);
-  const {conversations, isLoading, isError, message} = useSelector((state)=> state.chat)
+
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('')
+  const [incomingMessage, setIncomingMessage] = useState(null)
+  const socket = useRef();
+
+
 
   useEffect(()=> {
-    if(!user){
-      navigate('/login')
-    }
-    if(isError){
-      toast.error(message)
-    }
-    dispatch(getConversations(user.id));
-  }, [user, navigate, dispatch, isError, messages, message]);
+    socket.current= io("ws://localhost:8900")
+    socket.current.on("getMessage", (data) => {
+      console.log('message')
+      setIncomingMessage({
+        sender: data.senderId,
+        text: data.text,
+        createdAt: Date.now(),
+      });
+      console.log(data)
+    });
+  },[]);
+
+  useEffect(() => {
+    incomingMessage &&
+      currentChat?.members.includes(incomingMessage.sender) &&
+      setMessages((prev) => [...prev, incomingMessage]);
+  }, [incomingMessage, currentChat]);
+
+  useEffect(()=> {
+    socket.current.emit('addUser', user.id);
+    socket.current.on('getUsers', users=> {
+    });
+
+  },[user]);
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const msgData = {
+      text: newMessage,
+      conversationId:currentChat._id,
+      sender:user.id
+    }
 
-  }
-  if(isLoading){
-    return (
-      <>
-      <Dimmer active inverted>
-          <Loader inverted>Loading</Loader>
-      </Dimmer>
-      </>
-    )
-  }
+    const receiver= currentChat.members.find(member=> member._id !== user.id)
+    setNewMessage('');
+
+    dispatch(sendUserMessage(msgData));
+    socket.current?.emit('sendMessage', {
+      senderId:user.id,
+      receiverId:receiver._id,
+      text:newMessage
+    });
+
+    setMessages([...messages, msgData]);
+  };
 
   return (
     <div className='messenger'>
       <div className="chatMenu">
           <div className="chatMenuWrapper">
             <input placeholder='Search conversation' className='chatMenuInput' />
-            {conversations.map(conversation =>
-              <div onClick={()=> {
-                setCurrentChat(conversation);
-                setMessages(conversation.messages);
-                console.log(messages)
-              }}>
-                <Conversation conversation={conversation}/>
-              </div>
-            )}
+            <ConversationList setMessages={setMessages} setCurrentChat={setCurrentChat}/>
 
           </div>
       </div>
@@ -70,19 +94,11 @@ function Messenger() {
             currentChat ?
             <>
             <div className="chatBoxTop">
-              { messages.length > 0 ?
-                messages.map((msg) => <Message msg={msg} own={msg.sender === user.id}/>)
-                : <span> No messages yet. Message to start a conversation</span>
-              }
+              <MessageList messages={messages} />
 
             </div>
             <div className="chatBoxBottom">
-                <textarea
-                  className='messageInput'
-                  value={newMessage}
-                  onChange={(e)=>{setNewMessage(e.target.value)}}
-                  placeholder='Aa'></textarea>
-                <button onClick={handleSubmit} className='messageSubmitBtn'>Send</button>
+                <ChatInput handleSubmit={handleSubmit} newMessage={newMessage} setNewMessage={setNewMessage} />
             </div>
             </> :
             <span className='noConvoText'> Open a Conversation to view messages</span>

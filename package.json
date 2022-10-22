@@ -8,7 +8,8 @@
     "start": "nodemon backend/server.js",
     "server": "nodemon backend/server.js",
     "client": "npm start --prefix frontend",
-    "dev": "concurrently start \"npm run server \" \"npm run client\""
+    "socket": "npm start --prefix socket",
+    "dev": "concurrently start \"npm run server \" \"npm run client\" \"npm run socket \""
   },
   "repository": {
     "type": "git",
@@ -44,7 +45,6 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.5.3",
     "passport": "^0.6.0",
-    "passport-jwt": "^4.0.0",
-    "socket.io": "^4.5.2"
+    "passport-jwt": "^4.0.0"
   }
 }

@@ -7,9 +7,7 @@ const getMessage = asyncHandler(async(req,res)=> {
 
 const createMessage = asyncHandler(async(req,res)=> {
   const {text, conversationId} = req.body;
-  console.log(req.body)
   const conversation = await Conversation.findOne({_id:conversationId});
-  console.log(conversationId)
   if(!conversation) {
     res.status(400);
     throw new Error('Conversation not found');
