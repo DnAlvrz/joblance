@@ -1,15 +1,12 @@
 import React from 'react'
 import "./messenger.css"
 
-import Message from '../../components/message/Message'
 import Online from '../../components/online/Online'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import {sendUserMessage, reset} from '../../features/chat/chatSlice';
-import {toast} from 'react-toastify';
-import {Dimmer, Loader}from 'semantic-ui-react';
+import {sendUserMessage} from '../../features/chat/chatSlice';
 import { useRef } from 'react'
 import {io} from 'socket.io-client';
 import ConversationList from '../../components/conversations/ConversationList'
@@ -30,7 +27,6 @@ function Messenger() {
   const socket = useRef();
 
 
-
   useEffect(()=> {
     socket.current= io("ws://localhost:8900")
     socket.current.on("getMessage", (data) => {
@@ -45,12 +41,18 @@ function Messenger() {
   },[]);
 
   useEffect(() => {
+    console.log('inc hit')
+    const isMember = currentChat?.members.filter((user)=>user._id===incomingMessage?.sender).length > 0
+    console.log(isMember)
     incomingMessage &&
-      currentChat?.members.includes(incomingMessage.sender) &&
+      isMember &&
       setMessages((prev) => [...prev, incomingMessage]);
   }, [incomingMessage, currentChat]);
 
   useEffect(()=> {
+    if(!user){
+      navigate('/login')
+    }
     socket.current.emit('addUser', user.id);
     socket.current.on('getUsers', users=> {
     });
