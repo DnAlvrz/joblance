@@ -1,10 +1,11 @@
 import {useEffect, useState} from 'react'
 import { useSelector, useDispatch} from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import {Item, Message, Container, Dimmer, Loader, Pagination, Menu, Dropdown, Input} from 'semantic-ui-react'
+import {Item, Message, Container, Dimmer, Loader, Pagination, Menu, Dropdown, Input, Grid} from 'semantic-ui-react'
 import { toast } from 'react-toastify'
 import {getOpenJobs, reset} from '../../features/jobs/jobSlice'
 import JobItem from '../../components/JobItem'
+import SideNav from '../../components/SideNav'
 
 
 function JobList() {
@@ -66,29 +67,37 @@ function JobList() {
 
   return (
     <>
-    <Menu>
-
-      <Input  style={{width:'100%', padding:'2px'}} placeholder='Search...' icon='search'/>
-      <Menu.Menu position='right'>
-        <Dropdown
-          item
-          simple
-          text='Regions'
-          direction='right'
-          options={options}
-        />
-      </Menu.Menu>
-    </Menu>
-    <Message  size='large'>
-
-      <Item.Group divided>
-      {jobs.map(job =>  <JobItem key={job._id} job={job}/>)}
-      </Item.Group>
-      <Container text>
-        <Pagination defaultActivePage={activePage} totalPages={count/10} onPageChange={pageChange} />
-      </Container>
-    </Message>
+    <Grid >
+      <Grid.Row centered>
+        <Grid.Column width={3} only='large screen'>
+          <SideNav />
+        </Grid.Column>
+        <Grid.Column width={13}>
+          <Menu>
+            <Input  style={{width:'100%', padding:'2px'}} placeholder='Search...' icon='search'/>
+            <Menu.Menu position='right'>
+              <Dropdown
+                item
+                simple
+                text='Regions'
+                direction='right'
+                options={options}
+              />
+            </Menu.Menu>
+          </Menu>
+          <Message  size='large'>
+            <Item.Group divided>
+            {jobs.map(job =>  <JobItem key={job._id} job={job}/>)}
+            </Item.Group>
+            <Container text>
+              <Pagination defaultActivePage={activePage} totalPages={count/10} onPageChange={pageChange} />
+            </Container>
+          </Message>
+      </Grid.Column>
+      </Grid.Row>
+    </Grid>
     </>
+    
   )
 }
 

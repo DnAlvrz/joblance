@@ -4,13 +4,15 @@ import Message from './Message'
 
 function MessageList({ messages}) {
   const scrollRef = useRef();
-  const {user} = useSelector((state)=> state.auth)
+  const {user} = useSelector((state)=> state.auth);
+
   useEffect(()=> {
     scrollRef.current?.scrollIntoView({behavior:"smooth"})
-  }, [messages, ])
+  }, [messages, ]);
+
   return (
     <>
-    {messages.length > 0 ?
+    { messages.length > 0 ?
       messages.map((msg) => <div ref={scrollRef} key={msg._id}  ><Message   msg={msg} own={msg.sender === user.id}/></div>)
       : <span> No messages yet. Message to start a conversation</span>
     }

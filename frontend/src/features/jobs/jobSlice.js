@@ -56,6 +56,15 @@ export const getUserJob = createAsyncThunk('jobs/getUserJob', async (jobId, thun
   }
 });
 
+export const sendJobApplicaiton = createAsyncThunk('jobs/sendJobApplicaiton', async(applicationData, thunkAPI ) => {
+  try {
+    const userToken = thunkAPI.getState().auth.user.token;
+    return await jobService.sendApplication(applicationData, userToken);
+  } catch (error) {
+    
+  }
+});
+
 export const jobSlice = createSlice({
   name: 'jobs',
   initialState,

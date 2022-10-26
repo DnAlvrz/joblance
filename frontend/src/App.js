@@ -25,29 +25,19 @@ function App() {
       <Router>
       <Header />
         { user ? (
-          <Container >
-          <Grid >
-            <Grid.Row centered>
-              <Grid.Column width={3} only='large screen'>
-                <SideNav />
-              </Grid.Column>
-              <Grid.Column width={13}>
-                <Routes>
-                  <Route path="/" element={<Index/>} />
-                  <Route path="/dashboard" element={<Dashboard/>} />
-                  <Route path="/chat" element={<Messenger/>} />
-                  <Route path="/jobs">
-                    <Route index element={<JobList/>} />
-                    <Route path=":id" element={<Job/>} />
-                    <Route path="post" element={<PostJob/>} />
-                    <Route path="user" element={<UserJobs/>} />
-                  </Route>
-                  <Route path="*" element={<NotFound/>} />
-                </Routes>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-          </Container>
+          
+          <Routes>
+            <Route path="/" element={<Index/>} />
+            <Route path="/dashboard" element={<Dashboard/>} />
+            <Route path="/chat" element={<Messenger/>} />
+            <Route path="/jobs">
+              <Route index element={<JobList/>} />
+              <Route path=":id" element={<Job/>} />
+              <Route path="post" element={<PostJob/>} />
+              <Route path="user" element={<UserJobs/>} />
+            </Route>
+            <Route path="*" element={<NotFound/>} />
+          </Routes>
         )
           : (
             <Container >

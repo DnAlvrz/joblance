@@ -36,7 +36,6 @@ function Messenger() {
         text: data.text,
         createdAt: Date.now(),
       });
-      console.log(data)
     });
   },[]);
 
@@ -54,10 +53,11 @@ function Messenger() {
       navigate('/login')
     }
     socket.current.emit('addUser', user.id);
-    socket.current.on('getUsers', users=> {
+    socket.current.on('getUsers', users => {
+      console.log(users)
     });
 
-  },[user]);
+  },[navigate, user]);
 
 
   const handleSubmit = async (e) => {

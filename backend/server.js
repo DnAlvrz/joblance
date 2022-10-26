@@ -24,6 +24,7 @@ const ratingRouter = require('./routes/rating')
 const userRouter = require('./routes/user');
 const chatRouter = require('./routes/conversation')
 const messageRouter = require('./routes/message')
+const applicationRouter =require('./routes/application')
 
 connectDatabase();
 require('./models/Application');
@@ -49,7 +50,7 @@ app.use('/api/v1/jobs/contracts/', passport.authenticate('jwt', {session:false})
 app.use('/api/v1/jobs/contracts/ratings/', passport.authenticate('jwt', {session:false}), ratingRouter);
 app.use('/api/v1/jobs/offers/', passport.authenticate('jwt', {session:false}), offerRouter);
 app.use('/api/v1/jobs/photos/', passport.authenticate('jwt', {session:false}), jobPhotoRouter);
-
+app.use('/api/v1/application',applicationRouter )
 app.use(errorHandler);
 
 

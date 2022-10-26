@@ -23,7 +23,7 @@ const deleteApplication = asyncHandler(async (req, res) => {
 
 
 const createApplication = asyncHandler(async(req,res)=> {
-  const {  jobId, message } = req.body;
+  const {jobId, message } = req.body;
 
   if(!jobId || !message) {
     res.status(400);
@@ -31,7 +31,6 @@ const createApplication = asyncHandler(async(req,res)=> {
   }
   const job = await Job.findOne({_id:jobId});
   if(job) {
-
     const application = await Application.create({
       job:jobId,
       talent: req.user._id,
@@ -50,9 +49,8 @@ const createApplication = asyncHandler(async(req,res)=> {
   }
 });
 
+
 module.exports = {
   createApplication,
-  updateApplication,
-  deleteApplication,
-  getApplications
+  deleteApplication
 }

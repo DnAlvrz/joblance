@@ -18,7 +18,6 @@ const createJob = async(jobData, token) => {
       Authorization: token
     }
   };
-
   const response = await axios.post(API_URL, jobData, config);
   return response.data;
 };
@@ -52,15 +51,36 @@ const getUserJobs = async (token) => {
   };
   const response = await axios.get(`${API_URL}user`, config);
   return response.data
+};
+
+const sendApplication = async(applicationData, token) => {
+  const config = {
+    headers: {
+      Authorization:token
+    }
+  };
+  const response = await axios.post(`${API_URL}application`, applicationData, config)
+  return response.data
 }
 
 const updateJob = async(jobId, token,jobData)=> {
-
-
+  const config = {
+    headers: {
+      Authorization: token
+    }
+  }
+  const response =await axios.put(`${API_URL}/${jobId}`, jobData, config)
+  return response.data
 };
 
 const deleteJob = async (jobId, token) => {
-
+  const config = {
+    header: {
+      Authorization: token
+    }
+  };
+  const response = await axios.delete(`${API_URL}/${jobId}`, config);
+  return response.data
 };
 
 const jobService = {
@@ -70,7 +90,8 @@ const jobService = {
   updateJob,
   deleteJob,
   getJob,
-  getUserJobs
+  getUserJobs,
+  sendApplication
 }
 
 export default jobService;
