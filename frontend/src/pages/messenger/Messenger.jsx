@@ -30,7 +30,6 @@ function Messenger() {
   useEffect(()=> {
     socket.current= io("ws://localhost:8900")
     socket.current.on("getMessage", (data) => {
-      console.log('message')
       setIncomingMessage({
         sender: data.senderId,
         text: data.text,
@@ -40,7 +39,6 @@ function Messenger() {
   },[]);
 
   useEffect(() => {
-    console.log('inc hit')
     const isMember = currentChat?.members.filter((user)=>user._id===incomingMessage?.sender).length > 0
     console.log(isMember)
     incomingMessage &&
