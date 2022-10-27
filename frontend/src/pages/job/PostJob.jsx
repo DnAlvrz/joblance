@@ -3,10 +3,10 @@ import {useNavigate} from 'react-router-dom';
 import { useState , useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { Message, Grid, Button, Icon, Divider, Dimmer, Loader,Form } from 'semantic-ui-react';
-import PostStep from '../../components/PostStep';
-import JobForm from '../../components/JobForm';
-import JobPhoto from '../../components/JobPhoto';
-import Map from '../../components/Map';
+import PostStep from '../../components/jobs/PostStep';
+import JobForm from '../../components/jobs/JobForm';
+import JobPhoto from '../../components/jobs/JobPhoto';
+import Map from '../../components/jobs/Map';
 import {createJob, reset} from '../../features/jobs/jobSlice'
 
 function PostJob() {
@@ -35,7 +35,6 @@ function PostJob() {
     }
     if(isError) {
       toast.error(message);
-      dispatch(reset())
     }
     if(!user){
       console.log('no user')
@@ -51,7 +50,7 @@ function PostJob() {
       toast.error("Enable Location");
     }
 
-  }, [user, navigate, dispatch, message]);
+  }, [user, navigate, dispatch, message, isError]);
 
   const onChange = (e) => {
     setFormData((prevState)=>({

@@ -1,4 +1,5 @@
 import React from 'react'
+import { useEffect } from 'react';
 import {Form} from 'semantic-ui-react';
 function JobForm({onChange, formData}) {
   const {
@@ -8,6 +9,7 @@ function JobForm({onChange, formData}) {
     location,
     duration,
   } = formData;
+  
 
   return (
     <Form>

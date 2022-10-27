@@ -1,14 +1,12 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import {React} from 'react';
-import {useSelector} from 'react-redux';
-import { Container, Grid} from "semantic-ui-react";
+import { Container} from "semantic-ui-react";
 import {ToastContainer} from 'react-toastify';
-import SideNav from "./components/SideNav";
 import Dashboard from './pages/user/Dashboard';
 import Index from './pages/Index';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
-import Header from './components/Header';
+import Header from './components/includes/Header';
 import NotFound from './pages/NotFound';
 import Job from './pages/job/Job';
 import JobList from './pages/job/JobList';
@@ -18,16 +16,16 @@ import 'react-toastify/dist/ReactToastify.css'
 import Messenger from "./pages/messenger/Messenger";
 
 function App() {
-  const {user} = useSelector((state)=> state.auth);
   return (
     <>
       <ToastContainer />
       <Router>
       <Header />
-        { user ? (
-          
+        <Container>
           <Routes>
             <Route path="/" element={<Index/>} />
+            <Route path="/login" element={<Login/>} />
+            <Route path="/register" element={<Register/>} />
             <Route path="/dashboard" element={<Dashboard/>} />
             <Route path="/chat" element={<Messenger/>} />
             <Route path="/jobs">
@@ -38,19 +36,8 @@ function App() {
             </Route>
             <Route path="*" element={<NotFound/>} />
           </Routes>
-        )
-          : (
-            <Container >
-              <Routes>
-                <Route path="/" element={<Index/>} />
-                <Route path="/login" element={<Login/>} />
-                <Route path="/register" element={<Register/>} />
-                <Route path="*" element={<NotFound/>} />
-              </Routes>
-            </Container>
-        )}
+          </Container>
       </Router>
-
     </>
   );
 }
