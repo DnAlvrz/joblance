@@ -1,13 +1,15 @@
+
 import { Button, Dropdown, Grid, Icon, List } from 'semantic-ui-react'
 
 function ListItem({setCurrentJob,job, dispatch}) {
+
   return (
     <>
     <List.Item key={job._id} style={{padding:'10px'}}>
       <List.Content floated='right'>
         <Grid>
           <Grid.Row>
-            <Grid.Column only='table computer'>
+            <Grid.Column only='tablet computer'>
               <Button.Group size='mini'>
                 <Button color='teal' onClick={(e)=> {
                   setCurrentJob(job);

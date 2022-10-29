@@ -3,11 +3,6 @@ import {Link, useNavigate} from 'react-router-dom' //useNavigate
 import {useDispatch, useSelector} from 'react-redux';
 import {logout, reset} from '../../features/auth/authSlice'
 import { Button, Menu, Container, Icon, Dropdown } from 'semantic-ui-react'
-import e from 'cors';
-
-
-
-
 
 function Header() {
   const navigate = useNavigate();
@@ -16,7 +11,7 @@ function Header() {
 
   const trigger = (
     <span>
-      <Icon name='user' /> Hello, {user.firstname}
+      <Icon name='user' /> Hello, {user?.firstname}
     </span>
   )
 
@@ -25,7 +20,7 @@ function Header() {
       key: 'user',
       text: (
         <span>
-          Signed in as <strong>{user.firstname} {user.lastname} </strong>
+          Signed in as <strong>{user?.firstname} {user?.lastname} </strong>
         </span>
       ),
       disabled: true,
@@ -38,13 +33,13 @@ function Header() {
     { key: 'settings', text: 'Settings' },
     { key: 'sign-out', text: 'Sign Out', onClick: e=>{onLogout()}},
   ]
-  
 
   const onLogout = () => {
     dispatch(logout());
     dispatch(reset());
     navigate('/login')
   };
+
   return (
     <>
     <Menu secondary small style={{maxWidth:'100%'}}>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+
 import { useEffect } from 'react';
 import { useSelector, useDispatch} from 'react-redux'
 import { useNavigate } from 'react-router-dom';
@@ -9,18 +9,23 @@ import {toast} from 'react-toastify'
 function UserJobs() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const {user} = useSelector((state)=> state.auth)
+
   const {jobs, isLoading, isError, message} = useSelector((state)=> state.jobs);
   
   useEffect(()=> {
+    if(!user){
+      navigate('/login')
+    }
     if(isError) { 
       toast.error(message);
     }
     dispatch(getUserJob());
-  },[dispatch, isError, message, navigate])
+  },[user, dispatch, isError, message, navigate])
 
   return (
     <>
-    <JobTabs isLoading={isLoading} jobs={jobs}/>
+      <JobTabs isLoading={isLoading} jobs={jobs}/>
     </>
   )
 }
