@@ -14,6 +14,7 @@ import PostJob from "./pages/job/PostJob";
 import UserJobs from "./pages/user/UserJobs";
 import 'react-toastify/dist/ReactToastify.css'
 import Messenger from "./pages/messenger/Messenger";
+import Footer from "./components/includes/Footer";
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
       <ToastContainer />
       <Router>
       <Header />
-        <Container>
+        <Container style={{height:'100vh%'}}>
           <Routes>
             <Route path="/" element={<Index/>} />
             <Route path="/login" element={<Login/>} />
@@ -32,11 +33,14 @@ function App() {
               <Route index element={<JobList/>} />
               <Route path=":id" element={<Job/>} />
               <Route path="post" element={<PostJob/>} />
-              <Route path="user" element={<UserJobs/>} />
+            </Route>
+            <Route path="/user">
+              <Route path="jobs" element={<UserJobs/>} />
             </Route>
             <Route path="*" element={<NotFound/>} />
           </Routes>
-          </Container>
+        </Container>
+        <Footer />
       </Router>
     </>
   );

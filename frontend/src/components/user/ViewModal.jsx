@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Modal } from 'semantic-ui-react'
 
-function ViewModal({open, dispatch}) {
+function ViewModal({open, modalDispatch}) {
 
 
   return (
@@ -9,7 +9,7 @@ function ViewModal({open, dispatch}) {
 		closeOnEscape={true}
 		closeOnDimmerClick={true}
 		open={open}
-		onClose={() => dispatch({ type: 'CLOSE_MODAL' })}
+		onClose={() => modalDispatch({ type: 'CLOSE_MODAL' })}
 		>
 			<Modal.Header>View Job</Modal.Header>
 			<Modal.Content>

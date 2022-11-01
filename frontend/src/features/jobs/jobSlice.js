@@ -56,12 +56,34 @@ export const getUserJob = createAsyncThunk('jobs/getUserJob', async (jobId, thun
   }
 });
 
-export const sendJobApplicaiton = createAsyncThunk('jobs/sendJobApplicaiton', async(applicationData, thunkAPI ) => {
+export const sendJobApplication = createAsyncThunk('jobs/sendJobApplicaiton', async(applicationData, thunkAPI ) => {
   try {
     const userToken = thunkAPI.getState().auth.user.token;
-    return await jobService.sendApplication(applicationData, userToken);
+    console.log(applicationData);
+    return await jobService.sendApplication(userToken, applicationData);
   } catch (error) {
-    
+    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
+export const updateJob = createAsyncThunk('jobs/updateJob', async(jobData, thunkAPI) => {
+  try {
+    const userToken = thunkAPI.getState().auth.user.token;
+    return await jobService.updateJob(userToken, jobData);
+  } catch (error) {
+    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
+export const deleteJob = createAsyncThunk('jobs/deleteJob', async(jobId, thunkAPI) => {
+  try {
+    const userToken = thunkAPI.getState().auth.user.token;
+    return await jobService.deleteJob(userToken, jobId);
+  } catch (error) {
+    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
 });
 
@@ -114,6 +136,31 @@ export const jobSlice = createSlice({
         state.isError = true;
         state.message = action.payload
       })
+      // Update Job
+      .addCase(updateJob.pending, (state)=> {
+        state.isLoading=true
+      })
+      .addCase(updateJob.fulfilled, (state, action)=> {
+        state.isLoading=false
+        state.job = action.payload
+      })
+      .addCase(updateJob.rejected, (state, action)=> {
+        state.isLoading=false;
+        state.isError = true;
+        state.message = action.payload
+      })
+      // Delete Job
+      .addCase(deleteJob.pending, (state)=> {
+        state.isLoading=true
+      })
+      .addCase(deleteJob.fulfilled, (state, action)=> {
+        state.isLoading=false
+      })
+      .addCase(deleteJob.rejected, (state, action)=> {
+        state.isLoading=false;
+        state.isError = true;
+        state.message = action.payload
+      })
       //GET User jobs
       .addCase(getUserJob.pending, (state)=> {
         state.isLoading=true
@@ -125,6 +172,19 @@ export const jobSlice = createSlice({
       .addCase(getUserJob.rejected, (state, action)=> {
         state.isLoading=false;
         state.isError = true;
+        state.message = action.payload
+      })
+      // Create Job Application
+      .addCase(sendJobApplication.pending, (state)=> {state.isLoading=true})
+      .addCase(sendJobApplication.fulfilled, (state)=> {
+        state.isLoading=false
+        state.isSuccess = true;
+        state.isError = false
+      })
+      .addCase(sendJobApplication.rejected, (state, action)=> {
+        state.isLoading=false;
+        state.isError = true;
+        state.isSuccess=false;
         state.message = action.payload
       })
   }

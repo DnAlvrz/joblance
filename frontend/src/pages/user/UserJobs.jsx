@@ -9,9 +9,9 @@ import {toast} from 'react-toastify'
 function UserJobs() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {user} = useSelector((state)=> state.auth)
+  const {user} = useSelector((state)=> state.auth);
 
-  const {jobs, isLoading, isError, message} = useSelector((state)=> state.jobs);
+  const {jobs, isSuccess, isLoading, isError, message} = useSelector((state)=> state.jobs);
   
   useEffect(()=> {
     if(!user){
@@ -20,9 +20,11 @@ function UserJobs() {
     if(isError) { 
       toast.error(message);
     }
+    if(isSuccess){
+      dispatch(getUserJob());
+    }
     dispatch(getUserJob());
   },[user, dispatch, isError, message, navigate])
-
   return (
     <>
       <JobTabs isLoading={isLoading} jobs={jobs}/>

@@ -26,7 +26,7 @@ function SideNav() {
               onClick={ handleItemClick}
             />
             </Link>
-            <Link to= '/jobs/user'>
+            <Link to= '/user/jobs'>
               <Menu.Item
                 as='span'
                 name='My Jobs'

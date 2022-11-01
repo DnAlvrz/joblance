@@ -5,8 +5,8 @@ import { Dimmer, Loader } from 'semantic-ui-react';
 function Map({setCoords,draggable, coords, width, height, zoom}) {
   const[map, setMap] = useState(null);
   const [currentPosition, setCurrentPosition] = useState({
-    lat: coords.lat,
-    lng:coords.lng
+    lat: 0,
+    lng:0
   });
   const [markerPosition, setMarkerPosition]= useState();
   const markerRef = useRef(null);
@@ -33,7 +33,7 @@ function Map({setCoords,draggable, coords, width, height, zoom}) {
 
   const onUnmount = useCallback(function callback(map) {
     setMap(null)
-  }, []);
+  }, [setMap]);
 
   const geocodeLatLng = () => {
     var requestOptions = {
@@ -48,6 +48,10 @@ function Map({setCoords,draggable, coords, width, height, zoom}) {
   }
 
   useEffect (() => {
+    setCurrentPosition({
+        lat:coords.lat,
+        lng:coords.lng
+    })
     if(!coords) {
       if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -63,7 +67,7 @@ function Map({setCoords,draggable, coords, width, height, zoom}) {
         console.log("Not Available");
       }
     }
-  }, [coords, currentPosition, setCoords]);
+  }, []);
 
   const onMarkerLoad = useCallback(
     marker => {

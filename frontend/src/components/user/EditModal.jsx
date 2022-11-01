@@ -1,10 +1,15 @@
 import React from 'react'
-import { Button, Modal } from 'semantic-ui-react'
+import { Button, Dimmer, Loader, Modal } from 'semantic-ui-react'
 import JobForm from '../jobs/JobForm';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import {updateJob} from '../../features/jobs/jobSlice'
+import {useSelector, useDispatch} from 'react-redux'
+import { toast } from 'react-toastify';
 
-function EditModal({job, open, dispatch}) {
+function EditModal({job, open, modalDispatch}) {
+	const dispatch = useDispatch();
+
 	const [formData, setFormData] = useState({
     title:'',
     description: '',
@@ -20,13 +25,19 @@ function EditModal({job, open, dispatch}) {
     }));
   };
 
-	const handleSubmit = ()=> {
-		console.log(formData)
+	const {isSuccess, isError, isLoading, message} = useSelector((state)=> state.jobs)
+
+	const handleSubmit = (e) => {
+		e.preventDefault()
+		dispatch(updateJob({jobId:job._id, formData}))
 	}
 
 	useEffect(()=> {
+		if(isSuccess){
+			toast.success('Job updated');
+		}
 		if(job){
-			setFormData((prevState)=> ({
+			setFormData((prevState) => ({
 				...prevState,
 				title:job.title,
 				description: job.description,
@@ -35,7 +46,7 @@ function EditModal({job, open, dispatch}) {
 				duration: job.duration,
 			}))
 		}
-	},[job])
+	},[job, dispatch, isError, message, isSuccess, modalDispatch])
 
   return (
 		
@@ -46,14 +57,17 @@ function EditModal({job, open, dispatch}) {
 			closeOnEscape={true}
 			closeOnDimmerClick={true}
 			open={open}
-			onClose={() => dispatch({ type: 'CLOSE_MODAL' })}
+			onClose={() => modalDispatch({ type: 'CLOSE_MODAL' })}
 		>
+			<Dimmer active={isLoading}inverted>
+				<Loader/>
+			</Dimmer>
 			<Modal.Header>Edit Job</Modal.Header>
 			<Modal.Content scrolling>
 				<JobForm  onChange={onChange} formData={formData} />
 			</Modal.Content >
 			<Modal.Actions>
-				<Button positive onClick={handleSubmit}>
+				<Button positive loading={isLoading} onClick={handleSubmit}>
 					Submit
 				</Button>
 			</Modal.Actions>

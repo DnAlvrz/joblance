@@ -24,7 +24,7 @@ function JobTabs({jobs, isLoading}) {
   const vacant = jobs.filter( job => job.isOpen===true);
   const complete = jobs.filter( job => job.isOpen===false);
 
-  const [state, dispatch] = useReducer(modalReducer, {
+  const [state, modalDispatch] = useReducer(modalReducer, {
     editModalOpen:false,
     deleteModalOpen: false,
     viewModalOpen: false,
@@ -39,13 +39,13 @@ function JobTabs({jobs, isLoading}) {
       menuItem: 'All',
       render: () =>
       <Tab.Pane loading={isLoading} attached={false}>
-        <ListUserJobs setCurrentJob={setCurrentJob} jobs={jobs} dispatch={dispatch} />
+        <ListUserJobs setCurrentJob={setCurrentJob} jobs={jobs} modalDispatch={modalDispatch} />
       </Tab.Pane>,
     },
     {
       menuItem: 'Vacant',
       render: () =>
-      <Tab.Pane loading={isLoading} attached={false} dispatch={dispatch}>
+      <Tab.Pane loading={isLoading} attached={false} modalDispatch={modalDispatch}>
         <ListUserJobs jobs={vacant} />
       </Tab.Pane>,
     },
@@ -62,9 +62,9 @@ function JobTabs({jobs, isLoading}) {
     <>
     <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
     <div style={{maxWidth:'90%', paddingLeft:'10px'}}>
-      <EditModal job={currentJob} currentJob={currentJob} dispatch={dispatch} open={editModalOpen} />
-      <DeleteModal currentJob={currentJob} dispatch={dispatch} open={deleteModalOpen} />
-      <ViewModal currentJob={currentJob} dispatch={dispatch} open={viewModalOpen} />
+      <EditModal job={currentJob} currentJob={currentJob} modalDispatch={modalDispatch} open={editModalOpen} />
+      <DeleteModal currentJob={currentJob} modalDispatch={modalDispatch} open={deleteModalOpen} />
+      <ViewModal currentJob={currentJob} modalDispatch={modalDispatch} open={viewModalOpen} />
     </div>
     </>
   )

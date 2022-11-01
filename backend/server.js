@@ -41,16 +41,16 @@ app.get('/test', (req, res)=> {
   res.sendFile(path.resolve('test/test.html'));
 });
 
-app.use('/api/v1/auth', authRouters);
-app.use('/api/v1/users',passport.authenticate('jwt', {session:false}), userRouter);
-app.use('/api/v1/chat', passport.authenticate('jwt', {session:false}), chatRouter);
+app.use('/api/v1/auth/', authRouters);
+app.use('/api/v1/users/',passport.authenticate('jwt', {session:false}), userRouter);
+app.use('/api/v1/chat/', passport.authenticate('jwt', {session:false}), chatRouter);
 app.use('/api/v1/chat/message', passport.authenticate('jwt', {session:false}), messageRouter);
 app.use('/api/v1/jobs/', passport.authenticate('jwt', {session:false}), jobRouter);
 app.use('/api/v1/jobs/contracts/', passport.authenticate('jwt', {session:false}), contractRouter);
 app.use('/api/v1/jobs/contracts/ratings/', passport.authenticate('jwt', {session:false}), ratingRouter);
 app.use('/api/v1/jobs/offers/', passport.authenticate('jwt', {session:false}), offerRouter);
 app.use('/api/v1/jobs/photos/', passport.authenticate('jwt', {session:false}), jobPhotoRouter);
-app.use('/api/v1/application',applicationRouter )
+app.use('/api/v1/jobs/application/',passport.authenticate('jwt', {session:false}), applicationRouter )
 app.use(errorHandler);
 
 

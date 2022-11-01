@@ -1,18 +1,34 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { Button, Container, Divider, Form } from 'semantic-ui-react'
+import { reset, sendJobApplication } from '../../features/jobs/jobSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+
 
 const ApplicationForm = ({jobId}) => {
-  const [message, setMessage] = useState('');
+  const dispatch = useDispatch();
+
+  const {isSuccess, isError, message, isLoading} = useSelector((state) => state.jobs)
+  const [applicationMessage, setapplicationMessage] = useState('');
 
   const onChange = (e) => {
-    setMessage(e.target.value);
+    setapplicationMessage(e.target.value);
   }
 
   const onSubmit = ()=> {
-    console.log(message);
-    setMessage('')
+    dispatch(sendJobApplication({jobId, applicationMessage}));
+    setapplicationMessage('')
   }
+  useEffect(()=> {
+    if(isSuccess){
+      toast.success('Application sent.')
+    }
+    if(isError){
+      toast.error(message)
+    }
+  }, [isError, message, dispatch])
+  
   return (
     <>
     <Container textAlign='center'>
@@ -25,9 +41,9 @@ const ApplicationForm = ({jobId}) => {
         placeholder='Tell them why, you are the best candidate for this job.'
         name='description'
         onChange={onChange}
-        value={message}
+        value={applicationMessage}
       />
-      <Button fluid onClick={onSubmit} disabled={Boolean(!message)} secondary> Submit </Button>
+      <Button loading={isLoading} fluid onClick={onSubmit} disabled={Boolean(!applicationMessage)} secondary> Submit </Button>
     </Form>
     </>
   )

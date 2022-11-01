@@ -1,7 +1,8 @@
 
+import { Link } from 'react-router-dom';
 import { Button, Dropdown, Grid, Icon, List } from 'semantic-ui-react'
 
-function ListItem({setCurrentJob,job, dispatch}) {
+function ListItem({setCurrentJob,job, modalDispatch}) {
 
   return (
     <>
@@ -13,16 +14,19 @@ function ListItem({setCurrentJob,job, dispatch}) {
               <Button.Group size='mini'>
                 <Button color='teal' onClick={(e)=> {
                   setCurrentJob(job);
-                  dispatch({ type: 'editModalOpen' })
+                  modalDispatch({ type: 'editModalOpen' })
                   }}>
                   <Icon name='edit' />
                   Edit
                 </Button>
-                <Button color='red' onClick={(e)=> {dispatch({ type: 'deleteModalOpen' })}}>
+                <Button color='red' onClick={(e)=> {
+                  setCurrentJob(job);
+                  modalDispatch({ type: 'deleteModalOpen' })}}
+                >
                   <Icon name='trash alternate' />
                   Delete
                 </Button>
-                <Button color='black' onClick={(e)=> {dispatch({ type: 'viewModalOpen' })}}>
+                <Button color='black' onClick={(e)=> {modalDispatch({ type: 'viewModalOpen' })}}>
                   <Icon name='eye' />
                   View
                 </Button>
@@ -31,9 +35,9 @@ function ListItem({setCurrentJob,job, dispatch}) {
             <Grid.Column only='mobile'>
             <Dropdown icon='ellipsis vertical'>
             <Dropdown.Menu>
-              <Dropdown.Item icon='edit' text='Edit' onClick={(e)=> {dispatch({ type: 'editModalOpen' })}} />
-              <Dropdown.Item icon='delete' text='Delete' onClick={(e)=> {dispatch({ type: 'deleteModalOpen' })}} />
-              <Dropdown.Item icon='eye' text='View' onClick={(e)=> {dispatch({ type: 'viewModalOpen' })}} />
+              <Dropdown.Item icon='edit' text='Edit' onClick={(e)=> {modalDispatch({ type: 'editModalOpen' })}} />
+              <Dropdown.Item icon='delete' text='Delete' onClick={(e)=> {modalDispatch({ type: 'deleteModalOpen' })}} />
+              <Dropdown.Item icon='eye' text='View' onClick={(e)=> {modalDispatch({ type: 'viewModalOpen' })}} />
             </Dropdown.Menu>
           </Dropdown>
             </Grid.Column>
@@ -42,7 +46,7 @@ function ListItem({setCurrentJob,job, dispatch}) {
       </List.Content>
       <List.Icon name='github' size='large' verticalAlign='middle' />
       <List.Content>
-        <List.Header as='a'>{job.title}</List.Header>
+        <List.Header> <Link to={`${job._id}`}>{job.title}</Link> </List.Header>
         <List.Description as='a'>{job.createdAt}</List.Description>
       </List.Content>
     </List.Item>

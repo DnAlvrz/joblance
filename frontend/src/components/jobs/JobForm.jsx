@@ -8,7 +8,6 @@ function JobForm({onChange, formData}) {
     location,
     duration,
   } = formData;
-  
 
   return (
     <Form>

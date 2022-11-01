@@ -44,6 +44,23 @@ function Header() {
     <>
     <Menu secondary small style={{maxWidth:'100%'}}>
       <Container>
+      { user? (
+        <>
+        <Link to='/jobs'>
+          <Menu.Item
+              name='/jobs'
+              // active={activeItem === 'home'}
+              // onClick={this.handleItemClick}
+            />
+        </Link>
+        <Link to='/dashboard'>
+          <Menu.Item
+            name='dashboard'
+          />
+        </Link>
+        </>
+        ) : (
+      <>
         <Link to='/'>
           <Menu.Item
               name='home'
@@ -61,6 +78,9 @@ function Header() {
             name='contact'
           />
         </Link>
+      </>
+      )
+      }
         <Menu.Menu position='right'>
           { !user ? (
             <>

@@ -9,7 +9,7 @@ function Comments() {
       Offers
     </Header>
       <Comment>
-        <Comment.Avatar src='/images/avatar/small/matt.jpg' />
+        <Comment.Avatar src='/matt.jpg' />
         <Comment.Content>
           <Comment.Author as='a'>Mohaiden Manladen</Comment.Author>
           <Comment.Metadata>

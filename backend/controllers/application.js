@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const Application = require('../models/Application');
 const Contract = require('../models/Contract');
+const Job = require('../models/Job');
 
 const deleteApplication = asyncHandler(async (req, res) => {
   const id = req.params.id;
@@ -23,6 +24,7 @@ const deleteApplication = asyncHandler(async (req, res) => {
 
 
 const createApplication = asyncHandler(async(req,res)=> {
+  console.log('request body: ', req.body)
   const {jobId, message } = req.body;
 
   if(!jobId || !message) {

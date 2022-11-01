@@ -1,14 +1,23 @@
-import React from 'react'
 import { Button, Modal } from 'semantic-ui-react'
+import {useDispatch} from 'react-redux'
 
-function DeleteModal({open, dispatch, currentJob}) {
+import {deleteJob} from '../../features/jobs/jobSlice';
+
+function DeleteModal({open, modalDispatch, currentJob}) {
+	const dispatch = useDispatch();
+
+	const handleDeleteJob = () => {
+		dispatch(deleteJob(currentJob._id));
+		modalDispatch({ type: 'CLOSE_MODAL' });
+	}
 
   return (
     <Modal
+		size='tiny'
 		closeOnEscape={true}
 		closeOnDimmerClick={true}
 		open={open}
-		onClose={() => dispatch({ type: 'CLOSE_MODAL' })}
+		onClose={() => modalDispatch({ type: 'CLOSE_MODAL' })}
 		>
 			<Modal.Header>Delete Job</Modal.Header>
 			<Modal.Content>
@@ -16,18 +25,21 @@ function DeleteModal({open, dispatch, currentJob}) {
 			</Modal.Content>
 			<Modal.Actions>
 				<Button
-					negative
-				>
+					onClick={()=>{
+						modalDispatch({type: 'CLOSE_MODAL'})
+					}}
+					positive
+				> 
 					No
 				</Button>
 				<Button
-					positive
+					onClick={handleDeleteJob}
+					negative
 				>
 					Yes
 				</Button>
 			</Modal.Actions>
 		</Modal>
-
   )
 }
 

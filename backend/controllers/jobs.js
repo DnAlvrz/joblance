@@ -72,33 +72,39 @@ const createJob = asyncHandler( async(req, res) => {
 const updateJob = asyncHandler(async (req, res) => {
   const id = req.params.id;
   const job = await Job.findOne({id});
-
+  
   if(!job) {
     res.status(400);
     throw new Error('Job not found');
   }
+
   if (job.user._id.toString() !== req.user._id.toString()) {
+    
     res.status(401)
     throw new Error('User not authorized')
   }
 
-  const updatedJob = await Job.findByIdAndUpdate(id, req.body, {
-    new: true,
-  });
-
-  res.status(201).json(job);
+  const updatedJob = await Job.findByIdAndUpdate(id, req.body);
+  if(updatedJob){
+    res.status(201).json(job);
+  } else{
+    res.status(500)
+    throw new Error('Something went wrong.')
+  }
+  
 });
 
 const deleteJob = asyncHandler(async (req, res) => {
   const id = req.params.id;
   const jobMatch = await Job.findOne({id});
-
+  console.log('hit')
   if(!jobMatch) {
     res.status(400);
     throw new Error('Job not found');
   }
 
-  if (jobMatch.user._id.toString() !== req.user.id) {
+  if (jobMatch.user._id.toString() !== req.user._id.toString()) {
+    console.log('user forbidden');
     res.status(401);
     throw new Error('User not authorized');
   }
