@@ -25,7 +25,7 @@ function Header() {
       ),
       disabled: true,
     },
-    { key: 'profile', text: 'Your Profile', onClick: e=>{navigate('/login')} },
+    { key: 'profile', text: 'Your Profile', onClick: e=>{navigate(`/user/${user.id}`)} },
     { key: 'stars', text: 'Your Stars' },
     { key: 'explore', text: 'Explore' },
     { key: 'integrations', text: 'Integrations' },
