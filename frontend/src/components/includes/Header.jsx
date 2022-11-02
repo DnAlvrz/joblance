@@ -46,13 +46,18 @@ function Header() {
       <Container>
       { user? (
         <>
-        <Link to='/jobs'>
-          <Menu.Item
-              name='/jobs'
-              // active={activeItem === 'home'}
-              // onClick={this.handleItemClick}
-            />
-        </Link>
+       
+          <Dropdown text='Jobs' pointing className='link item'>
+            <Dropdown.Menu>
+              <Dropdown.Header> Jobs</Dropdown.Header>
+              <Dropdown.Item><Link to='/jobs'>Jobs </Link></Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Header>My Jobs</Dropdown.Header>
+              <Dropdown.Item><Link to='/user/jobs'> My Jobs </Link></Dropdown.Item>
+              <Dropdown.Item><Link to='/jobs/post'> Post a job </Link></Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+
         <Link to='/dashboard'>
           <Menu.Item
             name='dashboard'

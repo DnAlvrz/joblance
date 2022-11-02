@@ -16,7 +16,7 @@ function SideNav() {
 
     <Menu vertical>
         <Menu.Item>
-          <Menu.Header>Jobs</Menu.Header>
+          <Menu.Header>Filter</Menu.Header>
           <Menu.Menu>
             <Link to= '/jobs'>
             <Menu.Item
