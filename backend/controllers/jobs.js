@@ -13,8 +13,22 @@ const listJobs = asyncHandler(async (req, res) => {
 
 const viewJob = asyncHandler(async (req, res) => {
   const id = req.params.id;
-  const job = await Job.findOne({_id:id}, { contracts:0, updatedAt:0, __v:0, offers:0, isOpen:0});
-  res.status(200).json(job);
+  const job = await Job.findOne({_id:id})
+    .populate('contracts')
+    .populate({
+        path:'applications', 
+        populate:{ 
+          path: 'talent', 
+          select:' firstname lastname',
+      }})
+    .populate('offers');
+  if(job){
+    res.status(200).json(job);
+  } else {
+    res.status(404);
+    throw new Error('Job not found')
+  }
+  
 });
 
 const createJob = asyncHandler( async(req, res) => {
@@ -116,7 +130,7 @@ const deleteJob = asyncHandler(async (req, res) => {
 const getUserJobs = asyncHandler(async (req, res) => {
   // const user = await User.findById({_id:req.user.id});
   if(req.user.id){
-    const jobs = await Job.find({user:req.user.id}).populate('contracts').populate('offers').populate('applications');
+    const jobs = await Job.find({user:req.user.id});
     res.status(200).json(jobs);
   } else {
     res.status(404);

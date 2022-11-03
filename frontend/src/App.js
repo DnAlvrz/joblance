@@ -16,6 +16,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import Messenger from "./pages/messenger/Messenger";
 import Footer from "./components/includes/Footer";
 import Profile from "./pages/user/Profile";
+import UserJobView from "./pages/user/UserJobView";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
             <Route path="/user">
               <Route path=':id' element={<Profile/>} />
               <Route path="jobs" element={<UserJobs/>} />
+              <Route path="jobs/:jobId" element={<UserJobView/>} />
             </Route>
             <Route path="*" element={<NotFound/>} />
           </Routes>

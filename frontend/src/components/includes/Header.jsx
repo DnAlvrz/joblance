@@ -50,11 +50,11 @@ function Header() {
           <Dropdown text='Jobs' pointing className='link item'>
             <Dropdown.Menu>
               <Dropdown.Header> Jobs</Dropdown.Header>
-              <Dropdown.Item><Link to='/jobs'>Jobs </Link></Dropdown.Item>
+              <Link to='/jobs'><Dropdown.Item>Jobs</Dropdown.Item> </Link>
               <Dropdown.Divider />
               <Dropdown.Header>My Jobs</Dropdown.Header>
-              <Dropdown.Item><Link to='/user/jobs'> My Jobs </Link></Dropdown.Item>
-              <Dropdown.Item><Link to='/jobs/post'> Post a job </Link></Dropdown.Item>
+              <Link to='/user/jobs'> <Dropdown.Item>My Jobs </Dropdown.Item></Link>
+              <Link to='/jobs/post'><Dropdown.Item> Post a job </Dropdown.Item></Link>
             </Dropdown.Menu>
           </Dropdown>
 

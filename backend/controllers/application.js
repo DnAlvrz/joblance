@@ -40,6 +40,8 @@ const createApplication = asyncHandler(async(req,res)=> {
     });
 
     if(application) {
+      job.applications.push(application._id);
+      await job.save()
       res.status(201).json(application);
     } else {
       res.status(400)
