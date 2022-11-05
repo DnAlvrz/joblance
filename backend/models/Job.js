@@ -37,10 +37,11 @@ const jobSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please enter the duration of the project']
   },
-  contracts: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Contract'
-  }],
+  contracts: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'Contract',
+    validate: [ arrayLimit, '{PATH} exceeds the limit of 1'],
+  },
   photos: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'JobPhoto'
@@ -61,5 +62,9 @@ const jobSchema = new mongoose.Schema({
 {
   timestamps: true
 });
+
+function arrayLimit(val) {
+  return val.length < 2;
+}
 
 module.exports = new mongoose.model('Job', jobSchema);

@@ -1,20 +1,42 @@
 import React, { useEffect } from 'react'
 import { Button, Header, Image, List } from 'semantic-ui-react'
+import {createContract, reset} from '../../features/contracts/contractSlice';
+import {useDispatch, useSelector} from 'react-redux'
+import { toast } from 'react-toastify';
+function ApplicationListItem({application,job}) {
+  const dispatch = useDispatch();
 
-function ApplicationListItem({application}) {
+  const {contractError, contractMessage} = useSelector((state)=>state.contract)
 
-  
+  const handleAccept = (e) => {
+    e.preventDefault();
+    const contractData = {
+      jobId:job._id,
+      applicationId:application._id,
+      talentId:application?.talent._id
+    }
+    dispatch(createContract(contractData))
+  }
+
+  const handleReject = (e) => {
+    e.preventDefault();
+
+  }
+
   useEffect(()=>{
-    console.log(application)
-  }, [application]);
+    if(contractError){
+      toast.error(contractMessage)
+    }
+    dispatch(reset());
+  }, [contractError, contractMessage, dispatch]);
 
   return (
     <>
     <List.Item>
       <List.Content floated='right'>
         <Button.Group>
-          <Button positive>Accept</Button>
-          <Button negative>Reject</Button>
+          <Button positive onClick={handleAccept}>Accept</Button>
+          <Button negative onClick={handleReject}>Reject</Button>
         </Button.Group>
       </List.Content>
       <Image avatar src='/images/avatar/small/lena.png' />

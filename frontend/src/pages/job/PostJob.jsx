@@ -32,6 +32,7 @@ function PostJob() {
   useEffect(() => {
     if(isSuccess) {
       navigate('/jobs')
+      toast.success('Job Posted')
     }
     if(isError) {
       toast.error(message);
@@ -49,8 +50,8 @@ function PostJob() {
     } else {
       toast.error("Enable Location");
     }
-
-  }, [user, navigate, dispatch, message, isError]);
+    dispatch(reset());
+  }, [user, isSuccess, navigate, dispatch, message, isError]);
 
   const onChange = (e) => {
     setFormData((prevState)=>({
@@ -83,7 +84,7 @@ function PostJob() {
         photos
       }
       dispatch(createJob(job));
-      dispatch(reset());
+
     }
   }
 

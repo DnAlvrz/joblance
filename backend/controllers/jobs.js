@@ -14,21 +14,32 @@ const listJobs = asyncHandler(async (req, res) => {
 const viewJob = asyncHandler(async (req, res) => {
   const id = req.params.id;
   const job = await Job.findOne({_id:id})
-    .populate('contracts')
     .populate({
-        path:'applications', 
-        populate:{ 
-          path: 'talent', 
+      path:'contracts',
+      populate:[
+        {
+          path: 'talent',
+          select:' firstname lastname',
+        }, {
+          path:'rating',
+          model:'Rating'}
+        ]
+    })
+    .populate({
+        path:'applications',
+        populate:{
+          path: 'talent',
           select:' firstname lastname',
       }})
     .populate('offers');
   if(job){
     res.status(200).json(job);
+    console.log(job)
   } else {
     res.status(404);
     throw new Error('Job not found')
   }
-  
+
 });
 
 const createJob = asyncHandler( async(req, res) => {
@@ -86,14 +97,14 @@ const createJob = asyncHandler( async(req, res) => {
 const updateJob = asyncHandler(async (req, res) => {
   const id = req.params.id;
   const job = await Job.findOne({id});
-  
+
   if(!job) {
     res.status(400);
     throw new Error('Job not found');
   }
 
   if (job.user._id.toString() !== req.user._id.toString()) {
-    
+
     res.status(401)
     throw new Error('User not authorized')
   }
@@ -105,20 +116,18 @@ const updateJob = asyncHandler(async (req, res) => {
     res.status(500)
     throw new Error('Something went wrong.')
   }
-  
+
 });
 
 const deleteJob = asyncHandler(async (req, res) => {
   const id = req.params.id;
   const jobMatch = await Job.findOne({id});
-  console.log('hit')
   if(!jobMatch) {
     res.status(400);
     throw new Error('Job not found');
   }
 
   if (jobMatch.user._id.toString() !== req.user._id.toString()) {
-    console.log('user forbidden');
     res.status(401);
     throw new Error('User not authorized');
   }

@@ -33,22 +33,28 @@ const createApplication = asyncHandler(async(req,res)=> {
   }
   const job = await Job.findOne({_id:jobId});
   if(job) {
-    const application = await Application.create({
-      job:jobId,
-      talent: req.user._id,
-      message
-    });
-
-    if(application) {
-      job.applications.push(application._id);
-      await job.save()
-      res.status(201).json(application);
-    } else {
-      res.status(400)
-      throw new Error('Something went wrong while trying to create job application.')
+    if(job.user._id.toString() === req.user._id.toString() ){
+      res.status(401)
+      throw new Error('Cannot submit an application to your own job.')
     }
+    else {
+      const application = await Application.create({
+        job:jobId,
+        talent: req.user._id,
+        message
+      });
+      if(application) {
+        job.applications.push(application._id);
+        await job.save()
+        res.status(201).json(application);
+      } else {
+        res.status(400)
+        throw new Error('Something went wrong while trying to create job application.')
+      }
+    }
+
   } else {
-    res.status(400);
+    res.status(404);
     throw new Error('Job not found.');
   }
 });

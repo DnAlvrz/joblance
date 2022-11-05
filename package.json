@@ -43,8 +43,10 @@
     "express-fileupload": "^1.4.0",
     "google-map-react": "^2.2.0",
     "jsonwebtoken": "^8.5.1",
+    "moment-timezone": "^0.5.38",
     "mongoose": "^6.5.3",
     "passport": "^0.6.0",
-    "passport-jwt": "^4.0.0"
+    "passport-jwt": "^4.0.0",
+    "react-moment": "^1.1.2"
   }
 }

@@ -12,7 +12,7 @@ const listRatings = asyncHandler(async (req, res) => {
 
 const addRating = asyncHandler(async (req, res) => {
   const {talentId, rate, text, contractId} = req.body;
-
+  console.log()
   if(!talentId || !rate || !text || !contractId) {
     res.status(400);
     throw new Error('Please fill in all fields');
@@ -38,7 +38,6 @@ const addRating = asyncHandler(async (req, res) => {
     throw new Error('Unauthorized');
   }
 
-
   const rating = await Rating.create({
     contract: contract._id,
     user: req.user._id,
@@ -46,27 +45,26 @@ const addRating = asyncHandler(async (req, res) => {
     rating: rate,
     text
   });
-  
+
   if(rating){
     contract.rating = rating._id;
     await contract.save();
+    talent.ratings.push(rating)
+    await talent.save();
     res.status(201).json(rating);
   } else {
     res.status(400)
     throw new Error('Could not create new rating');
   }
-
 });
 
 const getRating = asyncHandler(async (req, res) => {
   const id = req.params.ratingId;
   const rating = await Rating.findById( { _id: id });
-
   if(!rating) {
     res.status(404)
     throw new Error('Rating not found');
   }
-
   res.status(200).json(rating);
 });
 
@@ -84,7 +82,7 @@ const updateRating = asyncHandler(async (req, res) => {
     throw new Error('User is not authorized');
   }
   const {text, rate} = req.body;
-  
+
   if(!text|| !rate) {
     res.status(400);
     throw new Error('Please fill in all fields');
@@ -117,4 +115,4 @@ module.exports = {
   getRating,
   updateRating,
   deleteRating
-} 
+}

@@ -1,15 +1,13 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { Button, Container, Divider, Form } from 'semantic-ui-react'
-import { reset, sendJobApplication } from '../../features/jobs/jobSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
+import {sendJobApplication } from '../../features/jobs/jobSlice';
+import { useDispatch } from 'react-redux';
 
 
-const ApplicationForm = ({jobId}) => {
+const ApplicationForm = ({jobId, user,jobUser}) => {
   const dispatch = useDispatch();
 
-  const {isSuccess, isError, message, isLoading} = useSelector((state) => state.jobs)
   const [applicationMessage, setapplicationMessage] = useState('');
 
   const onChange = (e) => {
@@ -20,15 +18,7 @@ const ApplicationForm = ({jobId}) => {
     dispatch(sendJobApplication({jobId, applicationMessage}));
     setapplicationMessage('')
   }
-  useEffect(()=> {
-    if(isSuccess){
-      toast.success('Application sent.')
-    }
-    if(isError){
-      toast.error(message)
-    }
-  }, [isError, message, dispatch])
-  
+
   return (
     <>
     <Container textAlign='center'>
@@ -43,7 +33,14 @@ const ApplicationForm = ({jobId}) => {
         onChange={onChange}
         value={applicationMessage}
       />
-      <Button loading={isLoading} fluid onClick={onSubmit} disabled={Boolean(!applicationMessage)} secondary> Submit </Button>
+      {
+        jobUser === user.id ? (
+        <Button fluid disabled secondary>Locked</Button>
+        ) : (
+        <Button fluid onClick={onSubmit} disabled={applicationMessage.length === 0 } secondary> Submit </Button>
+        )
+      }
+
     </Form>
     </>
   )

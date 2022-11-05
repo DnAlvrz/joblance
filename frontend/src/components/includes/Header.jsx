@@ -1,8 +1,8 @@
  // import { FaSignInAlt, FaUser, FaSignOutAlt} from 'react-icons/fa'
 import {Link, useNavigate} from 'react-router-dom' //useNavigate
 import {useDispatch, useSelector} from 'react-redux';
-import {logout, reset} from '../../features/auth/authSlice'
-import { Button, Menu, Container, Icon, Dropdown } from 'semantic-ui-react'
+import {logout} from '../../features/auth/authSlice'
+import { Button, Menu, Container, Icon, Dropdown, Image } from 'semantic-ui-react'
 
 function Header() {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ function Header() {
 
   const trigger = (
     <span>
-      <Icon name='user' /> Hello, {user?.firstname}
+      <Image avatar src='/matt.jpg' /> Hello, {user?.firstname}
     </span>
   )
 
@@ -26,17 +26,12 @@ function Header() {
       disabled: true,
     },
     { key: 'profile', text: 'Your Profile', onClick: e=>{navigate(`/user/${user.id}`)} },
-    { key: 'stars', text: 'Your Stars' },
-    { key: 'explore', text: 'Explore' },
-    { key: 'integrations', text: 'Integrations' },
-    { key: 'help', text: 'Help' },
-    { key: 'settings', text: 'Settings' },
+    { key: 'Messages', text: 'Messages', onClick: e=>{navigate(`/chat`)} },
     { key: 'sign-out', text: 'Sign Out', onClick: e=>{onLogout()}},
   ]
 
   const onLogout = () => {
     dispatch(logout());
-    dispatch(reset());
     navigate('/login')
   };
 
@@ -46,15 +41,15 @@ function Header() {
       <Container>
       { user? (
         <>
-       
+
           <Dropdown text='Jobs' pointing className='link item'>
             <Dropdown.Menu>
               <Dropdown.Header> Jobs</Dropdown.Header>
-              <Link to='/jobs'><Dropdown.Item>Jobs</Dropdown.Item> </Link>
+              <Link to='/jobs'><Dropdown.Item key='joblist'>Jobs</Dropdown.Item> </Link>
               <Dropdown.Divider />
               <Dropdown.Header>My Jobs</Dropdown.Header>
-              <Link to='/user/jobs'> <Dropdown.Item>My Jobs </Dropdown.Item></Link>
-              <Link to='/jobs/post'><Dropdown.Item> Post a job </Dropdown.Item></Link>
+              <Link to='/user/jobs'> <Dropdown.Item key='userjobs'>My Jobs </Dropdown.Item></Link>
+              <Link to='/jobs/post'><Dropdown.Item key='postjob'> Post a job </Dropdown.Item></Link>
             </Dropdown.Menu>
           </Dropdown>
 
@@ -103,6 +98,7 @@ function Header() {
             </>
           ) : (
             <>
+
               <Dropdown style={{padding:'10px'}} trigger={trigger} options={options} />
             </>
           )

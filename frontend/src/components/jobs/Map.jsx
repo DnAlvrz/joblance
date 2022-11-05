@@ -42,7 +42,7 @@ function Map({setCoords,draggable, coords, width, height, zoom}) {
     fetch(`https://api.geoapify.com/v1/geocode/reverse?lat=${coords.lat}&lon=${coords.lng}&apiKey=${process.env.REACT_APP_REVERSE_GEOCODING_API_KEY}`, requestOptions)
       .then(response => response.json())
       .then(result =>{
-        alert(`${result.features[0].properties.street } ${result.features[0].properties.city}`)
+        console.log(`${result.features[0].properties.street } ${result.features[0].properties.city}`)
       })
       .catch(error => alert('error', error));
   }

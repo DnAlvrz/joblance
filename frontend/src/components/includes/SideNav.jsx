@@ -7,7 +7,7 @@ function SideNav() {
   const [activeItem, setActiveItem] = useState('')
 
   const handleItemClick = (e) => {
-
+    setActiveItem(e.target.name)
   }
   useEffect(()=> {
 

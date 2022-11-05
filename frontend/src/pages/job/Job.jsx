@@ -2,7 +2,7 @@ import { useParams, useNavigate} from 'react-router-dom'
 import { useSelector, useDispatch} from 'react-redux'
 import { useEffect} from 'react'
 import {Grid, Dimmer, Loader, Divider, Header, Segment} from 'semantic-ui-react';
-import {getJob} from '../../features/jobs/jobSlice';
+import {getJob, reset} from '../../features/jobs/jobSlice';
 
 import Map from '../../components/jobs/Map'
 import { toast } from 'react-toastify';
@@ -15,17 +15,26 @@ function Job() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {user} = useSelector((state) => state.auth);
-  const {job, isLoading, isError, message,} = useSelector((state) => state.jobs);
+  const {job, isLoading, isSuccess, isError, message,} = useSelector((state) => state.jobs);
 
   useEffect (() => {
+    dispatch(getJob(id));
+
+    if(isSuccess){
+      toast.success('Application sent')
+    }
+
     if(isError){
       toast.error(message)
     }
     if(!user) {
       navigate('/login')
     }
-    dispatch(getJob(id));
-  }, [id, user, navigate, dispatch, isError, message]);
+
+    return ()=> {
+      dispatch(reset())
+    }
+  }, [id, isSuccess, user, navigate, dispatch, isError, message]);
 
   if(isLoading) {
     return(
@@ -63,8 +72,8 @@ function Job() {
               <Map draggable={false} height='300px' width='100%' coords={{lat:job?.lat, lng:job?.long}}/>
             </Grid.Column>
           <Grid.Column width={5}>
-            <ApplicationForm jobId={job._id} />
-          </Grid.Column> 
+            <ApplicationForm user={user} jobUser={job.user} jobId={job._id} />
+          </Grid.Column>
           </Grid.Row>
           <Grid.Row centered>
             <Grid.Column  width={11}>

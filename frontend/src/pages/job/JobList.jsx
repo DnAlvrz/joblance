@@ -39,22 +39,26 @@ function JobList() {
     dispatch(getOpenJobs(activePage));
   }
 
-  useEffect( () => {
-    if(isError){
-      toast.error(message)
-    }
-
+  useEffect(()=> {
     if(!user) {
       navigate('/login')
     }
+  }, [navigate, user])
 
+
+  useEffect( () => {
     dispatch(getOpenJobs(activePage));
 
-    return () => {
+    return ()=> {
       dispatch(reset())
     }
+  }, [activePage, dispatch, ])
 
-  }, [user, activePage, isError, navigate, dispatch, message])
+  useEffect(()=>{
+    if(isError){
+      toast.error(message)
+    }
+  }, [isError, message])
   if(isLoading) {
     return(
     <>
@@ -97,7 +101,7 @@ function JobList() {
       </Grid.Row>
     </Grid>
     </>
-    
+
   )
 }
 
