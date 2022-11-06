@@ -52,16 +52,6 @@ const getUserJobs = async (token) => {
   return response.data
 };
 
-const sendApplication = async(token, applicationData ) => {
-  const config = {
-    headers: {
-      Authorization:token
-    }
-  };
-
-  const response = await axios.post(`${API_URL}application`, {jobId:applicationData.jobId, message:applicationData.applicationMessage}, config)
-  return response.data
-}
 
 const updateJob = async(token, jobData)=> {
   const config = {
@@ -92,7 +82,6 @@ const jobService = {
   deleteJob,
   getJob,
   getUserJobs,
-  sendApplication
 }
 
 export default jobService;

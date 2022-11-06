@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom'
-import { Button, Image, List, Rating } from 'semantic-ui-react'
+import { Button, Header, Image, List, Rating } from 'semantic-ui-react'
 import Moment from 'react-moment';
 import 'moment-timezone';
 import Rate from '../rating/Rate';
@@ -12,7 +12,13 @@ function ContractListItem({contract, setCurrentContract, setFinishOpen,setTermin
     setCurrentContract(contract)
     setFinishOpen(true)
   }
-  console.log(contract)
+  const handleTerminate = (e) => {
+    e.preventDefault();
+    setCurrentContract(contract)
+    setTerminateOpen(true)
+    console.log( contract.status === 'terminated' );
+  }
+
   return (
     <>
     <List.Item>
@@ -21,26 +27,27 @@ function ContractListItem({contract, setCurrentContract, setFinishOpen,setTermin
           contract.isOpen ? (
           <Button.Group>
             <Button positive onClick={handleFinish}>Finish</Button>
-            <Button disabled negative onClick={()=>setTerminateOpen(true)}>Terminate</Button>
+            <Button negative onClick={handleTerminate}>Terminate</Button>
           </Button.Group>
-          ):(
+          ) : (
           <>
           {
-            contract.rating === null ? (
-            <div  style={{padding:'15px'}}>
-              <Rate rating={contract.rating} contractId={contract._id} contract={contract} />
-            </div>
+            contract.rating === null && contract.status === 'finished' ? (
+              <div  style={{padding:'15px'}}>
+                <Rate rating={contract.rating} contractId={contract._id} contract={contract} />
+              </div>
+            ) :
+              contract.status === 'terminated' ? (<Header textAlign='center' as='h5'>Terminated</Header>
             ) : (
-            <div  style={{padding:'15px'}}>
+              <div  style={{padding:'15px'}}>
+                <Header textAlign='center' as='h5'>Rated</Header>
                 <Rating disabled rating={contract.rating.rating} defaultRating={contract.rating.rating} maxRating={5} />
-            </div>
+              </div>
           )
           }
-
           </>
           )
         }
-
       </List.Content>
       <Image avatar src='/matt.jpg' />
       <List.Content>

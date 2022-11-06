@@ -34,7 +34,6 @@ const viewJob = asyncHandler(async (req, res) => {
     .populate('offers');
   if(job){
     res.status(200).json(job);
-    console.log(job)
   } else {
     res.status(404);
     throw new Error('Job not found')

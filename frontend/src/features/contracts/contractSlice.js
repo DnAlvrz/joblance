@@ -32,6 +32,17 @@ export const finishContract = createAsyncThunk('contract/finishContract', async 
   }
 });
 
+export const terminateContract = createAsyncThunk('contract/terminateContract', async (contractId, thunkAPI) => {
+  try {
+    const userToken = thunkAPI.getState().auth.user.token;
+    const responseData = await contractService.terminateContract(userToken, contractId);
+    console.log(contractId)
+    return responseData;
+  } catch (error){
+    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
 
 export const contractSlice = createSlice({
   name: 'contracts',
@@ -63,6 +74,19 @@ export const contractSlice = createSlice({
         state.contractError=false
       })
       .addCase(finishContract.rejected, (state, action)=> {
+        state.contractLoading=false;
+        state.contractError=true;
+        state.contractSuccess=false;
+        state.contractMessage = action.payload
+      })
+      // Terminate Contract
+      .addCase(terminateContract.pending, (state)=> {state.contractLoading=true})
+      .addCase(terminateContract.fulfilled, (state, action)=> {
+        state.contractLoading=false
+        state.contractSuccess=true;
+        state.contractError=false
+      })
+      .addCase(terminateContract.rejected, (state, action)=> {
         state.contractLoading=false;
         state.contractError=true;
         state.contractSuccess=false;

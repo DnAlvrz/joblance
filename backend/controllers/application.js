@@ -24,7 +24,6 @@ const deleteApplication = asyncHandler(async (req, res) => {
 
 
 const createApplication = asyncHandler(async(req,res)=> {
-  console.log('request body: ', req.body)
   const {jobId, message } = req.body;
 
   if(!jobId || !message) {
@@ -52,15 +51,40 @@ const createApplication = asyncHandler(async(req,res)=> {
         throw new Error('Something went wrong while trying to create job application.')
       }
     }
-
   } else {
     res.status(404);
     throw new Error('Job not found.');
   }
 });
 
+const rejectApplication = asyncHandler(async( req, res) => {
+  const applicationId = req.params.id;
+  const application = await Application.findById({_id:applicationId});
+
+  if(!application) {
+    res.status(404);
+    throw new Error('Application not found');
+  }
+
+  const job = await Job.findById({_id:application.job});
+
+  if(!job) {
+    res.status(400);
+    throw new Error('Application is not associated with job');
+  }
+
+  if(job.user._id.toString() !== req.user._id.toString() ){
+    res.status(401)
+    throw new Error('Unathorized modification to job')
+  }
+
+  application.status = 'rejected';
+  await application.save();
+  res.status(201).json(application);
+});
 
 module.exports = {
   createApplication,
-  deleteApplication
+  deleteApplication,
+  rejectApplication,
 }

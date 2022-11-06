@@ -3,6 +3,7 @@ import { Button, Header, Image, List } from 'semantic-ui-react'
 import {createContract, reset} from '../../features/contracts/contractSlice';
 import {useDispatch, useSelector} from 'react-redux'
 import { toast } from 'react-toastify';
+import {rejectApplication} from '../../features/application/applicationSlice'
 function ApplicationListItem({application,job}) {
   const dispatch = useDispatch();
 
@@ -20,6 +21,7 @@ function ApplicationListItem({application,job}) {
 
   const handleReject = (e) => {
     e.preventDefault();
+    dispatch(rejectApplication(application._id))
 
   }
 

@@ -4,12 +4,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Confirm, Dimmer, Header, List, Loader, Tab } from 'semantic-ui-react'
 import {getJob, reset as jobReset} from '../../features/jobs/jobSlice'
-import { finishContract, reset as contractReset } from '../../features/contracts/contractSlice';
+import { finishContract, terminateContract,reset as contractReset } from '../../features/contracts/contractSlice';
 import {reset as ratingReset} from '../../features/rating/ratingSlice'
 import Map from '../../components/jobs/Map';
 import ApplicationListItem from '../../components/jobs/ApplicationListItem';
 import ContractListItem from '../../components/contracts/ContractListItem';
-import {submitRating} from '../../features/rating/ratingSlice'
 
 function UserJobView() {
   let {jobId} = useParams();
@@ -30,12 +29,15 @@ function UserJobView() {
     setFinishOpen(false)
     dispatch(contractReset())
   }
-  const handleTerminate = ()=> {
 
+  const handleTerminate = (e)=> {
+    e.preventDefault();
+    dispatch(terminateContract(currentContract?._id));
+    setTerminateOpen(false);
+    dispatch(contractReset());
   }
 
   useEffect(() => {
-
     if(contractSuccess){
       toast.success('Contract saved');
     }
@@ -54,40 +56,44 @@ function UserJobView() {
     if(!user){
       navigate('/login');
     }
-    dispatch(getJob(jobId))
+
+    dispatch(getJob(jobId));
+
     return () => {
-     dispatch(jobReset());
-     dispatch(contractReset());
-     dispatch(ratingReset());
-    }
-  }, [
-      contractError,
-      contractMessage,
-      contractSuccess,
-      dispatch,
-      isError,
-      jobId,
-      message,
-      navigate,
-      ratingError,
-      ratingMessage,
-      ratingSuccess,
-      user
+      dispatch(jobReset());
+      dispatch(contractReset());
+      dispatch(ratingReset());
+  }},
+  [
+    contractError,
+    contractMessage,
+    contractSuccess,
+    dispatch,
+    isError,
+    jobId,
+    message,
+    navigate,
+    ratingError,
+    ratingMessage,
+    ratingSuccess,
+    user
   ]);
 
   const panes = [
     { menuItem: 'Contracts', render: () =>
     <Tab.Pane style={{minHeight:'500px'}}>
       <List>
-
-         {job.contracts?.length >= 1 ? job.contracts?.map(contract =>
-          <ContractListItem
-            setFinishOpen={setFinishOpen}
-            setTerminateOpen={setTerminateOpen}
-            setCurrentContract={setCurrentContract}
-            key={contract._id} contract={contract}
-          />
-         ): <Header textAlign='center' style={{padding:'100px'}} as='h2'>No contracts yet</Header>}
+         {
+          job.contracts?.length >= 1 ? job.contracts?.map(contract =>
+            <ContractListItem
+              setFinishOpen={setFinishOpen}
+              setTerminateOpen={setTerminateOpen}
+              setCurrentContract={setCurrentContract}
+              key={contract._id} contract={contract}
+            />
+          ):
+          <Header textAlign='center' style={{padding:'100px'}} as='h2'>No contracts yet</Header>
+        }
           <Confirm
             open={finishOpen}
             onCancel={()=>setFinishOpen(false)}
@@ -100,11 +106,10 @@ function UserJobView() {
             onConfirm={handleTerminate}
           />
       </List>
-
     </Tab.Pane> },
     { menuItem: 'Details', render: () =>
-    <Tab.Pane style={{minHeight:'500px'}}>
-      <Map draggable={false} height='400px' width='100%' coords={{lat:job?.lat, lng:job?.long}}/>
+    <Tab.Pane style={{ minHeight: '500px' }}>
+      <Map draggable={false} height='400px' width='100%' coords={{lat: job?.lat, lng: job?.long}}/>
     </Tab.Pane> },
     { menuItem: 'Applications', render: () =>
     <Tab.Pane style={{minHeight:'500px'}}>
@@ -116,11 +121,7 @@ function UserJobView() {
         }
       </List>
     </Tab.Pane>
-    },
-
-  ]
-
-
+    }]
 
   if(isLoading) {
     return (

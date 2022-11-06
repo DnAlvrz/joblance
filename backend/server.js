@@ -50,7 +50,7 @@ app.use('/api/v1/contracts/', passport.authenticate('jwt', {session:false}), con
 app.use('/api/v1/ratings/', passport.authenticate('jwt', {session:false}), ratingRouter);
 app.use('/api/v1/offers/', passport.authenticate('jwt', {session:false}), offerRouter);
 app.use('/api/v1/jobs/photos/', passport.authenticate('jwt', {session:false}), jobPhotoRouter);
-app.use('/api/v1/jobs/application/',passport.authenticate('jwt', {session:false}), applicationRouter )
+app.use('/api/v1/applications/',passport.authenticate('jwt', {session:false}), applicationRouter )
 app.use(errorHandler);
 
 

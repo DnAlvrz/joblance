@@ -25,8 +25,8 @@ const addContract = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error('Job not found');
   }
-  console.log(job.contracts.length >= 1)
-  if(job.contracts.length >= 1){
+  const filteredContracts = job.contracts.filter(contract=>contract.status==='ongoing');
+  if(filteredContracts.length >= 1){
     res.status(400);
     throw new Error('Exceeded the maximum number of contracts')
   }
@@ -66,6 +66,23 @@ const addContract = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error('Contract not created');
    }
+});
+
+const terminateContract = asyncHandler(async(req,res)=> {
+  const contractId = req.params.contractId;
+  const contract = await Contract.findById({_id:contractId});
+
+  if(!contract) {
+    res.status(404)
+    throw new Error('Contract not found');
+  }
+  if(contract.status === 'finished' || contract.status === 'terminated') {
+    res.status(400);
+    throw new Error('Contract already closed.')
+  }
+  contract.status = 'terminated';
+  await contract.save();
+  res.status(200).json(contract)
 });
 
 const deleteContract = asyncHandler(async (req, res) => {
@@ -108,5 +125,6 @@ module.exports = {
   addContract,
   listContracts,
   toggleContract,
-  deleteContract
+  deleteContract,
+  terminateContract
 }

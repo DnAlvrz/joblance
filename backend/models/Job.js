@@ -64,7 +64,7 @@ const jobSchema = new mongoose.Schema({
 });
 
 function arrayLimit(val) {
-  return val.length < 2;
+  return val.length <= 2;
 }
 
 module.exports = new mongoose.model('Job', jobSchema);
