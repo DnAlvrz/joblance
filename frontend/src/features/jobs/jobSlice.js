@@ -56,16 +56,6 @@ export const getUserJob = createAsyncThunk('jobs/getUserJob', async (jobId, thun
   }
 });
 
-export const sendJobApplication = createAsyncThunk('jobs/sendJobApplicaiton', async(applicationData, thunkAPI ) => {
-  try {
-    const userToken = thunkAPI.getState().auth.user.token;
-    console.log(applicationData);
-    return await jobService.sendApplication(userToken, applicationData);
-  } catch (error) {
-    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-    return thunkAPI.rejectWithValue(message);
-  }
-});
 
 export const updateJob = createAsyncThunk('jobs/updateJob', async(jobData, thunkAPI) => {
   try {
@@ -174,19 +164,7 @@ export const jobSlice = createSlice({
         state.isError = true;
         state.message = action.payload
       })
-      // Create Job Application
-      .addCase(sendJobApplication.pending, (state)=> {state.isLoading=true})
-      .addCase(sendJobApplication.fulfilled, (state)=> {
-        state.isLoading=false
-        state.isSuccess = true;
-        state.isError = false
-      })
-      .addCase(sendJobApplication.rejected, (state, action)=> {
-        state.isLoading=false;
-        state.isError = true;
-        state.isSuccess=false;
-        state.message = action.payload
-      })
+
   }
 });
 
