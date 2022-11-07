@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Grid, Header, List, Segment } from 'semantic-ui-react'
+import { Container, Grid, Header, Icon, List, Segment } from 'semantic-ui-react'
 
 function Footer() {
   return (
@@ -14,7 +14,7 @@ function Footer() {
               <List.Item as='a'>Collaborate with us</List.Item>
               <List.Item as='a'>How To Access</List.Item>
               <List.Item as='a'>Contact Us</List.Item>
-              
+
             </List>
           </Grid.Column>
           <Grid.Column width={3}>
@@ -22,7 +22,7 @@ function Footer() {
             <List link inverted>
               <List.Item as='a'>Help us improve</List.Item>
               <List.Item as='a'>Sitemap</List.Item>
-              
+
               <List.Item as='a'>FAQs</List.Item>
               <List.Item as='a'>Careers</List.Item>
             </List>
@@ -38,15 +38,14 @@ function Footer() {
           </Grid.Column>
           <Grid.Column width={4}>
             <Header as='h4' inverted>
-              Codevs 	&copy; 2022
+              ZPPSU | GP 7 	&copy; 2022
             </Header>
-            <ul>
-              <li>Alvarez, Joseph Adonis B.</li>
-              <li>Asmad, Benedict Mahatma Z.</li>
-              <li>Aculbe, Rachel Q.</li>
-              <li>Kuan, Kenneth R.</li>
-              <li>Ft. Amparado, Archie Arthur M.</li>
-            </ul>
+            <List style={{paddingLeft:'15px'}}>
+              <List.Item> <Icon name='right triangle' />Alvarez, Joseph Adonis B.</List.Item>
+              <List.Item> <Icon name='right triangle' /> Asmad, Benedict Mahatma Z.</List.Item>
+              <List.Item> <Icon name='right triangle' />Aculbe, Rachel Q.</List.Item>
+              <List.Item> <Icon name='right triangle' /> Kuan, Kenneth R.</List.Item>
+            </List>
           </Grid.Column>
         </Grid.Row>
       </Grid>

@@ -27,6 +27,8 @@ function PostJob() {
     budget: '',
     location: '',
     duration: '',
+    city: '',
+    worktype: ''
   });
 
   useEffect(() => {
@@ -59,6 +61,15 @@ function PostJob() {
       [e.target.name]: e.target.value,
     }));
   };
+
+  const onChangeWorktype = (e, data)=> {
+
+    setFormData((prevState)=>({
+      ...prevState,
+      worktype: data.value,
+    }));
+    console.log(formData)
+  }
 
   const onFileChange = (e) => {
     const files = e.target.files
@@ -101,7 +112,7 @@ function PostJob() {
           <Grid.Column width={16}>
             <Divider horizontal> Job Post</Divider>
             {
-              page === 1 ? <JobForm onChange={onChange} formData={formData} /> :
+              page === 1 ? <JobForm  onChangeWorktype={onChangeWorktype} onChange={onChange} formData={formData} /> :
               page === 2 ?
             <>
               <Form>

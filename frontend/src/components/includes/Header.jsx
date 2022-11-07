@@ -41,8 +41,12 @@ function Header() {
       <Container>
       { user? (
         <>
-
-          <Dropdown text='Jobs' pointing className='link item'>
+          <Link to='/dashboard' style={{padding:'10px'}}>
+            <Menu.Item
+              name='dashboard'
+            />
+          </Link>
+          <Dropdown text='Jobs' pointing className='link Menu item'>
             <Dropdown.Menu>
               <Dropdown.Header> Jobs</Dropdown.Header>
               <Link to='/jobs'><Dropdown.Item key='joblist'>Jobs</Dropdown.Item> </Link>
@@ -52,12 +56,26 @@ function Header() {
               <Link to='/jobs/post'><Dropdown.Item key='postjob'> Post a job </Dropdown.Item></Link>
             </Dropdown.Menu>
           </Dropdown>
-
-        <Link to='/dashboard'>
-          <Menu.Item
-            name='dashboard'
-          />
-        </Link>
+          <Dropdown text='Contracts' pointing className='link Menu item'>
+            <Dropdown.Menu>
+              <Dropdown.Header> Contracts</Dropdown.Header>
+              <Link to='/jobs'><Dropdown.Item key='joblist'>Jobs</Dropdown.Item> </Link>
+              <Dropdown.Divider />
+              <Dropdown.Header>My Jobs</Dropdown.Header>
+              <Link to='/user/jobs'> <Dropdown.Item key='userjobs'>My Jobs </Dropdown.Item></Link>
+              <Link to='/jobs/post'><Dropdown.Item key='postjob'> Post a job </Dropdown.Item></Link>
+            </Dropdown.Menu>
+          </Dropdown>
+          <Dropdown disabled text='Reports' pointing className='link Menu item'>
+            <Dropdown.Menu>
+              <Dropdown.Header> Contracts</Dropdown.Header>
+              <Link to='/jobs'><Dropdown.Item key='joblist'>Jobs</Dropdown.Item> </Link>
+              <Dropdown.Divider />
+              <Dropdown.Header>My Jobs</Dropdown.Header>
+              <Link to='/user/jobs'> <Dropdown.Item key='userjobs'>My Jobs </Dropdown.Item></Link>
+              <Link to='/jobs/post'><Dropdown.Item key='postjob'> Post a job </Dropdown.Item></Link>
+            </Dropdown.Menu>
+          </Dropdown>
         </>
         ) : (
       <>

@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react'
 import {Menu} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 
-function SideNav() {
+function DashboardSideNav() {
   const [activeItem, setActiveItem] = useState('')
 
   const handleItemClick = (e) => {
@@ -108,4 +108,4 @@ function SideNav() {
   )
 }
 
-export default SideNav
+export default DashboardSideNav

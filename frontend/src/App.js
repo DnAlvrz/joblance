@@ -17,7 +17,7 @@ import Messenger from "./pages/messenger/Messenger";
 import Footer from "./components/includes/Footer";
 import Profile from "./pages/user/Profile";
 import UserJobView from "./pages/user/UserJobView";
-
+import "pure-react-carousel/dist/react-carousel.es.css";
 function App() {
   return (
     <>

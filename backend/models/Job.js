@@ -9,6 +9,14 @@ const jobSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  city: {
+    type:String,
+    required:true
+  },
+  worktype:{
+    type:String,
+    required:true
+  },
   title: {
     type: String,
     required: [true, 'Please enter the title of the project']
@@ -43,8 +51,8 @@ const jobSchema = new mongoose.Schema({
     validate: [ arrayLimit, '{PATH} exceeds the limit of 1'],
   },
   photos: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'JobPhoto'
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'JobPhoto'
   }],
   user: {
     type: mongoose.Schema.Types.ObjectId,

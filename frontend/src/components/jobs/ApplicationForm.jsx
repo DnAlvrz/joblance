@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { Button, Container, Divider, Form } from 'semantic-ui-react'
 import {sendJobApplication } from '../../features/application/applicationSlice';

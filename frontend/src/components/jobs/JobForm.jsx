@@ -1,59 +1,85 @@
 import React from 'react'
-import {Form} from 'semantic-ui-react';
-function JobForm({onChange, formData}) {
+import {Form, Select} from 'semantic-ui-react';
+function JobForm({onChange, onChangeWorktype, formData}) {
   const {
     title,
     description,
     budget,
     location,
     duration,
+    city,
+    workType
   } = formData;
+
+  const workTypes = [
+    { key: 'msn', value: 'mason', text: 'Masonry' },
+    { key: 'cnstrctn', value: 'construction', text: 'Construction' },
+    { key: 'crpnty', value: 'carpentry', text: 'Capentry' },
+    { key: 'plmb', value: 'plumbing', text: 'Pumbling' },
+    { key: 'elctrcn', value: 'electricity', text: 'Electricity' },
+  ]
 
   return (
     <Form>
       <Form.Group widths='equal'>
-        <Form.Input 
-          fluid 
-          label='Name' 
-          placeholder='Name' 
+        <Form.Input
+          fluid
+          label='Name'
+          placeholder='Name'
           name='title'
           onChange={onChange}
           value={title}
         />
-        <Form.Input 
+        <Form.Input
           fluid
           type='number'
-          label='Budget' 
+          label='Budget'
           placeholder='Budget'
           name='budget'
           onChange={onChange}
           value={budget}
         />
+        <Form.Input
+          fluid
+          label='City'
+          placeholder='City'
+          name='city'
+          onChange={onChange}
+          value={city}
+        />
+        <Form.Select
+          fluid
+          label='Work Type'
+          name='worktype'
+          placeholder='Select work type'
+          options={workTypes}
+          onChange={onChangeWorktype}
+         />
       </Form.Group>
       <Form.Group widths='equal'>
-        <Form.Input 
-          fluid 
+        <Form.Input
+          fluid
           label='Location'
           placeholder='Location'
           onChange={onChange}
           name='location'
           value={location}
         />
-        <Form.Input 
-          fluid 
-          label='Duration' 
+        <Form.Input
+          fluid
+          label='Duration'
           placeholder='Duration'
           name='duration'
           onChange={onChange}
           value={duration}
         />
       </Form.Group>
-      <Form.TextArea 
+      <Form.TextArea
         label='Description'
         placeholder='Describe your job requirements'
         name='description'
         onChange={onChange}
-        value={description}     
+        value={description}
       />
     </Form>
   )
