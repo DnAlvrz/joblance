@@ -1,5 +1,5 @@
 import {toast} from 'react-toastify'
-import {Form, Button, Message, Icon,Dimmer, Loader, Grid, Container} from 'semantic-ui-react'
+import {Form, Button, Message, Icon,Dimmer, Loader, Grid, Container, Divider} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 import {useState, useEffect} from 'react'
 import { useSelector, useDispatch} from 'react-redux'
@@ -22,7 +22,7 @@ function Register() {
   });
 
   const [isChecked, setIsChecked] = useState(false)
-
+  const [role, setRole] = useState('')
   const {
     firstname,
     lastname,
@@ -54,11 +54,15 @@ function Register() {
       [e.target.name]: e.target.value,
     }));
   };
+  const onRoleChange = (e, data) => {
+
+  }
 
   const onSubmit = (e) => {
     e.preventDefault();
     if(!isChecked){
       toast.error('Must aggree to terms and conditions')
+      return
     }
     if(password !== password2) {
       toast.error('Passwords do not match')
@@ -74,6 +78,11 @@ function Register() {
       dispatch(register(userData))
     }
   }
+
+  const roles = [
+    { key: 'clt', value: 'client', text: 'Client' },
+    { key: 'worker', value: 'worker', text: 'Worker' },
+  ]
 
   return (
     <>
@@ -116,11 +125,19 @@ function Register() {
             <Form.Input name='password' onChange={onChange} label='Password' type='password' />
             <Form.Input label='Confirm password' onChange={onChange} type='password' name='password2'/>
           </Form.Group>
+          <Form.Select
+            fluid
+            label='Join as client or worker'
+            name='role'
+            placeholder='Join as ..'
+            options={roles}
+            onChange={onRoleChange}
+          />
           <Form.Checkbox  inline label='I agree to the terms and conditions'
             checked={isChecked}
             onClick={(e) => {setIsChecked(!isChecked)}}
           />
-          <Button textAlign='left' style={{ width: '100%' }}  loading={isLoading} positive>Submit</Button>
+          <Button fluid color='teal'>Register</Button>
         </Form>
         <Container textAlign='center'>
         <Message attached='bottom' warning>
