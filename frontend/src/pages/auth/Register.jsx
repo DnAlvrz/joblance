@@ -1,5 +1,5 @@
 import {toast} from 'react-toastify'
-import {Form, Button, Message, Icon,Dimmer, Loader, Grid} from 'semantic-ui-react'
+import {Form, Button, Message, Icon,Dimmer, Loader, Grid, Container} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 import {useState, useEffect} from 'react'
 import { useSelector, useDispatch} from 'react-redux'
@@ -122,10 +122,11 @@ function Register() {
           />
           <Button textAlign='left' style={{ width: '100%' }}  loading={isLoading} positive>Submit</Button>
         </Form>
+        <Container textAlign='center'>
         <Message attached='bottom' warning>
-          <Icon name='help' />
           Already signed up?&nbsp;<Link to='/login'>Login here</Link>&nbsp;instead.
         </Message>
+        </Container>
         </Grid.Column>
       </Grid>
     </>

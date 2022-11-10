@@ -5,7 +5,18 @@ const listJobs = asyncHandler(async (req, res) => {
   const  page  = parseInt(req.query.page) || 1;
   const  limit  = parseInt(req.query.limit) || 50;
   const offset = page > 1 ? (page -1) * limit : 0;
-  const jobs = await Job.find({isOpen:true},{ contracts: 0, updatedAt: 0, __v: 0, offers: 0, isOpen: 0}).skip(offset).limit(limit);
+  const jobs = await Job.find({isOpen: true}, {
+      contracts: 0,
+      updatedAt: 0,
+      __v: 0,
+      offers: 0,
+      isOpen: 0
+    })
+    .sort({
+      createdAt:1,
+    })
+    .skip(offset)
+    .limit(limit);
   const jobsCount = await Job.count({isOpen:true})
   res.status(200).json({jobs, jobsCount});
 });
@@ -31,8 +42,15 @@ const viewJob = asyncHandler(async (req, res) => {
           path: 'talent',
           select:' firstname lastname',
       }})
-    .populate('offers');
+    .populate({
+      path: 'offers',
+      populate: {
+        path:'talent',
+        select: 'firstname lastname'
+      }
+    });
   if(job){
+    console.log(job)
     res.status(200).json(job);
   } else {
     res.status(404);
@@ -42,6 +60,7 @@ const viewJob = asyncHandler(async (req, res) => {
 });
 
 const createJob = asyncHandler( async(req, res) => {
+  console.log(req.body)
   const {
     title,
     description,
@@ -49,7 +68,9 @@ const createJob = asyncHandler( async(req, res) => {
     lat,
     lng,
     budget,
-    duration
+    duration,
+    worktype,
+    city
   } = req.body;
   if(
       !title ||
@@ -58,7 +79,9 @@ const createJob = asyncHandler( async(req, res) => {
       !lat ||
       !lng ||
       !budget ||
-      !duration
+      !duration||
+      !worktype ||
+      !city
     ) {
     res.status(400);
     throw new Error('Please fill in all fields');
@@ -72,6 +95,8 @@ const createJob = asyncHandler( async(req, res) => {
     long:lng,
     budget: budget.toLocaleString(),
     duration,
+    worktype,
+    city,
     user: req.user._id
   });
 
@@ -84,6 +109,8 @@ const createJob = asyncHandler( async(req, res) => {
       lat: job.lat,
       long: job.long,
       budget: job.budget,
+      worktype,
+      city,
       duration: job.duration
     });
   } else {

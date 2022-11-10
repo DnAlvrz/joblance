@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Button, Container, Divider, Form } from 'semantic-ui-react'
-import {sendJobApplication } from '../../features/application/applicationSlice';
+import {sendJobApplication, reset } from '../../features/application/applicationSlice';
 import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 
-
-const ApplicationForm = ({jobId, user,jobUser}) => {
+const ApplicationForm = ({applicationsLoading, jobId, user,jobUser}) => {
   const dispatch = useDispatch();
 
   const [applicationMessage, setapplicationMessage] = useState('');
@@ -17,6 +17,13 @@ const ApplicationForm = ({jobId, user,jobUser}) => {
     dispatch(sendJobApplication({jobId, applicationMessage}));
     setapplicationMessage('')
   }
+
+  useEffect(()=> {
+
+    return ()=> {
+      dispatch(reset())
+    }
+  },[dispatch]);
 
   return (
     <>
@@ -36,7 +43,7 @@ const ApplicationForm = ({jobId, user,jobUser}) => {
         jobUser === user.id ? (
         <Button fluid disabled secondary>Locked</Button>
         ) : (
-        <Button fluid onClick={onSubmit} disabled={applicationMessage.length === 0 } secondary> Submit </Button>
+        <Button loading={applicationsLoading} fluid onClick={onSubmit} disabled={applicationMessage.length === 0 } secondary> Submit </Button>
         )
       }
 

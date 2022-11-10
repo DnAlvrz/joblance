@@ -1,14 +1,13 @@
 import { useParams, useNavigate} from 'react-router-dom'
 import { useSelector, useDispatch} from 'react-redux'
-import { useEffect} from 'react'
+import { useEffect, useState} from 'react'
 import {Grid, Dimmer, Loader, Divider, Header, Segment} from 'semantic-ui-react';
-import {getJob, reset} from '../../features/jobs/jobSlice';
-
+import {getJob, reset as jobReset} from '../../features/jobs/jobSlice';
 import Map from '../../components/jobs/Map'
 import { toast } from 'react-toastify';
 import ApplicationForm from '../../components/jobs/ApplicationForm';
 import Comments from '../../components/jobs/Comments';
-
+import {submitOffer, reset as offerReset} from '../../features/offers/offerSlice';
 
 function Job() {
   let {id} = useParams();
@@ -16,12 +15,40 @@ function Job() {
   const navigate = useNavigate();
   const {user} = useSelector((state) => state.auth);
   const {job, isLoading, isSuccess, isError, message,} = useSelector((state) => state.jobs);
+  const {applicationsError, applicationsMessage, applicationsLoading, applicationsSuccess } = useSelector((state) => state.application);
+  const {offerError, offerSuccess, offerMessage} = useSelector((state)=> state.offer);
+
+  const [offer, setOffer] = useState('');
+
+  const onOfferChange = (e)=> {
+    e.preventDefault();
+    setOffer(e.target.value)
+  }
+
+  const onOfferSubmit = (e) => {
+    e.preventDefault();
+    if(offer.length <= 0) {
+      toast.error('Offer cannot be empty')
+      return;
+    }
+
+    dispatch(submitOffer({jobId:job._id, text:offer, talent:user.id}));
+  };
 
   useEffect (() => {
     dispatch(getJob(id));
+    if(offerError) {
+      toast.error(offerMessage);
+    }
+    if(offerSuccess) {
+      toast.success('Offer sent')
+    }
 
-    if(isSuccess){
+    if(applicationsSuccess){
       toast.success('Application sent')
+    }
+    if(applicationsError) {
+      toast.error(applicationsMessage);
     }
 
     if(isError){
@@ -32,9 +59,24 @@ function Job() {
     }
 
     return ()=> {
-      dispatch(reset())
+      dispatch(jobReset())
+      dispatch(offerReset())
     }
-  }, [id, isSuccess, user, navigate, dispatch, isError, message]);
+  }, [
+      id,
+      isSuccess,
+      user,
+      navigate,
+      dispatch,
+      isError,
+      message,
+      applicationsSuccess,
+      applicationsError,
+      applicationsMessage,
+      offerError,
+      offerSuccess,
+      offerMessage
+    ]);
 
   if(isLoading) {
     return(
@@ -72,12 +114,12 @@ function Job() {
               <Map draggable={false} height='300px' width='100%' coords={{lat:job?.lat, lng:job?.long}}/>
             </Grid.Column>
           <Grid.Column width={5}>
-            <ApplicationForm user={user} jobUser={job.user} jobId={job._id} />
+            <ApplicationForm applicationsLoading={applicationsLoading} user={user} jobUser={job.user} jobId={job._id} />
           </Grid.Column>
           </Grid.Row>
           <Grid.Row centered>
             <Grid.Column  width={11}>
-              <Comments/>
+              <Comments offers={job.offers} offer={offer} onOfferChange={onOfferChange} onOfferSubmit={onOfferSubmit} />
             </Grid.Column>
           </Grid.Row>
         </Grid>

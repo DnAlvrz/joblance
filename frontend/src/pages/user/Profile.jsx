@@ -1,7 +1,6 @@
 import {Button, Card, Container, Divider, Dropdown, Grid, Header, Image, Label, List, Rating, Segment, Table} from 'semantic-ui-react'
 
 function Profile() {
-
   const options = [
   { key: 1, text: 'job 1', value: 1 },
   { key: 2, text: 'job 2', value: 2 },
@@ -32,8 +31,8 @@ function Profile() {
               <Divider />
               <Container  textAlign='center'>
               <Header as='h3' textAlign='center' color='yellow'> Rating</Header>
-                <Header as='span' textAlign='center' color='blue'> 3.5</Header>  
-                <Rating size='tiny' maxRating={5} defaultRating={3} icon='star' disabled/> 
+                <Header as='span' textAlign='center' color='blue'> 3.5</Header>
+                <Rating size='tiny' maxRating={5} defaultRating={3} icon='star' disabled/>
               </Container>
               <Container style={{padding: '25px 40px'}}>
               <List>
@@ -70,7 +69,7 @@ function Profile() {
                 </Table.Row>
               </Table.Body>
             </Table>
-            
+
             </Segment>
           </Grid.Column>
           <Grid.Column width={10}>
@@ -93,7 +92,7 @@ function Profile() {
                     </Dropdown.Menu>
                   </Dropdown.Menu>
                 </Dropdown>
-                
+
               </Button.Group>
               <Container  style={{padding:'20px', marginTop:'30px'}} textAlign='justified'>
               <Header as='h4' color='green'>
@@ -142,7 +141,7 @@ function Profile() {
                     <Card.Header>Matthew Harris</Card.Header>
                     <Card.Meta>Local Resident</Card.Meta>
                     <Card.Description>
-                      <Rating size='tiny' maxRating={5} defaultRating={5} icon='star' disabled/> 
+                      <Rating size='tiny' maxRating={5} defaultRating={5} icon='star' disabled/>
                       <p>
                         Great work! He finished it in just a few hours! 5 stars bro!
                       </p>
@@ -154,7 +153,7 @@ function Profile() {
                     <Card.Header>Elliot Baker</Card.Header>
                     <Card.Meta>Local Resident</Card.Meta>
                     <Card.Description>
-                      <Rating size='tiny' maxRating={5} defaultRating={5} icon='star' disabled/> 
+                      <Rating size='tiny' maxRating={5} defaultRating={5} icon='star' disabled/>
                       <p>
                         Great work! He finished it in just a few hours! 5 stars bro!
                       </p>
@@ -166,7 +165,7 @@ function Profile() {
                     <Card.Header>Jake Smith</Card.Header>
                     <Card.Meta>Local Resident</Card.Meta>
                     <Card.Description>
-                      <Rating size='tiny' maxRating={5} defaultRating={5} icon='star' disabled/> 
+                      <Rating size='tiny' maxRating={5} defaultRating={5} icon='star' disabled/>
                       <p>
                         Great work! He finished it in just a few hours! 5 stars bro!
                       </p>

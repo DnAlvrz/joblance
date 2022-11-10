@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const API_URL = '/api/v1/ratings/'
+
 const submitRating= async(token, ratingData) => {
   const config = {
     headers: {

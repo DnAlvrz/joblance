@@ -11,7 +11,6 @@ import {createJob, reset} from '../../features/jobs/jobSlice'
 
 function PostJob() {
   const {isSuccess, isLoading, isError, message} = useSelector((state) => state.jobs);
-
   const {user} = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -95,7 +94,6 @@ function PostJob() {
         photos
       }
       dispatch(createJob(job));
-
     }
   }
 

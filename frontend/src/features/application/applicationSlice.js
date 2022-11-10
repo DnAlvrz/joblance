@@ -20,11 +20,9 @@ export const rejectApplication = createAsyncThunk('contract/rejectApplication', 
   }
 });
 
-
 export const sendJobApplication = createAsyncThunk('jobs/sendJobApplicaiton', async(applicationData, thunkAPI ) => {
   try {
     const userToken = thunkAPI.getState().auth.user.token;
-    console.log(applicationData);
     return await applicationService.sendApplication(userToken, applicationData);
   } catch (error) {
     const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();

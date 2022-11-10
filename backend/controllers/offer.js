@@ -6,10 +6,10 @@ const Job = require('../models/Job');
 
 const listOffers = asyncHandler(async (req, res) => {
   const offers = await Offer.find({},{ updatedAt:0, __v:0}).populate({
-    path:'job', 
-    select:'title budget location', 
-    populate:{ 
-      path: 'user', 
+    path:'job',
+    select:'title budget location',
+    populate:{
+      path: 'user',
       select:' firstname lastname',
     }
   });
@@ -27,20 +27,26 @@ const getOffer = asyncHandler(async (req, res) => {
 });
 
 const addOffer = asyncHandler(async (req, res) => {
-  const jobId = req.params.jobId;
-  const {text} = req.body;
+  const {text, jobId} = req.body;
   const job = await Job.findById( { _id: jobId } );
   const talent = await User.findById({_id:req.user.id})
+
+  if(!text || !jobId) {
+    res.status(400);
+    throw new Error('Please fill in all fields.')
+  }
 
   if(!text) {
     res.status(400);
     throw new Error('Text and Talent are required');
   }
+
   if(!job){
     res.status(404)
     throw new Error('Job not found');
   }
-  if(!talent){ 
+
+  if(!talent){
     res.status(404)
     throw new Error('User not found');
   }
@@ -48,14 +54,15 @@ const addOffer = asyncHandler(async (req, res) => {
   const offer = await Offer.create({
     job:job._id,
     text,
-    user: talent._id
+    talent: talent._id
   });
 
   if(!offer){
     res.status(400);
     throw new Error('Offer not created');
   }
-
+  job.offers.push(offer);
+  await job.save();
   res.status(201).json(offer);
 
 });

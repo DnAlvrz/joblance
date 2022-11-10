@@ -22,6 +22,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please enter a password.']
   },
+  userProfile: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'UserProfile',
+    default:null
+  },
   profession: [{
     type: String,
   }],
