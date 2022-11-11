@@ -10,7 +10,7 @@ opts.secretOrKey = process.env.JWT_SECRET_DEV ;
 // opts.audience = 'yoursite.net';
 
 passport.use(new JwtStrategy(opts, function(jwt_payload, next) {
-	User.findOne({_id: jwt_payload.id}, { password:0, createdAt:0,updatedAt:0, __v:0 },  function(err, user) {
+	User.findOne({_id: jwt_payload.id},{ password:0, createdAt:0, updatedAt:0, __v:0 } ,  function(err, user) {
 		if (err) {
 			return next(err, false);
 		}
@@ -19,5 +19,5 @@ passport.use(new JwtStrategy(opts, function(jwt_payload, next) {
 		} else {
 			return next(null, false);
 		}
-	});
+	}).populate('role');
 }));

@@ -22,14 +22,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please enter a password.']
   },
-  userProfile: {
+  profile: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'UserProfile',
     default:null
   },
-  profession: [{
-    type: String,
-  }],
   role: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Role',

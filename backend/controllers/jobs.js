@@ -130,12 +130,12 @@ const updateJob = asyncHandler(async (req, res) => {
   }
 
   if (job.user._id.toString() !== req.user._id.toString()) {
-
     res.status(401)
     throw new Error('User not authorized')
   }
 
   const updatedJob = await Job.findByIdAndUpdate(id, req.body);
+
   if(updatedJob){
     res.status(201).json(job);
   } else{

@@ -25,7 +25,6 @@ const userRouter = require('./routes/user');
 const chatRouter = require('./routes/conversation');
 const messageRouter = require('./routes/message');
 const applicationRouter =require('./routes/application');
-const userProfileRouter = require('./routes/userProfile');
 
 connectDatabase();
 require('./models/Application');
@@ -52,7 +51,6 @@ app.use('/api/v1/ratings/', passport.authenticate('jwt', {session:false}), ratin
 app.use('/api/v1/offers/', passport.authenticate('jwt', {session:false}), offerRouter);
 app.use('/api/v1/jobs/photos/', passport.authenticate('jwt', {session:false}), jobPhotoRouter);
 app.use('/api/v1/applications/',passport.authenticate('jwt', {session:false}), applicationRouter )
-app.use('/api/v1/profiles/',passport.authenticate('jwt', {session:false}), applicationRouter )
 app.use(errorHandler);
 
 

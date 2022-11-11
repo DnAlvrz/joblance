@@ -23,7 +23,7 @@ const userProfileSchema = new mongoose.Schema({
     }
   }],
   skills:[String],
-  Education: [{
+  education: [{
     school:{
       type:String,
       required: true,

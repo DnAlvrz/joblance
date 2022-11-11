@@ -16,5 +16,4 @@ const offerService = {
   submitOffer
 }
 
-
 export default offerService;

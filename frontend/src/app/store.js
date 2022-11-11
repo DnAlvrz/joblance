@@ -6,6 +6,7 @@ import contractReducer from '../features/contracts/contractSlice';
 import ratingReducer from '../features/rating/ratingSlice';
 import applicationReducer from '../features/application/applicationSlice';
 import offerReducear from '../features/offers/offerSlice';
+import userProfileReducer from '../features/userProfile/userProfileSlice'
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     contract: contractReducer,
     rating: ratingReducer,
     application: applicationReducer,
-    offer: offerReducear
+    offer: offerReducear,
+    userProfile:userProfileReducer
   },
 });

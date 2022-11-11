@@ -3,7 +3,7 @@ const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const utilRole = require('../util/createRoles');
-
+const Profile = require('../models/UserProfile')
 const registerUser = asyncHandler(async(req, res)=> {
   const {firstname, lastname, email, password, address, phone, role }  = req.body;
 
@@ -28,6 +28,7 @@ const registerUser = asyncHandler(async(req, res)=> {
     userRole = await utilRole.findOrCreateRole('client');
   }
 
+
   const user = await User.create({
     firstname,
     lastname,
@@ -35,7 +36,7 @@ const registerUser = asyncHandler(async(req, res)=> {
     password: hashedPassword,
     phone,
     address,
-    role: userRole
+    role: userRole,
   });
 
   if (user) {

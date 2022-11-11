@@ -1,16 +1,71 @@
-import {Button, Card, Container, Divider, Dropdown, Grid, Header, Image, Label, List, Rating, Segment, Table} from 'semantic-ui-react'
+import {Button, Card, Container, Dimmer, Divider, Dropdown, Form, Grid, Header, Image, Label, List, Loader, Rating, Segment, Table} from 'semantic-ui-react'
+import {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {Link, useNavigate, useParams} from 'react-router-dom';
+import {getUser} from '../../features/userProfile/userProfileSlice';
+import { toast } from 'react-toastify';
 
 function Profile() {
+  const {id} = useParams()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [currentJob, setCurrentJob] = useState(null);
+  const {user} = useSelector((state)=>state.auth);
+  const {userProfile, userProfileLoading, userProfileError, userProfileMessage} = useSelector((state=>state.userProfile));
+
   const options = [
   { key: 1, text: 'job 1', value: 1 },
   { key: 2, text: 'job 2', value: 2 },
   { key: 3, text: 'job 3', value: 3 },
   ]
 
+  const skills = [
+    { key: 'angular', text: 'Angular', value: 'angular' },
+    { key: 'css', text: 'CSS', value: 'css' },
+    { key: 'design', text: 'Graphic Design', value: 'design' },
+    { key: 'ember', text: 'Ember', value: 'ember' },
+    { key: 'html', text: 'HTML', value: 'html' },
+    { key: 'ia', text: 'Information Architecture', value: 'ia' },
+    { key: 'javascript', text: 'Javascript', value: 'javascript' },
+    { key: 'mech', text: 'Mechanical Engineering', value: 'mech' },
+    { key: 'meteor', text: 'Meteor', value: 'meteor' },
+    { key: 'node', text: 'NodeJS', value: 'node' },
+    { key: 'plumbing', text: 'Plumbing', value: 'plumbing' },
+    { key: 'python', text: 'Python', value: 'python' },
+    { key: 'rails', text: 'Rails', value: 'rails' },
+    { key: 'react', text: 'React', value: 'react' },
+    { key: 'repair', text: 'Kitchen Repair', value: 'repair' },
+    { key: 'ruby', text: 'Ruby', value: 'ruby' },
+    { key: 'ui', text: 'UI Design', value: 'ui' },
+    { key: 'ux', text: 'User Experience', value: 'ux' },
+  ]
+  const [page, setPage] = useState(1)
+
+  useEffect(()=>{
+    if(!user){
+      navigate('/login')
+    }
+    if(userProfileError) {
+      toast.error(userProfileMessage)
+    }
+    dispatch(getUser(id))
+  },[dispatch, navigate, user, id, userProfileError, userProfileMessage]);
+
+  if(userProfileLoading){
+    return (
+      <>
+      <Dimmer inverted>
+        <Loader>Loading</Loader>
+      </Dimmer>
+      </>
+    )
+  }
 
   return (
     <>
-      <Grid stackable>
+    {
+      userProfile?.profile ? (
+        <Grid style={{minHeight:'500px'}} stackable>
         <Grid.Row >
           <Grid.Column width={4}>
             <Segment color='teal'>
@@ -27,7 +82,6 @@ function Profile() {
                   Painter
                 </Label>
               </Container>
-
               <Divider />
               <Container  textAlign='center'>
               <Header as='h3' textAlign='center' color='yellow'> Rating</Header>
@@ -178,6 +232,70 @@ function Profile() {
           </Grid.Column>
         </Grid.Row>
       </Grid>
+      ) : (
+        <>
+        <Segment style={{minHeight:'500px'}}>
+          {
+              page === 1 ?
+              <>
+              <Container style={{padding:'100px'}} textAlign='center'>
+                <Header  >No information yet.</Header>
+                <span className='link' onClick={(e)=> {setPage(page+1)}}>Activate profile</span>
+              </Container>
+              </> :
+              <>
+              <Header textAlign='center'> PROFILE FORM</Header>
+              <Form style={{margin:'auto'}}>
+                <Form.TextArea label='About' placeholder='Tell us more about you...' />
+                <Divider/>
+                <Header>Skills</Header>
+                <Dropdown  placeholder='Skills' fluid multiple selection options={skills} />
+                <Divider/>
+                <Header>Education</Header>
+                <Grid stackable>
+                  <Grid.Row columns={3}>
+                    <Grid.Column >
+                      <Segment>
+                        <Form.Input label='Elementary' type='text' />
+                        <Form.Group widths='equal'>
+                          <Form.Input width={4} label='From' type='text' />
+                          <Form.Input width={4} label='Graduated' type='text' />
+                        </Form.Group>
+                      </Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                      <Segment>
+                      <Form.Input label='Highschool' type='text' />
+                      <Form.Group widths='equal'>
+                        <Form.Input width={4} label='From' type='text' />
+                        <Form.Input width={4} label='Graduated' type='text' />
+                      </Form.Group>
+                      </Segment>
+                    </Grid.Column>
+
+                    <Grid.Column >
+                      <Segment>
+                        <Form.Input label='College' type='text' />
+                        <Form.Group widths='equal'>
+                          <Form.Input width={4} label='From' type='text' />
+                          <Form.Input width={4} label='Graduated' type='text' />
+                        </Form.Group>
+                      </Segment>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+                <Divider/>
+                <Button fluid type='submit'>Submit</Button>
+              </Form>
+              </>
+            }
+
+        </Segment>
+        </>
+      )
+
+    }
+
     </>
   )
 }
