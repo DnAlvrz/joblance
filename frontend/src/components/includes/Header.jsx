@@ -2,7 +2,7 @@
 import {Link, useNavigate} from 'react-router-dom' //useNavigate
 import {useDispatch, useSelector} from 'react-redux';
 import {logout} from '../../features/auth/authSlice'
-import { Button, Menu, Container, Icon, Dropdown, Image } from 'semantic-ui-react'
+import { Button, Menu, Container, Dropdown, Image } from 'semantic-ui-react'
 
 function Header() {
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ function Header() {
       ),
       disabled: true,
     },
-    { key: 'profile', text: 'Your Profile', onClick: e=>{navigate(`/user/${user.id}`)} },
+    { key: 'profile', as:'a', href: user?.session === 'laborer' ? `/user/${user.id}` : '#', text: 'Your Profile', disabled: user?.session === 'client' },
     { key: 'Messages', text: 'Messages', onClick: e=>{navigate(`/chat`)} },
     { key: 'sign-out', text: 'Sign Out', onClick: e=>{onLogout()}},
   ]

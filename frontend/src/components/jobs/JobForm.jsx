@@ -1,5 +1,5 @@
 import React from 'react'
-import {Form, Select} from 'semantic-ui-react';
+import {Form} from 'semantic-ui-react';
 function JobForm({onChange, onChangeWorktype, formData}) {
   const {
     title,
@@ -8,7 +8,6 @@ function JobForm({onChange, onChangeWorktype, formData}) {
     location,
     duration,
     city,
-    workType
   } = formData;
 
   const workTypes = [

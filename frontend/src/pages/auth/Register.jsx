@@ -1,5 +1,5 @@
 import {toast} from 'react-toastify'
-import {Form, Button, Message, Icon,Dimmer, Loader, Grid, Container, Divider} from 'semantic-ui-react'
+import {Form, Button, Message,Dimmer, Loader, Grid, Container} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 import {useState, useEffect} from 'react'
 import { useSelector, useDispatch} from 'react-redux'
@@ -21,8 +21,10 @@ function Register() {
     phone:'',
   });
 
-  const [isChecked, setIsChecked] = useState(false)
-  const [role, setRole] = useState('')
+  const [isChecked, setIsChecked] = useState(false);
+
+  const [role, setRole] = useState('');
+
   const {
     firstname,
     lastname,
@@ -55,7 +57,7 @@ function Register() {
     }));
   };
   const onRoleChange = (e, data) => {
-
+    setRole(data.value)
   }
 
   const onSubmit = (e) => {
@@ -73,7 +75,8 @@ function Register() {
         email,
         password,
         phone,
-        address
+        address,
+        role
       }
       dispatch(register(userData))
     }

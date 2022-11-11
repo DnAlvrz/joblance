@@ -2,10 +2,12 @@ const User = require('../models/User');
 const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const utilRole = require('../util/createRoles');
 
 const registerUser = asyncHandler(async(req, res)=> {
-  const {firstname, lastname, email, password, address, phone }  = req.body;
-  if(!firstname || !lastname || !email || !password || !address || !phone) {
+  const {firstname, lastname, email, password, address, phone, role }  = req.body;
+
+  if(!firstname || !lastname || !email || !password || !address || !phone || !role) {
     res.status(400)
     throw new Error('Please fill in all fields.');
   }
@@ -19,6 +21,12 @@ const registerUser = asyncHandler(async(req, res)=> {
 
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
+  let userRole
+  if(role === 'worker') {
+    userRole = await utilRole.findOrCreateRole('laborer');
+  } else {
+    userRole = await utilRole.findOrCreateRole('client');
+  }
 
   const user = await User.create({
     firstname,
@@ -27,7 +35,7 @@ const registerUser = asyncHandler(async(req, res)=> {
     password: hashedPassword,
     phone,
     address,
-
+    role: userRole
   });
 
   if (user) {
@@ -59,7 +67,7 @@ const loginUser =  asyncHandler(async( req, res) => {
   }
 
   // Check for user email
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).populate({path:'role', select:'name'});
 
   if(user && await bcrypt.compare(password, user.password)) {
     const token = "Bearer " + await generateToken(user._id, user.firstname, user.lastname);
@@ -71,6 +79,7 @@ const loginUser =  asyncHandler(async( req, res) => {
         firstname: user.firstname,
         lastname: user.lastname,
         email: user.email,
+        session: user.role.name,
         token:token
       }
     });

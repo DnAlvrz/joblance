@@ -32,7 +32,8 @@ const userSchema = new mongoose.Schema({
   }],
   role: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Role'
+    ref: 'Role',
+    required: [true, 'User must have a role.']
   },
   jobs: [{
     type: mongoose.Schema.Types.ObjectId,
