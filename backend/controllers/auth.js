@@ -21,13 +21,14 @@ const registerUser = asyncHandler(async(req, res)=> {
 
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
-  let userRole
+  let userRole;
+  let userProfile;
   if(role === 'worker') {
     userRole = await utilRole.findOrCreateRole('laborer');
+
   } else {
     userRole = await utilRole.findOrCreateRole('client');
   }
-
 
   const user = await User.create({
     firstname,
@@ -41,6 +42,11 @@ const registerUser = asyncHandler(async(req, res)=> {
 
   if (user) {
     const token = `Bearer ` + await generateToken(user._id, firstname, lastname);
+    userProfile = await Profile.create({
+      user:user._id
+    })
+    user.profile=userProfile._id;
+    await user.save();
     res.status(201).json({
       success: true,
       message: 'Successfully registered! Please log in to your account.',
@@ -58,7 +64,6 @@ const registerUser = asyncHandler(async(req, res)=> {
   }
 });
 
-
 const loginUser =  asyncHandler(async( req, res) => {
   const {email, password } = req.body
 
@@ -67,7 +72,6 @@ const loginUser =  asyncHandler(async( req, res) => {
     throw new Error('Enter your email and password');
   }
 
-  // Check for user email
   const user = await User.findOne({ email }).populate({path:'role', select:'name'});
 
   if(user && await bcrypt.compare(password, user.password)) {
@@ -88,8 +92,8 @@ const loginUser =  asyncHandler(async( req, res) => {
     res.status(400);
     throw new Error('Wrong email or password.');
   }
-
 })
+
 const generateToken = async (id, firstname, lastname) => {
   return await jwt.sign({
     id,

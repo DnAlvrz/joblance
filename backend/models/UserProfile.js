@@ -10,7 +10,8 @@ const userProfileSchema = new mongoose.Schema({
     default:false
   },
   about: {
-    type:String
+    type:String,
+    default:''
   },
   workExperience: [{
     position:String,
@@ -23,14 +24,38 @@ const userProfileSchema = new mongoose.Schema({
     }
   }],
   skills:[String],
-  education: [{
-    school:{
+  college: [ {
+    name:{
+      type:String,
+      required: true,
+    },
+    course: String,
+    yearAttended: {
+      type:String,
+    },
+    yearGraduated: {
+      type:String
+    }
+  }],
+  highschool: [ {
+    name:{
       type:String,
       required: true,
     },
     yearAttended: {
       type:String,
-      required:true
+    },
+    yearGraduated: {
+      type:String
+    }
+  }],
+  elementary: [ {
+    name:{
+      type:String,
+      required: true,
+    },
+    yearAttended: {
+      type:String,
     },
     yearGraduated: {
       type:String

@@ -49,7 +49,7 @@ function Index() {
       </Fade>
     </Segment>
 
-  
+
       <Grid style={{ padding: '3em 0em' }} container stackable verticalAlign='middle'>
         <Grid.Row>
             <Grid.Column style={{height:'100%'}}  width={8}>
@@ -71,7 +71,7 @@ function Index() {
         <Grid.Row>
         </Grid.Row>
       </Grid>
-    
+
     <Grid style={{ padding: '3em 0em' }} container stackable verticalAlign='middle'>
       <Grid.Row>
         <Grid.Column style={{height:'100%'}}  width={8}>
@@ -155,24 +155,3 @@ function Index() {
 }
 
 export default Index
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
