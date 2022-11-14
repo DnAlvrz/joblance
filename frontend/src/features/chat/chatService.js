@@ -21,10 +21,20 @@ const sendUserMessage =  async (token, msgData) => {
   return response.data
 }
 
+const findOrCreateChat = async(token, userId) => {
+  const config = {
+    headers: {
+      authorization: token
+    }
+  }
+  const response = await axios.get(`${API_URL}${userId}/message`, config);
+  return response.data;
+}
 
 const chatService = {
   getUserConversations,
-  sendUserMessage
+  sendUserMessage,
+  findOrCreateChat
 }
 
 

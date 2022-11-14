@@ -17,7 +17,7 @@ function ConversationList({setCurrentChat,setMessages}) {
 
   return (
     <>
-    {conversations.map(conversation =>
+    {conversations?.map(conversation =>
       <div onClick={()=> {
         setCurrentChat(conversation);
         setMessages(conversation.messages);

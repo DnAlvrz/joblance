@@ -4,18 +4,13 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate, useParams} from 'react-router-dom';
 import {getUser, addEducation, reset, updateUserAbout, addSkills} from '../../features/userProfile/userProfileSlice';
 import { toast } from 'react-toastify';
-import EducationListItem from '../../components/profile/EducationListItem';
 import BasicInfo from '../../components/profile/BasicInfo';
 import TestimonialCard from '../../components/profile/TestimonialCard';
-import EducationForm from '../../components/profile/EducationForm';
-import SkillsForm from '../../components/profile/SkillsForm';
 import ContactButtons from '../../components/profile/ContactButtons';
-import AboutForm from '../../components/profile/AboutForm';
-import SkillLabel from '../../components/profile/SkillLabel';
 import SkillsSection from '../../components/profile/SkillsSection';
 import AboutSection from '../../components/profile/AboutSection';
 import EducationSection from '../../components/profile/EducationSection';
-
+import {reset as chatReset} from '../../features/chat/chatSlice';
 const Profile = () => {
   const {id} = useParams();
   const dispatch = useDispatch();
@@ -52,7 +47,6 @@ const Profile = () => {
   }
 
   const onEducationChange = (e)=> {
-    console.log(education)
     setEducation((prevState)=>({
       ...prevState,
       [e.target.name]: e.target.value
@@ -92,6 +86,7 @@ const Profile = () => {
     }
     return ()=> {
       dispatch(reset());
+      dispatch(chatReset());
     }
   },[dispatch, navigate, user, id, userProfileError, userProfileMessage, userProfileSuccess]);
 

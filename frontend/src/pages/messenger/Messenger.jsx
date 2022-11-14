@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import {sendUserMessage} from '../../features/chat/chatSlice';
+import {sendUserMessage,reset} from '../../features/chat/chatSlice';
 import { useRef } from 'react'
 import {io} from 'socket.io-client';
 import ConversationList from '../../components/conversations/ConversationList'
@@ -54,7 +54,9 @@ function Messenger() {
     socket.current.on('getUsers', users => {
       console.log(users)
     });
-
+    return () => {
+      dispatch(reset())
+    }
   },[navigate, user]);
 
 
