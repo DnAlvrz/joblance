@@ -25,8 +25,8 @@ function Header() {
       ),
       disabled: true,
     },
-    { key: 'profile', as:'a', href: user?.session === 'laborer' ? `/user/${user.id}` : '#', text: 'Your Profile', disabled: user?.session === 'client' },
-    { key: 'Messages', text: 'Messages', onClick: e=>{navigate(`/chat`)} },
+    { key: 'profile', as:'a', href: user?.session === 'laborer' ? `/user/${user.id}` : '', text: 'Your Profile', disabled: user?.session === 'client' },
+    { key: 'message', text: 'Messages', onClick: e=>{navigate(`/chat`)} },
     { key: 'sign-out', text: 'Sign Out', onClick: e=>{onLogout()}},
   ]
 
@@ -37,7 +37,7 @@ function Header() {
 
   return (
     <>
-    <Menu secondary small style={{maxWidth:'100%'}}>
+    <Menu secondary  style={{maxWidth:'100%'}}>
       <Container>
       { user? (
         <>
@@ -59,21 +59,17 @@ function Header() {
           <Dropdown text='Contracts' pointing className='link Menu item'>
             <Dropdown.Menu>
               <Dropdown.Header> Contracts</Dropdown.Header>
-              <Link to='/jobs'><Dropdown.Item key='joblist'>Jobs</Dropdown.Item> </Link>
+              <Link to='/jobs'><Dropdown.Item key='contracts'>Contracts</Dropdown.Item> </Link>
               <Dropdown.Divider />
               <Dropdown.Header>My Jobs</Dropdown.Header>
-              <Link to='/user/jobs'> <Dropdown.Item key='userjobs'>My Jobs </Dropdown.Item></Link>
-              <Link to='/jobs/post'><Dropdown.Item key='postjob'> Post a job </Dropdown.Item></Link>
+              <Link to='/user/jobs'> <Dropdown.Item key='UserContracts'>My Contracts </Dropdown.Item></Link>
             </Dropdown.Menu>
           </Dropdown>
           <Dropdown disabled text='Reports' pointing className='link Menu item'>
             <Dropdown.Menu>
               <Dropdown.Header> Contracts</Dropdown.Header>
-              <Link to='/jobs'><Dropdown.Item key='joblist'>Jobs</Dropdown.Item> </Link>
               <Dropdown.Divider />
               <Dropdown.Header>My Jobs</Dropdown.Header>
-              <Link to='/user/jobs'> <Dropdown.Item key='userjobs'>My Jobs </Dropdown.Item></Link>
-              <Link to='/jobs/post'><Dropdown.Item key='postjob'> Post a job </Dropdown.Item></Link>
             </Dropdown.Menu>
           </Dropdown>
         </>
@@ -82,8 +78,7 @@ function Header() {
         <Link to='/'>
           <Menu.Item
               name='home'
-              // active={activeItem === 'home'}
-              // onClick={this.handleItemClick}
+
             />
         </Link>
         <Link to='/dashboard'>
@@ -116,7 +111,6 @@ function Header() {
             </>
           ) : (
             <>
-
               <Dropdown style={{padding:'10px'}} trigger={trigger} options={options} />
             </>
           )

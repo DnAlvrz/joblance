@@ -26,10 +26,6 @@ function ListItem({setCurrentJob,job, modalDispatch}) {
                   <Icon name='trash alternate' />
                   Delete
                 </Button>
-                <Button color='black' onClick={(e)=> {modalDispatch({ type: 'viewModalOpen' })}}>
-                  <Icon name='eye' />
-                  View
-                </Button>
               </Button.Group>
             </Grid.Column>
             <Grid.Column only='mobile'>
@@ -37,7 +33,6 @@ function ListItem({setCurrentJob,job, modalDispatch}) {
             <Dropdown.Menu>
               <Dropdown.Item icon='edit' text='Edit' onClick={(e)=> {modalDispatch({ type: 'editModalOpen' })}} />
               <Dropdown.Item icon='delete' text='Delete' onClick={(e)=> {modalDispatch({ type: 'deleteModalOpen' })}} />
-              <Dropdown.Item icon='eye' text='View' onClick={(e)=> {modalDispatch({ type: 'viewModalOpen' })}} />
             </Dropdown.Menu>
           </Dropdown>
             </Grid.Column>

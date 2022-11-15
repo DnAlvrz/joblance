@@ -29,21 +29,21 @@ function JobList() {
   }, [dispatch])
 
   const options = [
-    { key: 1, text: 'NCR', value: 1 },
-    { key: 1, text: 'CAR', value: 1 },
-    { key: 1, text: 'Region I', value: 1 },
-    { key: 2, text: 'Region II', value: 2 },
-    { key: 3, text: 'Region IV-A', value: 4 },
-    { key: 3, text: 'Mimaropa', value: 4.5 },
-    { key: 3, text: 'Region V', value: 3 },
-    { key: 3, text: 'Region VI', value: 3 },
-    { key: 3, text: 'Region VII', value: 3 },
-    { key: 3, text: 'Region VIII', value: 3 },
-    { key: 3, text: 'Region IX', value: 3 },
-    { key: 3, text: 'Region X', value: 3 },
-    { key: 3, text: 'Region XI', value: 3 },
-    { key: 3, text: 'Region XII', value: 3 },
-    { key: 3, text: 'Region XII', value: 3 },
+    { key: 'ncr', text: 'NCR', value: 1 },
+    { key: 'car', text: 'CAR', value: 1 },
+    { key: '1', text: 'Region I', value: 1 },
+    { key: '2', text: 'Region II', value: 2 },
+    { key: '3', text: 'Region IV-A', value: 4 },
+    { key: '4', text: 'Mimaropa', value: 4.5 },
+    { key: '5', text: 'Region V', value: 3 },
+    { key: '6', text: 'Region VI', value: 3 },
+    { key: '7', text: 'Region VII', value: 3 },
+    { key: '8', text: 'Region VIII', value: 3 },
+    { key: '9', text: 'Region IX', value: 3 },
+    { key: '10', text: 'Region XI', value: 3 },
+    { key: '11', text: 'Region XII', value: 3 },
+    { key: '12', text: 'Region XII', value: 3 },
+    { key: '13', text: 'Region X', value: 3 },
   ]
 
   const pageChange = (event, data)=>{

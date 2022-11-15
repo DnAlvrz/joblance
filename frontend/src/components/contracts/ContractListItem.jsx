@@ -16,7 +16,6 @@ function ContractListItem({contract, setCurrentContract, setFinishOpen,setTermin
     e.preventDefault();
     setCurrentContract(contract)
     setTerminateOpen(true)
-    console.log( contract.status === 'terminated' );
   }
 
   return (
@@ -32,7 +31,7 @@ function ContractListItem({contract, setCurrentContract, setFinishOpen,setTermin
           ) : (
           <>
           {
-            contract.rating === null && contract.status === 'finished' ? (
+            contract.status === 'finished' && !contract.rating ? (
               <div  style={{padding:'15px'}}>
                 <Rate rating={contract.rating} contractId={contract._id} contract={contract} />
               </div>
