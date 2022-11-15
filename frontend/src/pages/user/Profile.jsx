@@ -1,4 +1,4 @@
-import {Button, Card, Container, Dimmer, Divider, Grid, Header, Label, Form, List, Loader, Segment} from 'semantic-ui-react'
+import { Card, Container, Dimmer, Divider, Grid, Header, List, Loader, Segment} from 'semantic-ui-react'
 import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate, useParams} from 'react-router-dom';
@@ -89,6 +89,10 @@ const Profile = () => {
       dispatch(chatReset());
     }
   },[dispatch, navigate, user, id, userProfileError, userProfileMessage, userProfileSuccess]);
+
+  if(userProfile.role.name === 'client'){
+    navigate('/dashboard')
+  }
 
   if(userProfileLoading){
     return (
