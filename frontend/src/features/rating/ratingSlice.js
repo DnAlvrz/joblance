@@ -11,7 +11,7 @@ const initialState = {
 };
 
 
-export const submitRating  = createAsyncThunk('contract/submitRating', async (contractData, thunkAPI) => {
+export const submitRating  = createAsyncThunk('rating/submitRating', async (contractData, thunkAPI) => {
   try {
     const userToken = thunkAPI.getState().auth.user.token;
     const responseData = await ratingService.submitRating(userToken, contractData);
@@ -22,7 +22,7 @@ export const submitRating  = createAsyncThunk('contract/submitRating', async (co
   }
 });
 
-export const contractSlice = createSlice({
+export const ratingSlice = createSlice({
   name: 'ratings',
   initialState,
   reducers: {
@@ -31,7 +31,7 @@ export const contractSlice = createSlice({
   extraReducers : (builder)=> {
     builder
       // Submit Rating
-      .addCase(submitRating.pending, (state)=> {state.contractLoading=true})
+      .addCase(submitRating.pending, (state)=> {state.ratingLoading=true})
       .addCase(submitRating.fulfilled, (state, action)=> {
         state.ratingLoading=false
         state.ratingSuccess=true;
@@ -47,5 +47,5 @@ export const contractSlice = createSlice({
   }
 })
 
-  export const {reset} = contractSlice.actions
-  export default contractSlice.reducer
+  export const {reset} = ratingSlice.actions
+  export default ratingSlice.reducer

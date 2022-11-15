@@ -2,7 +2,7 @@
 const router = require('express').Router();
 const fileUpload = require('express-fileupload');
 const {
-  uploadJobPhotos, 
+  uploadJobPhotos,
   listPhotos,
   deletePhoto
 } = require('../controllers/jobPhoto');
@@ -13,8 +13,7 @@ const {
   fileSizeLimiter,
 } = require('../middleware/files');
 
-router.get('/', listPhotos);
-
+router.get('/jobs/:jobId', listPhotos);
 router.post('/:jobId',
   fileUpload({createParentPath:true}),
   filespayload,
@@ -25,4 +24,4 @@ router.post('/:jobId',
 
 router.delete('/:jobId/remove/:photoId', deletePhoto);
 
-module.exports = router;                
+module.exports = router;

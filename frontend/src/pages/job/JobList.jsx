@@ -12,9 +12,21 @@ function JobList() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [activePage, setActivePage] = useState(1);
-
+  const [userLocation, setUserLocation] = useState({lat:0, lng:0})
   const {user} = useSelector((state)=> state.auth)
   const {jobs, isLoading, isError, message, count} = useSelector((state) => state.jobs);
+
+  useEffect(()=> {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      console.log(position.coords.latitude,position.coords.longitude)
+      setUserLocation({
+          lat:position.coords.latitude,
+          lng: position.coords.longitude
+      })
+      dispatch(getOpenJobs({activePage, userLocation}));
+    });
+
+  }, [dispatch])
 
   const options = [
     { key: 1, text: 'NCR', value: 1 },
@@ -36,23 +48,21 @@ function JobList() {
 
   const pageChange = (event, data)=>{
     setActivePage(data.activePage);
-    dispatch(getOpenJobs(activePage));
+    dispatch(getOpenJobs({activePage, userLocation}));
   }
 
   useEffect(()=> {
     if(!user) {
       navigate('/login')
     }
-  }, [navigate, user])
-
+  }, [navigate, user]);
 
   useEffect( () => {
-    dispatch(getOpenJobs(activePage));
 
     return ()=> {
       dispatch(reset())
     }
-  }, [activePage, dispatch, ])
+  }, [dispatch])
 
   useEffect(()=>{
     if(isError){
@@ -91,7 +101,7 @@ function JobList() {
           </Menu>
           <Message  size='large'>
             <Item.Group divided>
-            {jobs.map(job =>  <JobItem key={job._id} job={job}/>)}
+            {jobs?.map(job =>  <JobItem key={job._id} job={job}/>)}
             </Item.Group>
             <Container text>
               <Pagination defaultActivePage={activePage} totalPages={count/10} onPageChange={pageChange} />

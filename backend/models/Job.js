@@ -25,17 +25,20 @@ const jobSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please enter the description of the project']
   },
-  location: {
+  address: {
     type: String,
     required: [true, 'Please enter the location of the project']
   },
-  lat: {
-    type: Number,
-    required: [true, 'Please enter the latitude of the project']
-  },
-  long: {
-    type: Number,
-    required: [true, 'Please enter the longitude of the project']
+  geolocation: {
+    type: {
+      type: String,
+      enum: ['Point'],
+      required: true
+    },
+    coordinates: {
+      type: [Number],
+      required: true
+    }
   },
   budget : {
     type: String,
@@ -74,5 +77,7 @@ const jobSchema = new mongoose.Schema({
 function arrayLimit(val) {
   return val.length <= 2;
 }
+
+jobSchema.index({geolocation: '2dsphere'})
 
 module.exports = new mongoose.model('Job', jobSchema);

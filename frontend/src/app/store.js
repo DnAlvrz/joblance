@@ -7,7 +7,7 @@ import ratingReducer from '../features/rating/ratingSlice';
 import applicationReducer from '../features/application/applicationSlice';
 import offerReducear from '../features/offers/offerSlice';
 import userProfileReducer from '../features/userProfile/userProfileSlice'
-
+import photoReducer from '../features/photos/photoSlice'
 export const store = configureStore({
   reducer: {
     auth:authReducer,
@@ -17,6 +17,7 @@ export const store = configureStore({
     rating: ratingReducer,
     application: applicationReducer,
     offer: offerReducear,
-    userProfile:userProfileReducer
+    userProfile:userProfileReducer,
+    photos: photoReducer
   },
 });

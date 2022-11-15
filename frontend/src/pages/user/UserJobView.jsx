@@ -109,7 +109,7 @@ function UserJobView() {
     </Tab.Pane> },
     { menuItem: 'Details', render: () =>
     <Tab.Pane style={{ minHeight: '500px' }}>
-      <Map draggable={false} height='400px' width='100%' coords={{lat: job?.lat, lng: job?.long}}/>
+      <Map draggable={false} height='400px' width='100%' coords={{lat:job?.geolocation.coordinates[1], lng: job?.geolocation.coordinates[0]}}/>
     </Tab.Pane> },
     { menuItem: 'Applications', render: () =>
     <Tab.Pane style={{minHeight:'500px'}}>

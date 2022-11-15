@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { Slide } from "pure-react-carousel";
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button, Card, Icon, Image } from "semantic-ui-react";
+import { Button, Card, Image } from "semantic-ui-react";
 
 const CustomCardSlide = ({ index, ...cardProps }) => (
   <Slide index={index}>

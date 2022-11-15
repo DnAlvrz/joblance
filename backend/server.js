@@ -35,6 +35,7 @@ app.use(morgan('dev'));
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({ extended: true, limit: '50mb', parameterLimit:100000}));
 app.use(passport.initialize());
+app.use('/uploads', express.static('files'))
 require('./config/passport');
 
 app.get('/test', (req, res)=> {
@@ -44,13 +45,14 @@ app.get('/test', (req, res)=> {
 app.use('/api/v1/auth/', authRouters);
 app.use('/api/v1/users/',passport.authenticate('jwt', {session:false}), userRouter);
 app.use('/api/v1/chat/', passport.authenticate('jwt', {session:false}), chatRouter);
-app.use('/api/v1/chat/message', passport.authenticate('jwt', {session:false}), messageRouter);
-app.use('/api/v1/jobs/', passport.authenticate('jwt', {session:false}), jobRouter);
+app.use('/api/v1/chat/message/', passport.authenticate('jwt', {session:false}), messageRouter);
 app.use('/api/v1/contracts/', passport.authenticate('jwt', {session:false}), contractRouter);
+app.use('/api/v1/jobs/', passport.authenticate('jwt', {session:false}), jobRouter);
+app.use('/api/v1/photos/', passport.authenticate('jwt', {session:false}), jobPhotoRouter);
 app.use('/api/v1/ratings/', passport.authenticate('jwt', {session:false}), ratingRouter);
 app.use('/api/v1/offers/', passport.authenticate('jwt', {session:false}), offerRouter);
-app.use('/api/v1/jobs/photos/', passport.authenticate('jwt', {session:false}), jobPhotoRouter);
-app.use('/api/v1/applications/',passport.authenticate('jwt', {session:false}), applicationRouter )
+app.use('/api/v1/applications/',passport.authenticate('jwt', {session:false}), applicationRouter);
+
 app.use(errorHandler);
 
 

@@ -4,14 +4,17 @@ const Job = require('../models/Job');
 const listJobs = asyncHandler(async (req, res) => {
   const  page  = parseInt(req.query.page) || 1;
   const  limit  = parseInt(req.query.limit) || 50;
+  const lat = req.query.lat;
+  const lng = req.query.lng;
   const offset = page > 1 ? (page -1) * limit : 0;
-  const jobs = await Job.find({isOpen: true}, {
+  const jobs = await Job.find({geolocation:{$near:{$geometry: {type:'point', coordinates:[lat, lng]}}}}, {
       contracts: 0,
       updatedAt: 0,
       __v: 0,
       offers: 0,
       isOpen: 0
     })
+    .populate('geolocation')
     .sort({
       createdAt:1,
     })
@@ -36,6 +39,7 @@ const viewJob = asyncHandler(async (req, res) => {
           model:'Rating'}
         ]
     })
+    .populate('geolocation')
     .populate({
         path:'applications',
         populate:{
@@ -50,7 +54,6 @@ const viewJob = asyncHandler(async (req, res) => {
       }
     });
   if(job){
-    console.log(job)
     res.status(200).json(job);
   } else {
     res.status(404);
@@ -60,7 +63,6 @@ const viewJob = asyncHandler(async (req, res) => {
 });
 
 const createJob = asyncHandler( async(req, res) => {
-  console.log(req.body)
   const {
     title,
     description,
@@ -72,6 +74,7 @@ const createJob = asyncHandler( async(req, res) => {
     worktype,
     city
   } = req.body;
+
   if(
       !title ||
       !description ||
@@ -90,10 +93,10 @@ const createJob = asyncHandler( async(req, res) => {
   const job = await Job.create( {
     title,
     description,
-    location,
+    address:location,
     lat,
-    long:lng,
-    budget: budget.toLocaleString(),
+    geolocation: {type:'Point', coordinates:[lng, lat]},
+    budget,
     duration,
     worktype,
     city,
