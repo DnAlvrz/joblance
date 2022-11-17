@@ -1,6 +1,7 @@
 import {useEffect, useState, useRef, useCallback} from 'react'
 import { GoogleMap, useJsApiLoader, MarkerF } from '@react-google-maps/api';
 import { Dimmer, Loader } from 'semantic-ui-react';
+import { toast } from 'react-toastify';
 
 function Map({setCoords,draggable, coords, width, height, zoom}) {
   const[map, setMap] = useState(null);
@@ -25,7 +26,6 @@ function Map({setCoords,draggable, coords, width, height, zoom}) {
 
   const onLoad = useCallback(function callback(map) {
     const bounds = new window.google.maps.LatLngBounds(currentPosition);
-    geocodeLatLng();
     map.fitBounds(bounds);
     setMap(map);
     mapRef.current = map;
@@ -35,17 +35,17 @@ function Map({setCoords,draggable, coords, width, height, zoom}) {
     setMap(null)
   }, [setMap]);
 
-  const geocodeLatLng = () => {
-    var requestOptions = {
-      method: 'GET',
-    };
-    fetch(`https://api.geoapify.com/v1/geocode/reverse?lat=${coords.lat}&lon=${coords.lng}&apiKey=${process.env.REACT_APP_REVERSE_GEOCODING_API_KEY}`, requestOptions)
-      .then(response => response.json())
-      .then(result =>{
-        console.log(`${result.features[0].properties.street } ${result.features[0].properties.city}`)
-      })
-      .catch(error => alert('error', error));
-  }
+  // const geocodeLatLng = () => {
+  //   var requestOptions = {
+  //     method: 'GET',
+  //   };
+  //   fetch(`https://api.geoapify.com/v1/geocode/reverse?lat=${coords.lat}&lon=${coords.lng}&apiKey=${process.env.REACT_APP_REVERSE_GEOCODING_API_KEY}`, requestOptions)
+  //     .then(response => response.json())
+  //     .then(result =>{
+  //       // result.features[0].properties.street result.features[0].properties.city
+  //     })
+  //     .catch(error => alert('error', error));
+  // }
 
   useEffect (() => {
     setCurrentPosition({
@@ -55,6 +55,7 @@ function Map({setCoords,draggable, coords, width, height, zoom}) {
     if(!coords) {
       if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(function(position) {
+          console.log(position.coords)
           setCurrentPosition({
               lat:position.coords.latitude,
               lng: position.coords.longitude
@@ -62,6 +63,9 @@ function Map({setCoords,draggable, coords, width, height, zoom}) {
           setCoords((prevState)=>
            ({...prevState, ...currentPosition})
           );
+          if (position.coords.accuracy > 10) {
+            toast.error("The GPS accuracy isn't good enough");
+          }
         });
       } else {
         console.log("Not Available");
