@@ -4,6 +4,7 @@ import Carousel from "../../components/carousel/Carousel";
 import DashboardSideNav from "../../components/includes/DashboardSideNav";
 
 function Dashboard() {
+
   return (
   <>
   <Grid>
@@ -13,24 +14,13 @@ function Dashboard() {
       </Grid.Column>
       <Grid.Column width={12}>
         <Segment >
-          <Carousel text='Top Masons'/>
+          <Carousel text='Top Masons' category={'carpentry'}/>
         </Segment>
         <Segment >
-          <Carousel />
-        </Segment>
-        <Segment >
-          <Carousel />
-        </Segment>
-        <Segment >
-          <Carousel />
-        </Segment>
-        <Segment >
-          <Carousel />
         </Segment>
       </Grid.Column>
     </Grid.Row>
   </Grid>
-
   </>
   )
 }
