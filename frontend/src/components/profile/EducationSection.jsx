@@ -21,15 +21,15 @@ function EducationSection({onEducationChange, eduType, handleAddEducation, setEd
           }} />
         </> : <></>
       }
-      { userProfile?.profile.college.length > 0 ? userProfile?.profile.college.map(school=><EducationListItem type={'college'} school={school}/>) : <Header as='h4' >No Information.</Header>
+      { userProfile?.profile?.college.length > 0 ? userProfile?.profile?.college?.map(school=><EducationListItem type={'college'} school={school}/>) : <Header as='h4' >No Information.</Header>
       }
       <Header as='h5' >High School</Header>
       { user.id === id ? <> <Button floated='right' size='tiny' basic circular icon='plus' onClick={()=>{
           setEduType('highschool')
           setShowEducationForm(!showEducationForm)
         }} /> </> : <></> }
-      { userProfile?.profile.highschool.length > 0 ?
-        userProfile?.profile.highschool.map(school=><EducationListItem school={school}/>) : <Header as='h4' >No Information.</Header> }
+      { userProfile?.profile?.highschool.length > 0 ?
+        userProfile?.profile?.highschool?.map(school=><EducationListItem school={school}/>) : <Header as='h4' >No Information.</Header> }
       <Header as='h5' >Elementary</Header>
       { user.id === id ?
         <>
@@ -39,7 +39,7 @@ function EducationSection({onEducationChange, eduType, handleAddEducation, setEd
             }}  />
         </> : <></>
       }
-      { userProfile?.profile.elementary.length > 0 ? userProfile?.profile.elementary.map(school=><EducationListItem school={school}/>) : <Header as='h4' >No Information.</Header>}
+      { userProfile?.profile?.elementary?.length > 0 ? userProfile?.profile?.elementary?.map(school=><EducationListItem school={school}/>) : <Header as='h4' >No Information.</Header>}
     </>
   )
 }

@@ -179,7 +179,7 @@ const getUserProfileByCategory = asyncHandler(async (req, res) => {
     {$unwind:'$ratings'},
     {
       $group: {
-        _id:'$_id',
+        _id:'$user._id',
         "name": { "$first": "$user.firstname" },
         "lastname": { "$last": "$user.lastname" },
         avgRating: {$avg:"$ratings.rating"}
@@ -189,14 +189,50 @@ const getUserProfileByCategory = asyncHandler(async (req, res) => {
     { $sort : { avgRating : -1 } }
   ]);
 
-  // const profile = await Profile.find({
-  //   members:{$in:[category]},
+  console.log(profiles)
+  res.status(200).json(profiles);
 
-  // }, { $sort: { avgRating: 1 } },).populate({
-  //   path:'user',
-  //   select: 'firstname lastname'
-  // })
-  // .limit(10);
+});
+
+const getT = asyncHandler(async (req, res) => {
+  const category = req.query.category
+  if(!category) {
+    res.status(400)
+    throw new Error('Nothing to query.')
+  }
+
+  const profiles = await Profile.aggregate([
+    {
+      $lookup: {
+        from: "users",
+        localField: "_id",
+        foreignField: "profile",
+        as: "user",
+      }
+    },
+    {
+      $lookup: {
+        from: "ratings",
+        localField: "ratings",
+        foreignField: "_id",
+        as: "ratings",
+      }
+    },
+    {$unwind:'$user'},
+    {$unwind:'$ratings'},
+    {
+      $group: {
+        _id: {"$user":"$user._id"},
+        "name": { "$first": "$user.firstname" },
+        "lastname": { "$last": "$user.lastname" },
+        avgRating: {$avg:"$ratings.rating"}
+      },
+    },
+
+    { $limit: 5},
+    { $sort : { avgRating : -1 } }
+  ]);
+
   console.log(profiles)
   res.status(200).json(profiles);
 

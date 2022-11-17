@@ -10,7 +10,7 @@ import SliderButtons from './SliderButtons'
 
 function Carousel({category, text}) {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
   const {userProfiles, userProfileLoading, userProfileError, userProfileMessage} = useSelector((state)=>state.userProfile);
 
   useEffect(()=> {
@@ -21,7 +21,7 @@ function Carousel({category, text}) {
     return () => {
       dispatch(profileReset());
     }
-  },[dispatch, userProfileError]);
+  },[dispatch]);
 
   if( userProfileLoading){
     return <>
@@ -35,14 +35,14 @@ function Carousel({category, text}) {
     <Header style={{padding:'10px'}}>{text}</Header>
     <CarouselProvider
       naturalSlideWidth={1}
-      naturalSlideHeight={.7}
+      naturalSlideHeight={.8}
       totalSlides={7}
       visibleSlides={3.25}
       style={{ width: '100%' }}
     >
       <Slider>
         {
-          userProfiles?.map(profile=> <CustomCardSlide category={category} profile={profile} />)
+          userProfiles?.map(profile=> <CustomCardSlide key={profile._id} category={category} profile={profile} />)
         }
 
       </Slider>

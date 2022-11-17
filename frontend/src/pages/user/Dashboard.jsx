@@ -14,9 +14,7 @@ function Dashboard() {
       </Grid.Column>
       <Grid.Column width={12}>
         <Segment >
-          <Carousel text='Top Masons' category={'carpentry'}/>
-        </Segment>
-        <Segment >
+          <Carousel text='Top Workers' category={'carpentry'}/>
         </Segment>
       </Grid.Column>
     </Grid.Row>

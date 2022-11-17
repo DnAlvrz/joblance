@@ -55,7 +55,6 @@ function Map({setCoords,draggable, coords, width, height, zoom}) {
     if(!coords) {
       if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(function(position) {
-          console.log(position.coords)
           setCurrentPosition({
               lat:position.coords.latitude,
               lng: position.coords.longitude
