@@ -21,6 +21,17 @@ export const getUser  = createAsyncThunk('profile/getUser', async (userId, thunk
   }
 });
 
+export const getUsersByCategory  = createAsyncThunk('profile/getUsersByCategory', async (category, thunkAPI) => {
+  try {
+    const userToken = thunkAPI.getState().auth.user.token;
+    const responseData = await userProfileService.getUsersByCategory(userToken, category);
+    return responseData;
+  } catch (error){
+    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
 export const updateUserAbout  = createAsyncThunk('profile/updateUserAbout', async ( data, thunkAPI) => {
   try {
     const userToken = thunkAPI.getState().auth.user.token;
@@ -73,6 +84,22 @@ export const userProfileSlice = createSlice({
         state.userProfile=action.payload
       })
       .addCase(getUser.rejected, (state, action)=> {
+        state.userProfileMessage = action.payload
+        state.userProfileError=true;
+        state.userProfileLoading=false;
+        state.userProfileSuccess=false;
+      })
+      // get user profiles by category
+      .addCase(getUsersByCategory.pending, (state)=> {
+        state.userProfileLoading=true
+      })
+      .addCase(getUsersByCategory.fulfilled, (state, action)=> {
+        state.userProfile=action.payload
+        state.userProfileLoading=false
+        state.userProfileError=false;
+        state.userProfiles=action.payload
+      })
+      .addCase(getUsersByCategory.rejected, (state, action)=> {
         state.userProfileMessage = action.payload
         state.userProfileError=true;
         state.userProfileLoading=false;

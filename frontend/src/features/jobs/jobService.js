@@ -28,7 +28,7 @@ const addJobPhoto = async(jobId, jobPhotos, token) => {
       Authorization: token
     }
   };
-  const response = await axios.post(`${API_URL}photos/${jobId}`, jobPhotos, config);
+  const response = await axios.post(`/api/v1/photos/${jobId}`, jobPhotos, config);
   return response.data;
 }
 

@@ -1,7 +1,8 @@
 const router = require('express').Router();
-const {getUserJobs, getUserProfile, updateAbout, addEducation, addSkills} = require('../controllers/user');
+const {getUserJobs, getUserProfile, updateAbout, addEducation, addSkills, getUserProfileByCategory} = require('../controllers/user');
 
 router.route('/jobs').get(getUserJobs);
+router.route('/sort/').get(getUserProfileByCategory);
 router.route('/:userId').get(getUserProfile);
 router.route('/:userId/about').put(updateAbout);
 router.route('/:userId/education').put(addEducation);

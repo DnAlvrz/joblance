@@ -90,9 +90,9 @@ const Profile = () => {
     }
   },[dispatch, navigate, user, id, userProfileError, userProfileMessage, userProfileSuccess]);
 
-  if(userProfile.role.name === 'client'){
-    navigate('/dashboard')
-  }
+  // if(userProfile.role.name === 'client'){
+  //   navigate('/dashboard')
+  // }
 
   if(userProfileLoading){
     return (

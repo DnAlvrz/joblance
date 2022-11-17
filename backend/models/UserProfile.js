@@ -61,10 +61,10 @@ const userProfileSchema = new mongoose.Schema({
       type:String
     }
   }],
-  testimonials: {
+  ratings: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Rating'
-  }
+  }]
 }, {timestamps:true});
 
 module.exports = new mongoose.model('UserProfile', userProfileSchema);

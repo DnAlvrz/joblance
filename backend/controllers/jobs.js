@@ -7,7 +7,10 @@ const listJobs = asyncHandler(async (req, res) => {
   const lat = req.query.lat;
   const lng = req.query.lng;
   const offset = page > 1 ? (page -1) * limit : 0;
-  const jobs = await Job.find({geolocation:{$near:{$geometry: {type:'point', coordinates:[lat, lng]}}}}, {
+  const jobs = await Job.find({
+    isOpen:true,
+    geolocation:{$near:{$geometry: {type:'point', coordinates:[lat, lng]}}}},
+    {
       contracts: 0,
       updatedAt: 0,
       __v: 0,

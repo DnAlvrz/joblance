@@ -40,10 +40,6 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Contract'
   }],
-  ratings: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Rating'
-  }]
 }, {
   timestamps: true
 });

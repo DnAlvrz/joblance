@@ -4,7 +4,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Card, Image } from "semantic-ui-react";
 
-const CustomCardSlide = ({ index, ...cardProps }) => (
+const CustomCardSlide = ({ index, category, profile }) => (
   <Slide index={index}>
     <div style={{ padding: 10 }}>
     <Card>
@@ -14,10 +14,10 @@ const CustomCardSlide = ({ index, ...cardProps }) => (
           size='mini'
           src='https://react.semantic-ui.com/images/avatar/large/steve.jpg'
         />
-        <Card.Header>Steve Sanders</Card.Header>
-        <Card.Meta>Friends of Elliot</Card.Meta>
+        <Card.Header>{profile.name} {profile.lastname} </Card.Header>
+        <Card.Meta>{category}</Card.Meta>
         <Card.Description>
-          Steve wants to add you to the group <strong>best friends</strong>
+        teve wants to add you to the group <strong  Sng>best friends</strong>
         </Card.Description>
       </Card.Content>
       <Card.Content extra>

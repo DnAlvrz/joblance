@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler');
 const Rating = require('../models/Rating');
 const User = require('../models/User');
 const Contract = require('../models/Contract');
+const UserProfile = require('../models/UserProfile');
 
 const listRatings = asyncHandler(async (req, res) => {
   // const { page = 1 } = req.query;
@@ -20,13 +21,13 @@ const addRating = asyncHandler(async (req, res) => {
 
   const contract = await Contract.findById( { _id: contractId } ).populate('job');
   const talent = await User.findById( { _id: talentId });
+  const talentProfile = await UserProfile.findOne({user:talentId});
 
-  if(!contract || !talent) {
-    const msge = !contract && talent ? 'Contract not found.' : 'User not found.'
+  if(!contract || !talent || !talentProfile)  {
+    const msge = !contract && talent && talentProfile ? 'Contract not found.' : 'User not found.'
     res.status(404);
     throw new Error(msge);
   }
-
 
   if(contract.rating) {
     res.status(403);
@@ -49,8 +50,8 @@ const addRating = asyncHandler(async (req, res) => {
   if(rating){
     contract.rating = rating._id;
     await contract.save();
-    talent.ratings.push(rating)
-    await talent.save();
+    talentProfile.ratings.push(rating)
+    await talentProfile.save();
     res.status(201).json(rating);
   } else {
     res.status(400)

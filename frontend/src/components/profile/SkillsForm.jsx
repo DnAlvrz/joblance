@@ -3,7 +3,7 @@ import { Button, Dropdown, Form } from 'semantic-ui-react';
 
 function SkillsForm({onSkillsChange, handleSkillsSubmit}) {
   const skills = [
-    { key: 'angular', text: 'Angular', value: 'angular' },
+    { key: 'carpentry', text: 'Caroebter', value: 'carpentry' },
     { key: 'css', text: 'CSS', value: 'css' },
     { key: 'design', text: 'Graphic Design', value: 'design' },
     { key: 'ember', text: 'Ember', value: 'ember' },

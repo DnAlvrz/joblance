@@ -41,11 +41,24 @@ const addSkills = async (token, userId, skills) => {
   return response.data
 }
 
+const getUsersByCategory = async (token, category) => {
+  const config = {
+    headers: {
+      Authorization: token
+    }
+  };
+  const response = await axios.get(`${API_URL}sort/?category=${category}`, config);
+  return response.data
+}
+
+
+
 const userProfileService = {
   getUser,
   updateUserAbout,
   addEducation,
-  addSkills
+  addSkills,
+  getUsersByCategory
 }
 
 export default userProfileService
