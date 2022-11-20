@@ -121,10 +121,22 @@ const toggleContract = asyncHandler(async (req, res) => {
   res.status(200).json(contract);
 });
 
+const getUserContracts = asyncHandler(async(req, res)=> {
+  const userId = req.params.userId;
+  const contracts = await Contract.find({user:userId})
+    .populate({
+      path:'job',
+      select:'title budget createdAt duration'
+    })
+    .populate('rating')
+  res.status(200).json(contracts)
+})
+
 module.exports = {
   addContract,
   listContracts,
   toggleContract,
   deleteContract,
-  terminateContract
+  terminateContract,
+  getUserContracts
 }

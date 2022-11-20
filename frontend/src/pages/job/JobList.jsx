@@ -18,14 +18,12 @@ function JobList() {
 
   useEffect(()=> {
     navigator.geolocation.getCurrentPosition(function(position) {
-      console.log(position.coords.latitude,position.coords.longitude)
       setUserLocation({
           lat:position.coords.latitude,
           lng: position.coords.longitude
       })
       dispatch(getOpenJobs({activePage, userLocation}));
     });
-
   }, [dispatch])
 
   const options = [

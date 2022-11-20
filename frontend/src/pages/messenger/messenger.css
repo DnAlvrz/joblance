@@ -23,11 +23,11 @@
   padding: 10px 0;
 }
 .chatBox{
-  flex: 5.5;
+  flex: 8.5;
 }
-.chatOnline{
+/* .chatOnline{
   flex: 3;
-}
+} */
 
 .chatMenuWrapper, .chatBoxWrapper, .chatOnlineWrapper {
   padding:10px;

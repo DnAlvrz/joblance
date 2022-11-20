@@ -4,10 +4,12 @@ const {
   addContract,
   deleteContract,
   terminateContract,
-  toggleContract
+  toggleContract,
+  getUserContracts
 } = require('../controllers/contracts');
 
 router.route('/').get(listContracts).post(addContract);
+router.route('/user/:userId').get(getUserContracts);
 router.route('/:contractId').put(toggleContract).delete(deleteContract)
 router.route('/terminate/:contractId').put(terminateContract)
 

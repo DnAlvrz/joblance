@@ -31,10 +31,21 @@ const terminateContract = async(token, contractId) => {
   return response.data
 }
 
+const getUserContracts = async(token, userId) => {
+  const config = {
+    headers: {
+      Authorization: token
+    }
+  };
+  const response = await axios.get(`${API_URL}/user/${userId}`, config)
+  return response.data
+}
+
 const contractService = {
   createContract,
   finishContract,
-  terminateContract
+  terminateContract,
+  getUserContracts
 }
 
 export default contractService;

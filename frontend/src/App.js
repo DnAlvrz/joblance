@@ -18,6 +18,7 @@ import Footer from "./components/includes/Footer";
 import Profile from "./pages/user/Profile";
 import UserJobView from "./pages/user/UserJobView";
 import "pure-react-carousel/dist/react-carousel.es.css";
+import UserContracts from "./pages/user/UserContracts";
 function App() {
   return (
     <>
@@ -39,6 +40,7 @@ function App() {
             <Route path="/user">
               <Route path=':id' element={<Profile/>} />
               <Route path="jobs" element={<UserJobs/>} />
+              <Route path="contracts" element={<UserContracts/>} />
               <Route path="jobs/:jobId" element={<UserJobView/>} />
             </Route>
             <Route path="*" element={<NotFound/>} />

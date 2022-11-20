@@ -38,7 +38,6 @@ const getJobs = async(token, data) => {
       Authorization: token
     }
   };
-  console.log(data);
   const response = await axios.get(`${API_URL}/?page=${data.activePage}&limit=10&lat=${data.userLocation.lat}&lng=${data.userLocation.lng}`, config);
   return response.data;
 };

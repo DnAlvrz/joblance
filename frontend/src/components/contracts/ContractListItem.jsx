@@ -23,7 +23,7 @@ function ContractListItem({contract, setCurrentContract, setFinishOpen,setTermin
     <List.Item>
       <List.Content floated='right'>
         {
-          contract.isOpen ? (
+          contract.status==='ongoing' ? (
           <Button.Group>
             <Button positive onClick={handleFinish}>Finish</Button>
             <Button negative onClick={handleTerminate}>Terminate</Button>
@@ -36,7 +36,7 @@ function ContractListItem({contract, setCurrentContract, setFinishOpen,setTermin
                 <Rate rating={contract.rating} contractId={contract._id} contract={contract} />
               </div>
             ) :
-              contract.status === 'terminated' ? (<Header textAlign='center' as='h5'>Terminated</Header>
+              contract.status === 'terminated' ? (<Header style={{padding:'15px'}} textAlign='center' as='h5'>Terminated</Header>
             ) : (
               <div  style={{padding:'15px'}}>
                 <Header textAlign='center' as='h5'>Rated</Header>

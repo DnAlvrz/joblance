@@ -107,11 +107,11 @@ function Messenger() {
             }
         </div>
       </div>
-      <div className="chatOnline">
+      {/* <div className="chatOnline">
         <div className="chatOnlineWrapper">
           <Online />
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

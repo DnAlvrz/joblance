@@ -59,7 +59,7 @@ function Header() {
           <Dropdown text='Contracts' pointing className='link Menu item'>
             <Dropdown.Menu>
               <Dropdown.Header> Contracts</Dropdown.Header>
-              <Link to='/jobs'><Dropdown.Item key='contracts'>Contracts</Dropdown.Item> </Link>
+              <Link to='/user/contracts'><Dropdown.Item key='contracts'>Contracts</Dropdown.Item> </Link>
               <Dropdown.Divider />
               <Dropdown.Header>My Jobs</Dropdown.Header>
               <Link to='/user/jobs'> <Dropdown.Item key='UserContracts'>My Contracts </Dropdown.Item></Link>
