@@ -44,7 +44,7 @@ app.get('/test', (req, res)=> {
 });
 
 app.use('/api/v1/auth/', authRouter);
-app.use('/api/admin/v1', adminRouter);
+app.use('/api/admin/v1',passport.authenticate('jwt', {session:false}), adminRouter);
 app.use('/api/v1/users/',passport.authenticate('jwt', {session:false}), userRouter);
 app.use('/api/v1/chat/', passport.authenticate('jwt', {session:false}), chatRouter);
 app.use('/api/v1/chat/message/', passport.authenticate('jwt', {session:false}), messageRouter);
