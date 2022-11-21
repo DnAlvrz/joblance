@@ -15,7 +15,7 @@ const totalCPUs = require('os').cpus().length;
 const errorHandler = require('./middleware/error');
 
 // Routes
-const authRouters = require('./routes/auth');
+const authRouter = require('./routes/auth');
 const jobRouter = require('./routes/jobs');
 const jobPhotoRouter = require('./routes/jobPhoto');
 const contractRouter = require('./routes/contracts')
@@ -25,6 +25,7 @@ const userRouter = require('./routes/user');
 const chatRouter = require('./routes/conversation');
 const messageRouter = require('./routes/message');
 const applicationRouter =require('./routes/application');
+const adminRouter =require('./routes/admin');
 
 connectDatabase();
 require('./models/Application');
@@ -42,7 +43,8 @@ app.get('/test', (req, res)=> {
   res.sendFile(path.resolve('test/test.html'));
 });
 
-app.use('/api/v1/auth/', authRouters);
+app.use('/api/v1/auth/', authRouter);
+app.use('/api/admin/v1', adminRouter);
 app.use('/api/v1/users/',passport.authenticate('jwt', {session:false}), userRouter);
 app.use('/api/v1/chat/', passport.authenticate('jwt', {session:false}), chatRouter);
 app.use('/api/v1/chat/message/', passport.authenticate('jwt', {session:false}), messageRouter);

@@ -9,13 +9,14 @@ const listJobs = asyncHandler(async (req, res) => {
   const offset = page > 1 ? (page -1) * limit : 0;
   const jobs = await Job.find({
     isOpen:true,
+    isVerfied: true,
     geolocation:{$near:{$geometry: {type:'point', coordinates:[lat, lng]}}}},
     {
       contracts: 0,
-      updatedAt: 0,
-      __v: 0,
       offers: 0,
-      isOpen: 0
+      updatedAt: 0,
+      isOpen: 0,
+      __v: 0,
     })
     .populate('geolocation')
     .sort({
@@ -178,7 +179,6 @@ const getUserJobs = asyncHandler(async (req, res) => {
     throw new Error('User not found')
   }
 });
-
 
 module.exports = {
   listJobs,

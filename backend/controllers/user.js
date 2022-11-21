@@ -3,7 +3,14 @@ const Job = require('../models/Job');
 const User = require('../models/User');
 const Profile = require('../models/UserProfile');
 
-
+const getTotalUserCount = asyncHandler(async(req, res)=> {
+  if(req.user.role.name!=='admin') {
+    res.status(401);
+    throw new Error('User unauthorized');
+  }
+  const userCount = await User.count();
+  res.status(200).json({userCount});
+});
 
 const getUserJobs = asyncHandler(async (req, res) => {
   // const user = await User.findById({_id:req.user.id});
@@ -61,7 +68,7 @@ const updateAbout = asyncHandler(async (req, res) => {
     res.status(200).json(user);
   } else {
     res.status(404);
-    throw new Error('User not found')
+    throw new Error('User not found');
   }
 });
 

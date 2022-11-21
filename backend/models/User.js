@@ -10,6 +10,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please enter a firstname.']
   },
+  status: {
+    type:String,
+    default:'unverified',
+    required: [true, 'Please enter user status.']
+  },
   lastname : {
     type: String,
     required: [true, 'Please enter a lastname.']
