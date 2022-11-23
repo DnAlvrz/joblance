@@ -10,6 +10,7 @@ const passport = require('passport');
 const path = require('path');
 const cluster = require('cluster');
 const totalCPUs = require('os').cpus().length;
+const createRoles = require('./util/createRoles')
 
 // Middle ware
 const errorHandler = require('./middleware/error');
@@ -70,7 +71,7 @@ if (cluster.isMaster){
     console.log(`worker ${worker.process.pid} died`);
     cluster.fork();
   });
-
+  createRoles.findOrCreateAdmin();
 } else {
   app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`.blue.underline);
