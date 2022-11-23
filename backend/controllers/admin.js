@@ -32,9 +32,9 @@ const verifyUser = asyncHandler(async(req, res)=> {
 });
 
 const verifyJob = asyncHandler(async(req, res)=> {
-  const jobId = req.body.jobId
+  const {jobId} = req.body.jobId
 
-  if(!jobId) {
+  if(!jobId || !status) {
     res.status(400);
     throw new Error('No job id given');
   }
