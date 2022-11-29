@@ -11,14 +11,10 @@ const CustomCardSlide = ({ index, category, profile }) => {
     <div style={{ padding: 10 }}>
     <Card>
       <Card.Content>
-        <Image
-          floated='right'
-          size='mini'
-          src='https://react.semantic-ui.com/images/avatar/large/steve.jpg'
-        />
-        <Card.Header>{profile.name} {profile.lastname} </Card.Header>
-        <Card.Meta>{category}</Card.Meta>
-        <Card.Description>
+
+        <Card.Header textAlign="center">{profile.firstname} {profile.lastname} </Card.Header>
+        <Card.Meta textAlign="center">{category}</Card.Meta>
+        <Card.Description textAlign="center">
         <Rating
             size='tiny'
             disabled={profile.avgRating}
@@ -32,7 +28,7 @@ const CustomCardSlide = ({ index, category, profile }) => {
       <Card.Content extra>
         <div className='ui two buttons'>
           <Link to={`/user/${profile._id}`}>
-            <Button basic color='blue'>
+            <Button  basic color='blue'>
               Profile
             </Button>
           </Link>
