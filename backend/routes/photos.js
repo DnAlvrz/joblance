@@ -4,7 +4,8 @@ const fileUpload = require('express-fileupload');
 const {
   uploadJobPhotos,
   listPhotos,
-  deletePhoto
+  deletePhoto,
+  listUserPhotos
 } = require('../controllers/jobPhoto');
 
 const {
@@ -14,6 +15,7 @@ const {
 } = require('../middleware/files');
 
 router.get('/jobs/:jobId', listPhotos);
+router.get('/users/:userId', listUserPhotos);
 router.post('/:jobId',
   fileUpload({createParentPath:true}),
   filespayload,

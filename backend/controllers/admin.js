@@ -32,27 +32,32 @@ const verifyUser = asyncHandler(async(req, res)=> {
 });
 
 const verifyJob = asyncHandler(async(req, res)=> {
-  const {jobId} = req.body.jobId
+  const {jobId, status} = req.body
 
   if(!jobId || !status) {
     res.status(400);
-    throw new Error('No job id given');
+    throw new Error('No job id given or status given');
   }
 
   if(req.user.role.name !== 'admin') {
-
     res.status(401);
     throw new Error('User unauthorized');
   }
 
   const job = await Job.findOne({ _id: jobId });
 
+
   if(job.isVeried) {
     res.status(400);
     throw new Error('Job already verified');
   }
 
-  job.isVerified = true;
+  if (status === 'rejected') {
+    job.status = 'rejected';
+  } else {
+    job.isVerified = true;
+    job.status = 'approved';
+  }
   await job.save();
   res.status(200).json({job});
 });
@@ -77,7 +82,7 @@ const getUnverifiedJobs = asyncHandler(async(req,res)=> {
     throw new Error('User unauthorized');
   }
 
-  const unverfiedJobs = await Job.find({ isVerified:false }, {
+  const unverfiedJobs = await Job.find({ isVerified:false, status: 'pending' }, {
     contracts: 0,
     offers: 0,
     updatedAt: 0,

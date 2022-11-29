@@ -72,9 +72,9 @@ function PostJob() {
 
   const onFileChange = (e) => {
     const files = e.target.files
-    console.log(files)
     const fileData = new FormData();
     Object.keys(files).forEach( key => fileData.append(files.item(key).name, files.item(key)));
+    console.log(fileData)
     setPhotos(fileData);
   };
 

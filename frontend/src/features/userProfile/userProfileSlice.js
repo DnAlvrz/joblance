@@ -65,6 +65,17 @@ export const addSkills  = createAsyncThunk('profile/addSkills', async (data, thu
   }
 });
 
+export const uploadProfilePicture  = createAsyncThunk('profile/uploadProfilePicture', async (data, thunkAPI) => {
+  try {
+    const userToken = thunkAPI.getState().auth.user.token;
+    const responseData = await userProfileService.uploadProfilePicture(userToken, data, data.userId);
+    return responseData;
+  } catch (error){
+    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
 export const userProfileSlice = createSlice({
   name: 'userProfile',
   initialState,
@@ -156,8 +167,23 @@ export const userProfileSlice = createSlice({
         state.userProfileLoading=false;
         state.userProfileSuccess=false;
       })
-
-
+      // Update User skills
+      .addCase(uploadProfilePicture.pending, (state)=> {
+        state.userProfileLoading=true
+      })
+      .addCase(uploadProfilePicture.fulfilled, (state, action)=> {
+        state.userProfile=action.payload
+        state.userProfileLoading=false
+        state.userProfileSuccess=true;
+        state.userProfileError=false;
+        state.userProfile  = action.payload
+      })
+      .addCase(uploadProfilePicture.rejected, (state, action)=> {
+        state.userProfileMessage = action.payload
+        state.userProfileError=true;
+        state.userProfileLoading=false;
+        state.userProfileSuccess=false;
+      })
 
   }
 

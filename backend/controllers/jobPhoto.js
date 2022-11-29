@@ -4,6 +4,7 @@ const asyncHandler = require('express-async-handler');
 const JobPhoto = require('../models/JobPhoto');
 const Job = require('../models/Job');
 const fs = require('fs');
+const User = require('../models/User');
 
 const uploadJobPhotos = asyncHandler( async(req, res) => {
   const id = req.params.jobId;
@@ -92,10 +93,24 @@ const listPhotos = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error('Job not found');
   }
+});
+
+const listUserPhotos = asyncHandler(async (req, res) => {
+  console.log('hit')
+  const userId = req.params.userId;
+  const user = await User.findById( { _id: userId, } ).populate('photos');
+  const photoUrls = user.photos.map(photo=>  req.protocol + '://' + req.get('host') +'/users/' + photo.name);
+  if(user){
+    res.status(200).json(photoUrls);
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
 })
 
 module.exports = {
   uploadJobPhotos,
   deletePhoto,
-  listPhotos
+  listPhotos,
+  listUserPhotos
 }

@@ -32,6 +32,10 @@ const userSchema = new mongoose.Schema({
     ref: 'UserProfile',
     default:null
   },
+  photos: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'UserPhoto',
+  }],
   role: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Role',

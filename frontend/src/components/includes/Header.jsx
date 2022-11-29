@@ -3,15 +3,29 @@ import {Link, useNavigate} from 'react-router-dom' //useNavigate
 import {useDispatch, useSelector} from 'react-redux';
 import {logout} from '../../features/auth/authSlice'
 import { Button, Menu, Container, Dropdown, Image } from 'semantic-ui-react'
+import { useEffect } from 'react';
+import { getUserPhotos } from '../../features/photos/photoSlice';
+import { toast } from 'react-toastify';
 
 function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {user} = useSelector((state) => state.auth);
+  const {photos, photoError, photoMessage} = useSelector((state)=>state.photos);
+
+  useEffect(()=> {
+    dispatch(getUserPhotos(user.id));
+
+    if(photoError){
+      toast.error(photoMessage)
+    }
+
+  }, [dispatch, photoError, photoMessage, user.id])
+
 
   const trigger = (
     <span>
-      <Image avatar src='/matt.jpg' /> Hello, {user?.firstname}
+      <Image avatar src={photos[photos.length-1]}/> Hello, {user?.firstname}
     </span>
   )
 

@@ -110,7 +110,7 @@ const Profile = () => {
       <Grid.Row >
         <Grid.Column width={4}>
           <Segment color='teal'>
-            <BasicInfo />
+            <BasicInfo user={user}/>
           </Segment>
         </Grid.Column>
         <Grid.Column width={10}>

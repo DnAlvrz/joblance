@@ -5,40 +5,40 @@ const getUser = async (token, userId) => {
   const config = {
     headers: {
       Authorization: token
-    }
+    },
   };
   const response = await axios.get(`${API_URL}${userId}`, config);
-  return response.data
+  return response.data;
 }
 
 const updateUserAbout = async (token, userId, aboutData) => {
   const config = {
     headers: {
       Authorization: token
-    }
+    },
   };
   const response = await axios.put(`${API_URL}${userId}/about`,{aboutText:aboutData}, config);
-  return response.data
+  return response.data;
 }
 
 const addEducation = async (token, userId, educationData) => {
   const config = {
     headers: {
-      Authorization: token
-    }
+      Authorization: token,
+    },
   };
   const response = await axios.put(`${API_URL}${userId}/education`,{educationData}, config);
-  return response.data
+  return response.data;
 }
 
 const addSkills = async (token, userId, skills) => {
   const config = {
     headers: {
-      Authorization: token
-    }
+      Authorization: token,
+    },
   };
   const response = await axios.put(`${API_URL}${userId}/skills`,{skills:skills}, config);
-  return response.data
+  return response.data;
 }
 
 const getUsersByCategory = async (token, category) => {
@@ -48,7 +48,18 @@ const getUsersByCategory = async (token, category) => {
     }
   };
   const response = await axios.get(`${API_URL}sort/?category=${category}`, config);
-  return response.data
+  return response.data;
+}
+
+const uploadProfilePicture = async(token, data, userId) => {
+  const config = {
+    headers: {
+      Authorization: token
+    }
+  };
+  console.log(data.uploadPhoto)
+  const response = await axios.put(`${API_URL}${userId}/photos`, data.uploadPhoto, config);
+  return response.data;
 }
 
 
@@ -58,7 +69,8 @@ const userProfileService = {
   updateUserAbout,
   addEducation,
   addSkills,
-  getUsersByCategory
+  getUsersByCategory,
+  uploadProfilePicture
 }
 
 export default userProfileService

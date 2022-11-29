@@ -25,7 +25,7 @@ const fileSizeLimiter = (req, res, next) => {
     res.status(403);
     throw new Error('Too many files or file size is too large')
   }
-  
+
   next();
 };
 
@@ -33,9 +33,11 @@ const fileExtLimiter = (allowedEXTArray) => {
   return (req, res, next) => {
     const files = req.files;
     const fileEXT = [];
+
     Object.keys(files).forEach(key => {
       fileEXT.push(path.extname(files[key].name))
     });
+
     const allowed = fileEXT.every(ext=>allowedEXTArray.includes(ext));
     if(!allowed) {
       res.status(400);

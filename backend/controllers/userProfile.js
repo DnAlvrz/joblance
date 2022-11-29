@@ -7,24 +7,10 @@ const newUserProfile = asyncHandler(async (req,res) => {
     res.status(401);
     throw new Error('Only registered workers can make a profile.')
   }
-
 });
 
-const getProfilesByCategory = asyncHandler(async (req, res) => {
 
-});
-
-const updateUserProfile = asyncHandler(async (req, res) => {
-
-});
-
-const deActivateProfile = asyncHandler(async (req, res) => {
-
-});
 
 module.exports = {
   newUserProfile,
-  getProfilesByCategory,
-  updateUserProfile,
-  deActivateProfile
 }

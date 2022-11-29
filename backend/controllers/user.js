@@ -2,19 +2,23 @@ const asyncHandler = require('express-async-handler');
 const Job = require('../models/Job');
 const User = require('../models/User');
 const Profile = require('../models/UserProfile');
+const UserPhoto = require('../models/UserPhoto');
+const path = require('path')
 
 const getTotalUserCount = asyncHandler(async(req, res)=> {
+
   if(req.user.role.name!=='admin') {
     res.status(401);
     throw new Error('User unauthorized');
   }
+
   const userCount = await User.count();
   res.status(200).json({userCount});
 });
 
 const getUserJobs = asyncHandler(async (req, res) => {
   // const user = await User.findById({_id:req.user.id});
-  if(req.user.id){
+  if (req.user.id){
     const jobs = await Job.find({user:req.user.id}).populate('contracts').populate('offers').populate('applications');
     res.status(200).json(jobs);
   } else {
@@ -63,7 +67,6 @@ const updateAbout = asyncHandler(async (req, res) => {
 
   profile.about = aboutText;
   await profile.save();
-  console.log(profile)
   if(user){
     res.status(200).json(user);
   } else {
@@ -153,6 +156,43 @@ const addSkills = asyncHandler(async (req, res) => {
   }
 });
 
+const getTopWorkers = asyncHandler(async (req, res) => {
+
+  const profiles = await Profile.aggregate([
+    {
+      $lookup: {
+        from: "users",
+        localField: "_id",
+        foreignField: "profile",
+        as: "user",
+      }
+    },
+    {
+      $lookup: {
+        from: "ratings",
+        localField: "ratings",
+        foreignField: "_id",
+        as: "ratings",
+      }
+    },
+    {$unwind:'$user'},
+    {$unwind:'$ratings'},
+    {
+      $group: {
+        _id:'$user._id',
+        "firstname": { "$first": "$user.firstname" },
+        "lastname": { "$last": "$user.lastname" },
+        avgRating: {$avg:"$ratings.rating"}
+      }
+    },
+    { $limit: 5},
+    { $sort : { avgRating : -1 } }
+  ]);
+
+  console.log(profiles)
+  res.status(200).json(profiles);
+});
+
 const getUserProfileByCategory = asyncHandler(async (req, res) => {
   const category = req.query.category
   if(!category) {
@@ -187,7 +227,7 @@ const getUserProfileByCategory = asyncHandler(async (req, res) => {
     {
       $group: {
         _id:'$user._id',
-        "name": { "$first": "$user.firstname" },
+        "firstname": { "$first": "$user.firstname" },
         "lastname": { "$last": "$user.lastname" },
         avgRating: {$avg:"$ratings.rating"}
       }
@@ -198,7 +238,6 @@ const getUserProfileByCategory = asyncHandler(async (req, res) => {
 
   console.log(profiles)
   res.status(200).json(profiles);
-
 });
 
 const getT = asyncHandler(async (req, res) => {
@@ -240,10 +279,46 @@ const getT = asyncHandler(async (req, res) => {
     { $sort : { avgRating : -1 } }
   ]);
 
-  console.log(profiles)
   res.status(200).json(profiles);
 
 });
+
+const uploadUserProfilePicture = asyncHandler( async(req, res) => {
+  const id = req.params.userId;
+  const user = await User.findOne( { _id:id } );
+  if(!user) {
+    res.status(404)
+    throw new Error('User not found')
+  }
+
+  const files = req.files
+  const errFiles = [];
+  console.log(req.files)
+  Object.keys(files).forEach(async (key) => {
+    const filepath = path.join(__dirname, '../../', 'uploads', files[key].name);
+    files[key].mv(filepath, async (err) => {
+      if(err){
+        errFiles.push(files[key].name);
+        return;
+      }
+      const photo = await UserPhoto.create({
+        name: files[key].name,
+        path: filepath,
+      });
+      user.photos.push(photo._id)
+      await user.save();
+    });
+  });
+
+  if(errFiles.length > 0){
+    res.status(500);
+    throw new Error(`Something went wrong while uploading ${errFiles}.`.replaceAll(',', ', '))
+  } else {
+    res.status(201).json({photos:user.photos})
+  }
+
+});
+
 
 module.exports = {
   getUserJobs,
@@ -251,5 +326,7 @@ module.exports = {
   updateAbout,
   addEducation,
   addSkills,
-  getUserProfileByCategory
+  getUserProfileByCategory,
+  uploadUserProfilePicture,
+  getTopWorkers
 }

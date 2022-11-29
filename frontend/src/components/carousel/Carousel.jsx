@@ -1,7 +1,6 @@
 import { CarouselProvider, Slider } from 'pure-react-carousel'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Dimmer, Header, Loader } from 'semantic-ui-react'
 import {getUsersByCategory, reset as profileReset} from '../../features/userProfile/userProfileSlice'
@@ -10,7 +9,6 @@ import SliderButtons from './SliderButtons'
 
 function Carousel({category, text}) {
   const dispatch = useDispatch();
-
   const {userProfiles, userProfileLoading, userProfileError, userProfileMessage} = useSelector((state)=>state.userProfile);
 
   useEffect(()=> {

@@ -22,6 +22,19 @@ export const getJobPhotos  = createAsyncThunk('photos/getJobPhotos', async (jobI
   }
 });
 
+export const getUserPhotos  = createAsyncThunk('photos/getUserPhotos', async (userId, thunkAPI) => {
+  try {
+    console.log('hit')
+    const userToken = thunkAPI.getState().auth.user.token;
+    const responseData = await photoService.getUserPhotos(userToken, userId);
+    console.log(responseData)
+    return responseData;
+  } catch (error){
+    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
 export const photoSlice = createSlice({
   name: 'photos',
   initialState,
@@ -39,6 +52,20 @@ export const photoSlice = createSlice({
         state.photos=action.payload;
       })
       .addCase(getJobPhotos.rejected, (state, action)=> {
+        state.photoLoading=false;
+        state.photoError=true;
+        state.photoSuccess=false;
+        state.photoMessage = action.payload
+      })
+      // Get User photos
+      .addCase(getUserPhotos.pending, (state)=> {state.photoLoading=true})
+      .addCase(getUserPhotos.fulfilled, (state, action)=> {
+        state.photoError=false
+        state.photoSuccess=true;
+        state.photoError=false;
+        state.photos=action.payload;
+      })
+      .addCase(getUserPhotos.rejected, (state, action)=> {
         state.photoLoading=false;
         state.photoError=true;
         state.photoSuccess=false;

@@ -9,6 +9,10 @@ const jobSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  status: {
+    type:String,
+    default: 'pending'
+  },
   city: {
     type:String,
     required:true

@@ -21,6 +21,7 @@ function Job() {
   const {offerError, offerSuccess, offerMessage} = useSelector((state)=> state.offer);
   const {photos, photoError, photoLoading, photoMessage} = useSelector((state)=>state.photos)
   const [offer, setOffer] = useState('');
+
   const onOfferChange = (e)=> {
     e.preventDefault();
     setOffer(e.target.value)
@@ -32,6 +33,7 @@ function Job() {
       return;
     }
     dispatch(submitOffer({jobId:job._id, text:offer, talent:user.id}));
+    setOffer('');
   };
 
   useEffect (() => {

@@ -14,8 +14,19 @@ const getJobPhotos = async (token, jobId) => {
 
 
 
+const getUserPhotos = async (token, userId) => {
+  const config = {
+    headers: {
+      Authorization: token
+    }
+  };
+  const response = await axios.get(`${API_URL}users/${userId}`, config)
+  return response.data
+}
+
 const photoService = {
-  getJobPhotos
+  getJobPhotos,
+  getUserPhotos
 };
 
 

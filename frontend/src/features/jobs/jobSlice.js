@@ -16,7 +16,7 @@ export const createJob = createAsyncThunk('jobs/create', async (jobData, thunkAP
   try {
     const userToken = thunkAPI.getState().auth.user.token;
     const responseData = await jobService.createJob(jobData.jobDetails, userToken);
-   await jobService.addJobPhoto(responseData.id, jobData.photos, userToken);
+    await jobService.addJobPhoto(responseData.id, jobData.photos, userToken);
     return responseData;
   } catch (error){
     const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
