@@ -86,7 +86,6 @@ const listPhotos = asyncHandler(async (req, res) => {
   const jobId = req.params.jobId;
   const job = await Job.findById( { _id: jobId, } ).populate('photos');
   const photoUrls = job.photos.map(photo=>  req.protocol + '://' + req.get('host') +'/uploads/' + photo.name);
-  console.log(photoUrls)
   if(job){
     res.status(200).json(photoUrls);
   } else {
@@ -96,7 +95,6 @@ const listPhotos = asyncHandler(async (req, res) => {
 });
 
 const listUserPhotos = asyncHandler(async (req, res) => {
-  console.log('hit')
   const userId = req.params.userId;
   const user = await User.findById( { _id: userId, } ).populate('photos');
   const photoUrls = user.photos.map(photo=>  req.protocol + '://' + req.get('host') +'/users/' + photo.name);

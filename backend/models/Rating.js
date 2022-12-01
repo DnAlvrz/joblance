@@ -11,7 +11,7 @@ const ratingSchema = new mongoose.Schema({
   },
   talent: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'UserProfile',
   },
   rating: {
     type: Number,

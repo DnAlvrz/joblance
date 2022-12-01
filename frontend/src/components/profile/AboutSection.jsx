@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Button, Header } from 'semantic-ui-react'
 import AboutForm from './AboutForm';
 
-function AboutSection({handleAboutTextChange, handleAboutSubmit}) {
+function AboutSection({profile, handleAboutTextChange, handleAboutSubmit}) {
   const {id} = useParams();
   const {user} = useSelector((state=>state.auth))
   const {userProfile} = useSelector((state=>state.userProfile))
@@ -16,7 +16,7 @@ function AboutSection({handleAboutTextChange, handleAboutSubmit}) {
       </Header>
       { showAboutForm  && user.id === id ? <><AboutForm handleAboutSubmit={handleAboutSubmit} handleAboutTextChange={handleAboutTextChange} /></> : <></>}
       { user.id === id ? <><Button basic circular icon='plus' floated='right' size='tiny' onClick={()=>{setShowAboutForm('true')}} /></>:<></>}
-      { userProfile?.profile?.about !== '' ? <><p>{userProfile?.profile?.about}</p></>  : <Header> No information</Header>}
+      { profile?.profile?.about !== '' ? <><p>{profile?.profile?.about}</p></>  : <Header> No information</Header>}
     </>
   )
 }

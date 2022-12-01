@@ -19,7 +19,6 @@ const Profile = () => {
   const {userProfile, userProfileSuccess, userProfileLoading, userProfileError, userProfileMessage} = useSelector((state)=>state.userProfile);
   const [eduType, setEduType] = useState('');
   const [aboutText, setAboutText] = useState('');
-  const [currentJob, setCurrentJob] = useState(null);
   const [profileSkills, setProfileSkills] = useState([]);
 
   const initialEducationState= {
@@ -110,14 +109,14 @@ const Profile = () => {
       <Grid.Row >
         <Grid.Column width={4}>
           <Segment color='teal'>
-            <BasicInfo user={user}/>
+            <BasicInfo profile={userProfile}/>
           </Segment>
         </Grid.Column>
         <Grid.Column width={10}>
           <Segment color='red'>
             <ContactButtons user={user} id={id} options={options} />
             <Container  style={{padding:'20px', marginTop:'30px'}} textAlign='justified'>
-              <AboutSection handleAboutTextChange={handleAboutTextChange} handleAboutSubmit={handleAboutSubmit} />
+              <AboutSection profile={userProfile} handleAboutTextChange={handleAboutTextChange} handleAboutSubmit={handleAboutSubmit} />
               <Divider />
               <SkillsSection handleSkillsSubmit={handleSkillsSubmit} onSkillsChange={onSkillsChange}  />
             <Header as='h4' color='blue'>Education</Header>

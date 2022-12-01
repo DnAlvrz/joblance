@@ -14,13 +14,15 @@ function Header() {
   const {photos, photoError, photoMessage} = useSelector((state)=>state.photos);
 
   useEffect(()=> {
-    dispatch(getUserPhotos(user.id));
+    if(user) {
+      dispatch(getUserPhotos(user.id));
+    }
 
     if(photoError){
       toast.error(photoMessage)
     }
 
-  }, [dispatch, photoError, photoMessage, user.id])
+  }, [dispatch, photoError, photoMessage, user])
 
 
   const trigger = (

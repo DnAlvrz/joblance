@@ -42,7 +42,7 @@ const addRating = asyncHandler(async (req, res) => {
   const rating = await Rating.create({
     contract: contract._id,
     user: req.user._id,
-    talent: talent._id,
+    talent: talentProfile._id,
     rating: rate,
     text
   });

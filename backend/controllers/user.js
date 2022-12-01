@@ -4,6 +4,7 @@ const User = require('../models/User');
 const Profile = require('../models/UserProfile');
 const UserPhoto = require('../models/UserPhoto');
 const path = require('path')
+const mongoose = require('mongoose')
 
 const getTotalUserCount = asyncHandler(async(req, res)=> {
 
@@ -29,20 +30,41 @@ const getUserJobs = asyncHandler(async (req, res) => {
 
 const getUserProfile = asyncHandler(async (req, res) => {
   const userId = req.params.userId
-
-  const user = await User.findById({_id:userId}, {
-    contracts:0,
+  const user = await User.findOne({_id:userId}, {
+    jobs:0,
+    contract:0,
     __v:0,
-    updatedAt: 0,
     password:0,
-    jobs: 0,
-    offers: 0,
-    conversations: 0,
-    role: 0
-  }).populate('profile');
+    offers:0,
+    conversations:0,
+    updatedAt:0,
+    role:0,
+  })
+  .populate({
+      path:'profile',
+      populate:{
+        path: 'ratings',
+        populate: {
+          path:'user',
+          select:'firstname lastname -_id'
+        }
+      }
+  })
 
+  let sum = 0;
+  if(user.profile.ratings.length !== 0) {
+    user.profile.ratings.forEach(rating => {
+      sum+= rating.rating
+    })
+  }
+  const avgRating = sum/user.profile.ratings.length
+  const userData={
+    ...user._doc,
+    avgRating
+  }
+  console.log(userData)
   if(user){
-    res.status(200).json(user);
+    res.status(200).json(userData);
   } else {
     res.status(404);
     throw new Error('User not found')
@@ -132,7 +154,6 @@ const addEducation = asyncHandler(async (req, res) => {
 const addSkills = asyncHandler(async (req, res) => {
   const userId = req.params.userId
   const {skills} = req.body;
-  console.log(req.body)
   const user = await User.findById({_id:userId}).populate('profile');
 
   if(!user) {
@@ -189,7 +210,6 @@ const getTopWorkers = asyncHandler(async (req, res) => {
     { $sort : { avgRating : -1 } }
   ]);
 
-  console.log(profiles)
   res.status(200).json(profiles);
 });
 
@@ -235,8 +255,6 @@ const getUserProfileByCategory = asyncHandler(async (req, res) => {
     { $limit: 5},
     { $sort : { avgRating : -1 } }
   ]);
-
-  console.log(profiles)
   res.status(200).json(profiles);
 });
 
@@ -293,7 +311,6 @@ const uploadUserProfilePicture = asyncHandler( async(req, res) => {
 
   const files = req.files
   const errFiles = [];
-  console.log(req.files)
   Object.keys(files).forEach(async (key) => {
     const filepath = path.join(__dirname, '../../', 'uploads', files[key].name);
     files[key].mv(filepath, async (err) => {
