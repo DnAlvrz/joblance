@@ -19,5 +19,5 @@ passport.use(new JwtStrategy(opts, function(jwt_payload, next) {
 		} else {
 			return next(null, false);
 		}
-	}).populate('role');
+	}).populate('role').populate('profile');
 }));

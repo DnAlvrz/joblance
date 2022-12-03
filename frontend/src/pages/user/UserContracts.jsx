@@ -6,16 +6,17 @@ import { toast } from 'react-toastify';
 import { Dimmer, Grid, List, Loader, Tab } from 'semantic-ui-react'
 import ContractItem from '../../components/contracts/ContractItem'
 import {getUserContracts, reset as contractReset} from '../../features/contracts/contractSlice';
+import {getApplications, reset as applicationReset} from '../../features/application/applicationSlice';
 
 function UserContracts() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const {user} = useSelector((state)=> state.auth);
     const {contracts, contractError, contractMessage, contractLoading} = useSelector((state)=> state.contract)
+    const {applications, applicationsError, applicationsMessage, applicationsLoading} = useSelector((state)=> state.application)
     const ongoing = contracts.filter(contract => contract.status==='ongoing');
     const finished = contracts.filter(contract => contract.status==='finished');
     const terminated = contracts.filter(contract => contract.status==='terminated');
-
     useEffect(()=> {
       if(contractError) {
         toast.error(contractMessage);
@@ -30,6 +31,7 @@ function UserContracts() {
       dispatch(getUserContracts(user.id));
       return ()=> {
         dispatch(contractReset());
+        dispatch(applicationReset())
       }
     },[user, dispatch, navigate, contractError])
     let panes;

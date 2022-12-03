@@ -1,7 +1,7 @@
 import React from 'react'
 import Moment from 'react-moment'
 import { Link } from 'react-router-dom'
-import { Button, Header, Image, List, Rating } from 'semantic-ui-react'
+import { Header, Image, List, Rating } from 'semantic-ui-react'
 
 
 function ContractItem({contract}) {

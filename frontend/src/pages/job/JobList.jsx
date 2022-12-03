@@ -98,11 +98,12 @@ function JobList() {
             </Menu.Menu>
           </Menu>
           <Message  size='large'>
+            {count} jobs
             <Item.Group divided>
             {jobs?.map(job =>  <JobItem key={job._id} job={job}/>)}
             </Item.Group>
             <Container text>
-              <Pagination defaultActivePage={activePage} totalPages={count/10} onPageChange={pageChange} />
+              <Pagination defaultActivePage={activePage} totalPages={Math.floor(count/10)} disabled={Math.floor(count/10) === 0} onPageChange={pageChange} />
             </Container>
           </Message>
       </Grid.Column>

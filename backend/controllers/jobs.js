@@ -8,23 +8,29 @@ const listJobs = asyncHandler(async (req, res) => {
   const lng = req.query.lng;
   const offset = page > 1 ? (page -1) * limit : 0;
   const jobs = await Job.find({
+     isOpen:true,
+     isVerfied: true,
+     worktype: {$in: req.user.profile.skills},
+     geolocation:{$near:{$geometry: {type:'point', coordinates:[lat, lng]}}}},
+     {
+       contracts: 0,
+       offers: 0,
+       updatedAt: 0,
+       isOpen: 0,
+       __v: 0,
+     })
+     .populate('geolocation')
+     .sort({
+       createdAt:1,
+     })
+     .skip(offset)
+     .limit(limit);
+  const jobsCount = await Job.count({
     isOpen:true,
-    isVerfied: true,
-    geolocation:{$near:{$geometry: {type:'point', coordinates:[lat, lng]}}}},
-    {
-      contracts: 0,
-      offers: 0,
-      updatedAt: 0,
-      isOpen: 0,
-      __v: 0,
-    })
-    .populate('geolocation')
-    .sort({
-      createdAt:1,
-    })
-    .skip(offset)
-    .limit(limit);
-  const jobsCount = await Job.count({isOpen:true})
+    isVerifieed:true,
+    worktype: {$in: req.user.profile.skills},
+    geolocation:{$near:{$geometry: {type:'point', coordinates:[lat, lng]}}}
+  });
   res.status(200).json({jobs, jobsCount});
 });
 

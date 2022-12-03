@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Pagination } from 'semantic-ui-react'
 
-function Paginate() {
+function Paginate({jobCount}) {
+  useEffect(()=> {
+    console.log(jobCount)
+  })
   return (
-    <Pagination defaultActivePage={1} totalPages={10} onPageChange={(event, data)=>{console.log(data.activePage)}} />
+    <>
+      <Pagination defaultActivePage={1} totalPages={jobCount} onPageChange={(event, data)=>{console.log(data.activePage)}} />
+    </>
   )
 }
 

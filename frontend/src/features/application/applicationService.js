@@ -25,9 +25,21 @@ const sendApplication = async(token, applicationData ) => {
 }
 
 
+const getApplications = async(token, userId ) => {
+  const config = {
+    headers: {
+      Authorization:token
+    }
+  };
+
+  const response = await axios.get(`${API_URL}${userId}`, config)
+  return response.data
+}
+
 const applicationService = {
   rejectApplication,
-  sendApplication
+  sendApplication,
+  getApplications
 }
 
 

@@ -30,6 +30,16 @@ export const sendJobApplication = createAsyncThunk('jobs/sendJobApplicaiton', as
   }
 });
 
+export const getApplications = createAsyncThunk('jobs/getApplications', async(applicationData, thunkAPI ) => {
+  try {
+    const userToken = thunkAPI.getState().auth.user.token;
+    return await applicationService.sendApplication(userToken, applicationData);
+  } catch (error) {
+    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
 export const applicationSlice = createSlice({
   name: 'applications',
   initialState,
@@ -51,7 +61,6 @@ export const applicationSlice = createSlice({
         state.applicationsSuccess=false;
         state.applicationsMessage = action.payload
       })
-
       // Create Job Application
       .addCase(sendJobApplication.pending, (state)=> {state.isLoading=true})
       .addCase(sendJobApplication.fulfilled, (state)=> {
@@ -60,6 +69,19 @@ export const applicationSlice = createSlice({
         state.applicationsError = false
       })
       .addCase(sendJobApplication.rejected, (state, action)=> {
+        state.applicationsLoading=false;
+        state.applicationsError = true;
+        state.applicationsSuccess=false;
+        state.applicationsMessage = action.payload
+      })
+      // Get User Job Applications
+      .addCase(getApplications.pending, (state)=> {state.isLoading=true})
+      .addCase(getApplications.fulfilled, (state, action)=> {
+        state.applicationsLoading=false;
+        state.applicationsError = false;
+        state.applications = action.payload
+      })
+      .addCase(getApplications.rejected, (state, action)=> {
         state.applicationsLoading=false;
         state.applicationsError = true;
         state.applicationsSuccess=false;
