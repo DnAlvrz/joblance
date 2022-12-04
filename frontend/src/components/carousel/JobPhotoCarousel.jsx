@@ -12,18 +12,17 @@ function JobPhotoCarousel({text, photos}) {
       naturalSlideWidth={1}
       naturalSlideHeight={1}
       totalSlides={photos.length}
-      visibleSlides={photos.length}
-      style={{ width: '100%' }}
+      visibleSlides={1}
+      style={{ width: '100%', maxHeight:'450px'}}
     >
       <Slider>
         {
           photos?.map(photo=> <PhotoSlide src={photo} />)
         }
       </Slider>
-      {
-        photos.length > 1 ? <SliderButtons /> : <></>
-      }
-
+        {
+          photos.length > 1 ? <SliderButtons /> : <></>
+        }
     </CarouselProvider>
 
     </>

@@ -9,7 +9,7 @@ const listJobs = asyncHandler(async (req, res) => {
   const offset = page > 1 ? (page -1) * limit : 0;
   const jobs = await Job.find({
      isOpen:true,
-     isVerfied: true,
+     isVerified: false,
      worktype: {$in: req.user.profile.skills},
      geolocation:{$near:{$geometry: {type:'point', coordinates:[lat, lng]}}}},
      {
@@ -20,6 +20,7 @@ const listJobs = asyncHandler(async (req, res) => {
        __v: 0,
      })
      .populate('geolocation')
+     .populate('photos')
      .sort({
        createdAt:1,
      })
@@ -27,10 +28,11 @@ const listJobs = asyncHandler(async (req, res) => {
      .limit(limit);
   const jobsCount = await Job.count({
     isOpen:true,
-    isVerifieed:true,
+    isVerified:true,
     worktype: {$in: req.user.profile.skills},
     geolocation:{$near:{$geometry: {type:'point', coordinates:[lat, lng]}}}
   });
+  console.log(jobsCount)
   res.status(200).json({jobs, jobsCount});
 });
 
@@ -124,13 +126,13 @@ const createJob = asyncHandler( async(req, res) => {
       budget: job.budget,
       worktype,
       city,
+      photos: [],
       duration: job.duration
     });
   } else {
     res.status(400);
     throw new Error('Job not created');
   }
-
 });
 
 const updateJob = asyncHandler(async (req, res) => {

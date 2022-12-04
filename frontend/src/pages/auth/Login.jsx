@@ -15,7 +15,7 @@ function Login() {
     password: ''
   });
 
-  const {user, isLoading, isError, isSuccess, message} = useSelector((state)=> state.auth)
+  const {user, authLoading, authError, authSuccess, authMessage} = useSelector((state)=> state.auth)
 
   const onChange = (e) => {
     setFormData(prevState =>({
@@ -38,22 +38,22 @@ function Login() {
   };
 
   useEffect (() => {
-    if(isError){
-      toast.error(message)
+    if(authError){
+      toast.error(authMessage)
     }
 
-    if(isSuccess || user){
+    if(authSuccess || user){
       navigate('/jobs')
     }
 
     dispatch(reset());
-  },[user, isError, isSuccess, message, isLoading, navigate,dispatch]);
+  },[user, navigate, dispatch, authError, authSuccess, authMessage]);
 
 
 
   return (
     <>
-    <Dimmer active={isLoading}>
+    <Dimmer active={authLoading}>
         <Loader>Loading</Loader>
     </Dimmer>
     <Grid textAlign='center' style={{ height: '80vh' }} verticalAlign='middle'>

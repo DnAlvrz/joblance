@@ -4,7 +4,7 @@ import { useEffect, useState} from 'react'
 import {Grid, Dimmer, Loader, Divider, Header, Segment} from 'semantic-ui-react';
 import { toast } from 'react-toastify';
 import {getJob, reset as jobReset} from '../../features/jobs/jobSlice';
-import { getJobPhotos } from '../../features/photos/photoSlice';
+import { getJobPhotos, reset as photoReset } from '../../features/photos/photoSlice';
 import {submitOffer, reset as offerReset} from '../../features/offers/offerSlice';
 import Map from '../../components/jobs/Map'
 import ApplicationForm from '../../components/jobs/ApplicationForm';
@@ -63,6 +63,7 @@ function Job() {
     return ()=> {
       dispatch(jobReset())
       dispatch(offerReset())
+      dispatch(photoReset())
     }
   }, [id, isSuccess, user, navigate, dispatch, isError, message, applicationsSuccess, applicationsError, applicationsMessage, offerError, offerSuccess, offerMessage, photoError, photoMessage]);
 

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import {Item, Message, Container, Dimmer, Loader, Pagination, Menu, Dropdown, Input, Grid} from 'semantic-ui-react'
 import { toast } from 'react-toastify'
 import {getOpenJobs, reset} from '../../features/jobs/jobSlice'
+import {reset as photoReset} from '../../features/photos/photoSlice'
 import JobItem from '../../components/jobs/JobItem'
 import SideNav from '../../components/includes/SideNav'
 
@@ -59,12 +60,14 @@ function JobList() {
 
     return ()=> {
       dispatch(reset())
+      dispatch(photoReset())
     }
   }, [dispatch])
 
   useEffect(()=>{
     if(isError){
       toast.error(message)
+      console.log(message)
     }
   }, [isError, message])
   if(isLoading) {

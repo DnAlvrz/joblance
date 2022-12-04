@@ -9,7 +9,7 @@ const initialState = {
   applicationsMessage: ''
 };
 
-export const rejectApplication = createAsyncThunk('contract/rejectApplication', async (applicationId, thunkAPI) => {
+export const rejectApplication = createAsyncThunk('application/rejectApplication', async (applicationId, thunkAPI) => {
   try {
     const userToken = thunkAPI.getState().auth.user.token;
     const responseData = await applicationService.rejectApplication(userToken, applicationId);
@@ -20,7 +20,7 @@ export const rejectApplication = createAsyncThunk('contract/rejectApplication', 
   }
 });
 
-export const sendJobApplication = createAsyncThunk('jobs/sendJobApplicaiton', async(applicationData, thunkAPI ) => {
+export const sendJobApplication = createAsyncThunk('application/sendJobApplicaiton', async(applicationData, thunkAPI ) => {
   try {
     const userToken = thunkAPI.getState().auth.user.token;
     return await applicationService.sendApplication(userToken, applicationData);
@@ -30,10 +30,10 @@ export const sendJobApplication = createAsyncThunk('jobs/sendJobApplicaiton', as
   }
 });
 
-export const getApplications = createAsyncThunk('jobs/getApplications', async(applicationData, thunkAPI ) => {
+export const getApplications = createAsyncThunk('application/getApplications', async(userId, thunkAPI ) => {
   try {
     const userToken = thunkAPI.getState().auth.user.token;
-    return await applicationService.sendApplication(userToken, applicationData);
+    return await applicationService.getApplications(userToken, userId);
   } catch (error) {
     const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
     return thunkAPI.rejectWithValue(message);

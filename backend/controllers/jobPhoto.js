@@ -8,7 +8,7 @@ const User = require('../models/User');
 
 const uploadJobPhotos = asyncHandler( async(req, res) => {
   const id = req.params.jobId;
-  const job = await Job.findOne( { _id:id } );
+  const job = await Job.findById( { _id:id } );
 
   if(!job) {
     res.status(404)
@@ -21,8 +21,8 @@ const uploadJobPhotos = asyncHandler( async(req, res) => {
   }
   const files = req.files
   const errFiles = [];
-
-  Object.keys(files).forEach(async (key) => {
+  const uploadedPhotos = [];
+  for (const key of Object.keys(files)) {
     const filepath = path.join(__dirname, '../../','files', files[key].name);
     files[key].mv(filepath, async (err) => {
       if(err){
@@ -32,11 +32,13 @@ const uploadJobPhotos = asyncHandler( async(req, res) => {
       const photo = await JobPhoto.create({
         name: files[key].name,
         path: filepath,
+        url:req.protocol + '://' + req.get('host') +'/uploads/' + files[key].name,
       });
-      job.photos.push(photo._id)
-      await job.save();
+      job.photos.push(photo._id);
     });
-  });
+    await job.save();
+  }
+
   if(errFiles.length > 0){
     res.status(500);
     throw new Error(`Something went wrong while uploading ${errFiles}.`.replaceAll(',', ', '))
@@ -97,7 +99,7 @@ const listPhotos = asyncHandler(async (req, res) => {
 const listUserPhotos = asyncHandler(async (req, res) => {
   const userId = req.params.userId;
   const user = await User.findById( { _id: userId, } ).populate('photos');
-  const photoUrls = user.photos.map(photo=>  req.protocol + '://' + req.get('host') +'/users/' + photo.name);
+  const photoUrls = user.photos.map(photo =>  req.protocol + '://' + req.get('host') +'/users/' + photo.name);
   if(user){
     res.status(200).json(photoUrls);
   } else {
@@ -106,8 +108,22 @@ const listUserPhotos = asyncHandler(async (req, res) => {
   }
 })
 
+const getjobPhoto = asyncHandler(async (req, res) => {
+  const jobId = req.params.jobId;
+  const job = await Job.findById( { _id: jobId, } ).populate('photos');
+  const photoUrl =  req.protocol + '://' + req.get('host') +'/users/' + job.photos[0].name
+
+  if(job && job.photos.length>0){
+    res.status(200).json(photoUrl);
+  } else {
+    res.status(404);
+    throw new Error('Job photos not found');
+  }
+})
+
 module.exports = {
   uploadJobPhotos,
+  getjobPhoto,
   deletePhoto,
   listPhotos,
   listUserPhotos

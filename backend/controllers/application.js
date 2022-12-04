@@ -83,8 +83,22 @@ const rejectApplication = asyncHandler(async( req, res) => {
   res.status(201).json(application);
 });
 
+
+const getUserApplications = asyncHandler(async( req, res) => {
+  console.log('hit')
+  const userId = req.params.userId
+  const applications = await Application.find({user:userId}).populate({
+    path:'job',
+    populate: {
+      path:'user',
+    }
+  });
+  res.status(201).json(applications);
+});
 module.exports = {
   createApplication,
   deleteApplication,
   rejectApplication,
+  getUserApplications,
+
 }

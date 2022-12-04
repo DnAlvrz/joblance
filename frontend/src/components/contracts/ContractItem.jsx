@@ -18,7 +18,6 @@ function ContractItem({contract}) {
           </div>: contract?.status === 'finished' && !contract?.rating ? <Header>Unrated</Header> : <></>
           }
       </List.Content>
-      <Image avatar src='/matt.jpg' />
       <List.Content>
         <List.Header>
           <Link to='/jobs'>{contract?.job.title}</Link>

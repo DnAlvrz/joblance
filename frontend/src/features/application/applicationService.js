@@ -32,7 +32,7 @@ const getApplications = async(token, userId ) => {
     }
   };
 
-  const response = await axios.get(`${API_URL}${userId}`, config)
+  const response = await axios.get(`${API_URL}users/${userId}`, config)
   return response.data
 }
 

@@ -55,7 +55,7 @@ const registerUser = asyncHandler(async(req, res)=> {
         firstname: user.firstname,
         lastname: user.lastname,
         email: user.email,
-        token: token
+        token: token,
       }
     });
   } else {
@@ -72,7 +72,7 @@ const loginUser =  asyncHandler(async( req, res) => {
     throw new Error('Enter your email and password');
   }
 
-  const user = await User.findOne({ email }).populate({path:'role', select:'name'});
+  const user = await User.findOne({ email }).populate({path:'role', select:'name'}).populate({path:'photos', select:'url -_id'});
 
   if(user && await bcrypt.compare(password, user.password)) {
     const token = "Bearer " + await generateToken(user._id, user.firstname, user.lastname);
@@ -85,7 +85,8 @@ const loginUser =  asyncHandler(async( req, res) => {
         lastname: user.lastname,
         email: user.email,
         session: user.role.name,
-        token:token
+        photos: user.photos[user.photos.length - 1] || null,
+        token:token,
       }
     });
   } else {

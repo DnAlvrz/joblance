@@ -23,6 +23,7 @@ const findOrCreateAdmin  = async () => {
       phone: process.env.ADMIN_PHONE_NUMBER,
       password: hashedPassword,
       role: adminRole._id,
+      address: 'Zamboanga City',
       status:'admin'
     })
     return newAdmin;

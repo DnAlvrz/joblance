@@ -301,6 +301,7 @@ const getT = asyncHandler(async (req, res) => {
 });
 
 const uploadUserProfilePicture = asyncHandler( async(req, res) => {
+  console.log('hit')
   const id = req.params.userId;
   const user = await User.findOne( { _id:id } );
   if(!user) {
@@ -320,6 +321,7 @@ const uploadUserProfilePicture = asyncHandler( async(req, res) => {
       const photo = await UserPhoto.create({
         name: files[key].name,
         path: filepath,
+        url: req.protocol + '://' + req.get('host') +'/users/' + files[key].name,
       });
       user.photos.push(photo._id)
       await user.save();

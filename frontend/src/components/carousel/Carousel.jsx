@@ -34,8 +34,8 @@ function Carousel({category, text}) {
     <CarouselProvider
       naturalSlideWidth={1}
       naturalSlideHeight={.8}
-      totalSlides={7}
-      visibleSlides={3.25}
+      totalSlides={userProfiles?.length || 1}
+      visibleSlides={userProfiles/3 || 1}
       style={{ width: '100%' }}
     >
       <Slider>

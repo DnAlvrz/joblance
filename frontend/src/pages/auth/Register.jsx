@@ -35,20 +35,20 @@ function Register() {
     address,
   } = formData;
 
-  const {user, isLoading, isError, isSuccess, message} = useSelector((state)=> state.auth);
+  const {user, authLoading, authError, authSuccess, authMessage} = useSelector((state)=> state.auth);
 
   useEffect(()=> {
 
-    if(isError){
-      toast.error(message);
+    if(authError){
+      toast.error(authMessage);
     }
 
-    if(isSuccess || user){
+    if(authSuccess || user){
       navigate('/');
     }
 
     dispatch(reset());
-  }, [user, isError, isSuccess, message, navigate,dispatch]);
+  }, [user, navigate, dispatch, authError, authSuccess, authMessage]);
 
   const onChange = (e) => {
     setFormData((prevState)=>({
@@ -90,7 +90,7 @@ function Register() {
   return (
     <>
 
-    <Dimmer active={isLoading}>
+    <Dimmer active={authLoading}>
       <Loader>Loading</Loader>
     </Dimmer>
     <Grid textAlign='center'  style={{ height: '80vh' }} verticalAlign='middle'>

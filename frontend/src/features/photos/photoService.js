@@ -8,7 +8,7 @@ const getJobPhotos = async (token, jobId) => {
       Authorization: token
     }
   };
-  const response = await axios.get(`${API_URL}jobs/${jobId}`, config)
+  const response = await axios.get(`${API_URL}jobs/all/${jobId}`, config)
   return response.data
 }
 
@@ -24,8 +24,21 @@ const getUserPhotos = async (token, userId) => {
   return response.data
 }
 
+
+const getJobPhoto = async (token, jobId) => {
+  const config = {
+    headers: {
+      Authorization: token
+    }
+  };
+  const response = await axios.get(`${API_URL}/jobs/primary/${jobId}`, config)
+  return response.data
+}
+
+
 const photoService = {
   getJobPhotos,
+  getJobPhoto,
   getUserPhotos
 };
 

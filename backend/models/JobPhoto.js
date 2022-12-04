@@ -8,6 +8,10 @@ const jobPhotoSchema = new mongoose.Schema({
   path: {
     type:String,
     required: [true, 'Enter the filepath']
+  },
+  url: {
+    type:String,
+    required: [true, 'Enter a url for photo']
   }
 }, {timestamps:true});
 

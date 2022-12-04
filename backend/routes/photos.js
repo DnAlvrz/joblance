@@ -5,7 +5,8 @@ const {
   uploadJobPhotos,
   listPhotos,
   deletePhoto,
-  listUserPhotos
+  listUserPhotos,
+  getjobPhoto
 } = require('../controllers/jobPhoto');
 
 const {
@@ -14,8 +15,6 @@ const {
   fileSizeLimiter,
 } = require('../middleware/files');
 
-router.get('/jobs/:jobId', listPhotos);
-router.get('/users/:userId', listUserPhotos);
 router.post('/:jobId',
   fileUpload({createParentPath:true}),
   filespayload,
@@ -23,6 +22,10 @@ router.post('/:jobId',
   fileExtLimiter(['.jpg', '.png', '.jpeg']),
   uploadJobPhotos
 );
+router.get('/users/:userId', listUserPhotos);
+router.get('/jobs/primary/:jobId', getjobPhoto);
+router.get('/jobs/all/:jobId', listPhotos);
+
 
 router.delete('/:jobId/remove/:photoId', deletePhoto);
 

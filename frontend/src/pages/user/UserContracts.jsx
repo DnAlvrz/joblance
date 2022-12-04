@@ -7,6 +7,8 @@ import { Dimmer, Grid, List, Loader, Tab } from 'semantic-ui-react'
 import ContractItem from '../../components/contracts/ContractItem'
 import {getUserContracts, reset as contractReset} from '../../features/contracts/contractSlice';
 import {getApplications, reset as applicationReset} from '../../features/application/applicationSlice';
+import ApplicationItem from '../../components/applications/ApplicationItem';
+
 
 function UserContracts() {
     const navigate = useNavigate();
@@ -29,6 +31,7 @@ function UserContracts() {
         navigate('/dashboard')
       }
       dispatch(getUserContracts(user.id));
+      dispatch(getApplications(user.id));
       return ()=> {
         dispatch(contractReset());
         dispatch(applicationReset())
@@ -38,36 +41,44 @@ function UserContracts() {
 
     panes = [
       { menuItem: 'All', render: () =>
-      <Tab.Pane style={{minHeight: '300px'}}>
+      <Tab.Pane key={'allcontracts'} style={{minHeight: '300px'}}>
         <List style={{minHeight:'300px'}} animated   divided relaxed>
           {
-            contracts.map(contract => <ContractItem contract={contract} />)
+            contracts.map(contract => <ContractItem key={contract.id} contract={contract} />)
           }
         </List>
       </Tab.Pane> },
       { menuItem: 'Active', render: () =>
-      <Tab.Pane style={{minHeight: '300px'}}>
+      <Tab.Pane key={'active'} style={{minHeight: '300px'}}>
         <List style={{minHeight:'300px'}} animated   divided relaxed>
           {
-            ongoing.map(contract =><ContractItem  contract={contract}/> )
+            ongoing.map(contract =><ContractItem key={contract.id}  contract={contract}/> )
           }
 
         </List>
       </Tab.Pane> },
       { menuItem: 'Finished', render: () =>
-      <Tab.Pane style={{minHeight: '300px'}}>
+      <Tab.Pane key={'finished'} style={{minHeight: '300px'}}>
         <List style={{minHeight:'300px'}} animated   divided relaxed>
           {
-            finished.map(contract=> <ContractItem contract={contract}/>)
+            finished.map(contract=> <ContractItem key={contract.id} contract={contract}/>)
           }
 
         </List>
       </Tab.Pane> },
       { menuItem: 'Terminated', render: () =>
-      <Tab.Pane style={{minHeight: '300px'}}>
+      <Tab.Pane key={'terminated'} style={{minHeight: '300px'}}>
         <List style={{minHeight:'300px'}} animated   divided relaxed>
           {
             terminated.map(contract=> <ContractItem contract={contract}/>)
+          }
+        </List>
+      </Tab.Pane> },
+      { menuItem: 'Applications', render: () =>
+      <Tab.Pane key={'applications'} style={{minHeight: '300px'}}>
+        <List style={{minHeight:'300px'}} animated   divided relaxed>
+          {
+            applications.map(application => <ApplicationItem key={application.id} application={application}/>)
           }
         </List>
       </Tab.Pane> },
