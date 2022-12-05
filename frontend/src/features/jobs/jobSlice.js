@@ -145,6 +145,7 @@ export const jobSlice = createSlice({
       })
       .addCase(deleteJob.fulfilled, (state, action)=> {
         state.isLoading=false
+        state.isSuccess=true;
       })
       .addCase(deleteJob.rejected, (state, action)=> {
         state.isLoading=false;

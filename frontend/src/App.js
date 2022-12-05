@@ -19,6 +19,8 @@ import Profile from "./pages/user/Profile";
 import UserJobView from "./pages/user/UserJobView";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import UserContracts from "./pages/user/UserContracts";
+import Help from "./pages/Help";
+import ContactUs from "./pages/ContactUs";
 function App() {
   return (
     <>
@@ -31,7 +33,9 @@ function App() {
             <Route path="/login" element={<Login/>} />
             <Route path="/register" element={<Register/>} />
             <Route path="/dashboard" element={<Dashboard/>} />
+            <Route path="/contact" element={<ContactUs/>} />
             <Route path="/chat" element={<Messenger/>} />
+            <Route path="/help" element={<Help/>} />
             <Route path="/jobs">
               <Route index element={<JobList/>} />
               <Route path=":id" element={<Job/>} />
