@@ -48,14 +48,14 @@ function ContractListItem({contract, setCurrentContract, setFinishOpen,setTermin
           )
         }
       </List.Content>
-      <Image avatar src='/matt.jpg' />
+      <Image avatar src={contract?.talent.photos[contract.talent.photos.length-1].url} />
       <List.Content>
         <List.Header>
-          <Link to='/jobs'>{contract.talent.firstname} {contract.talent.lastname} </Link>
+          <Link to='/jobs'>{contract?.talent.firstname} {contract?.talent.lastname} </Link>
         </List.Header>
         <List.Description>
           <p style={{padding:'0px', margin:'5px 0'}}>
-            <b>{contract.status.toUpperCase()}</b>
+            <b>{contract?.status.toUpperCase()}</b>
           </p>
           <span>Started on </span><Moment format="DD/MM/YY"  date={new Date(contract.createdAt)}/>
           <span> Until </span> <Moment format="DD/MM/YY"  date={new Date(contract.createdAt)}/>

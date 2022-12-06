@@ -9,7 +9,7 @@ const listJobs = asyncHandler(async (req, res) => {
   const offset = page > 1 ? (page -1) * limit : 0;
   const jobs = await Job.find({
      isOpen:true,
-     isVerified: false,
+     isVerified: true,
      worktype: {$in: req.user.profile.skills},
      geolocation:{$near:{$geometry: {type:'point', coordinates:[lat, lng]}}}},
      {
@@ -46,6 +46,10 @@ const viewJob = asyncHandler(async (req, res) => {
         {
           path: 'talent',
           select:' firstname lastname',
+          populate: {
+            path:'photos',
+            select: 'url'
+          }
         }, {
           path:'rating',
           model:'Rating'}
@@ -57,15 +61,20 @@ const viewJob = asyncHandler(async (req, res) => {
         populate:{
           path: 'talent',
           select:' firstname lastname',
+          populate: {
+            path:'photos',
+            select: 'url'
+          }
       }})
     .populate({
       path: 'offers',
       populate: {
         path:'talent',
-        select: 'firstname lastname'
+        select: 'firstname lastname photos'
       }
     });
   if(job){
+    console.log(job.applications[0].talent)
     res.status(200).json(job);
   } else {
     res.status(404);

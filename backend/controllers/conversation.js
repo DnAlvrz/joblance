@@ -8,8 +8,17 @@ const getConversations = asyncHandler(async (req,res)=>  {
 
   const conversations = await Conversation.find({
     members:{$in:[userId]}
-  }).populate('messages').populate({path:'members',select:' firstname lastname', });
-
+  }).populate({
+    path:'messages',
+    populate: {
+      path:'sender',
+      select:' firstname lastname',
+      populate:{
+        path:'photos',
+        select:'url'}
+    }
+  }).populate({path:'members',select:' firstname lastname', populate:{path:'photos', select:'url'} });
+  console.log(conversations[0].members)
   if(conversations) {
     res.status(200).json(conversations);
   } else {
@@ -35,7 +44,7 @@ const findOrCreateConversation = asyncHandler(async(req, res) => {
 
   const conversation = await Conversation.findOne({
     members:{$in:[userId, req.user._id]}
-  }).populate('messages').populate({path:'members',select:' firstname lastname' });
+  }).populate('messages').populate({path:'members',select:' firstname lastname', populate:{path:'photos', select:'url'} });
 
   if(!conversation) {
     console.log('hit')

@@ -65,7 +65,7 @@ function Messenger() {
     const msgData = {
       text: newMessage,
       conversationId:currentChat._id,
-      sender:user.id
+      sender:{_id:user.id}
     }
 
     const receiver= currentChat.members.find(member=> member._id !== user.id)

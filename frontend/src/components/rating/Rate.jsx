@@ -35,7 +35,7 @@ function Rate({rating, contractId, contract}) {
       <Modal.Header><Header textAlign='center' as='h3'>Submit your rating</Header></Modal.Header>
       <Modal.Content >
         <Modal.Description>
-          <Image centered src='/matt.jpg' size='small' circular />
+          <Image centered src={contract.talent.photos[contract.talent.photos.length-1].url} size='small' circular />
         </Modal.Description>
         <Container textAlign='center'>
           <Header

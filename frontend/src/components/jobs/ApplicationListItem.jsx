@@ -41,7 +41,7 @@ function ApplicationListItem({application,job}) {
           <Button negative onClick={handleReject}>Reject</Button>
         </Button.Group>
       </List.Content>
-      <Image avatar src='/images/avatar/small/lena.png' />
+      <Image avatar src={application?.talent?.photos[application?.talent?.photos?.length-1].url} />
       <List.Content>
         <Header as='h4'>
           {application?.talent.firstname} {application?.talent.lastname}

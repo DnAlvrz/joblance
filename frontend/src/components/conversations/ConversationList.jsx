@@ -22,7 +22,7 @@ function ConversationList({setCurrentChat,setMessages}) {
         setCurrentChat(conversation);
         setMessages(conversation.messages);
       }}>
-        <Conversation conversation={conversation} />
+        <Conversation key={conversation._id} conversation={conversation} />
       </div>
     )}
   </>

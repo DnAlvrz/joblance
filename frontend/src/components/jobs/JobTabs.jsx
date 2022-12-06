@@ -7,8 +7,8 @@ import ViewModal from '../user/ViewModal';
 
 const modalReducer = (state, modalAction) => {
   switch(modalAction.type) {
-    case 'editModalOpen': 
-      return {...state, editModalOpen:true};    
+    case 'editModalOpen':
+      return {...state, editModalOpen:true};
     case 'deleteModalOpen':
       return {...state, deleteModalOpen:true};
     case 'viewModalOpen':
@@ -28,12 +28,12 @@ function JobTabs({jobs, isLoading}) {
     editModalOpen:false,
     deleteModalOpen: false,
     viewModalOpen: false,
-  });  
+  });
 
   const [currentJob, setCurrentJob] = useState(null);
   const {editModalOpen, deleteModalOpen, viewModalOpen} = state;
 
-  
+
   const panes = [
     {
       menuItem: 'All',
