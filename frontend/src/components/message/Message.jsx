@@ -1,11 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import './message.css'
 import {format} from 'timeago.js';
 function Message({msg, own, user}) {
-  useEffect(()=> {
-    console.log(own)
-    console.log(msg.sender, user.id)
-  }, [])
   return (
     <div className={own ? 'message own' : 'message'} key={msg._id}>
       <div className="messageHeader">

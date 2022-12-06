@@ -39,7 +39,6 @@ function PostJob() {
       toast.error(message);
     }
     if(!user){
-      console.log('no user')
       navigate('/login')
     }
     if ("geolocation" in navigator) {
@@ -67,14 +66,12 @@ function PostJob() {
       ...prevState,
       worktype: data.value,
     }));
-    console.log(formData)
   }
 
   const onFileChange = (e) => {
     const files = e.target.files
     const fileData = new FormData();
     Object.keys(files).forEach( key => fileData.append(files.item(key).name, files.item(key)));
-    console.log(fileData)
     setPhotos(fileData);
   };
 

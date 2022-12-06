@@ -27,7 +27,6 @@ function UserContracts() {
         navigate('/login')
       }
       if(user.session === 'client') {
-        console.log(user.session);
         navigate('/dashboard')
       }
       dispatch(getUserContracts(user.id));

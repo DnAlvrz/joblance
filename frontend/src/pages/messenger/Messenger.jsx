@@ -40,7 +40,6 @@ function Messenger() {
 
   useEffect(() => {
     const isMember = currentChat?.members.filter((user)=>user._id===incomingMessage?.sender).length > 0
-    console.log(isMember)
     incomingMessage &&
       isMember &&
       setMessages((prev) => [...prev, incomingMessage]);
@@ -52,7 +51,6 @@ function Messenger() {
     }
     socket.current.emit('addUser', user.id);
     socket.current.on('getUsers', users => {
-      console.log(users)
     });
     return () => {
       dispatch(reset())

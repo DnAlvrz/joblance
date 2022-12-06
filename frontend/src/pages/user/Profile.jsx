@@ -68,7 +68,6 @@ const Profile = () => {
 
   const handleSkillsSubmit = (e) => {
     e.preventDefault();
-    console.log(profileSkills)
     dispatch(addSkills({id:id, skills:profileSkills}))
   }
 

@@ -67,7 +67,7 @@ function Map({setCoords,draggable, coords, width, height, zoom}) {
           }
         });
       } else {
-        console.log("Not Available");
+        alert('Alert need location permission')
       }
     }
   }, []);

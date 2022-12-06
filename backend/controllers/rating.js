@@ -13,7 +13,6 @@ const listRatings = asyncHandler(async (req, res) => {
 
 const addRating = asyncHandler(async (req, res) => {
   const {talentId, rate, text, contractId} = req.body;
-  console.log()
   if(!talentId || !rate || !text || !contractId) {
     res.status(400);
     throw new Error('Please fill in all fields');

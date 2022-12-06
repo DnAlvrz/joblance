@@ -32,7 +32,6 @@ const listJobs = asyncHandler(async (req, res) => {
     worktype: {$in: req.user.profile.skills},
     geolocation:{$near:{$geometry: {type:'point', coordinates:[lat, lng]}}}
   });
-  console.log(jobsCount)
   res.status(200).json({jobs, jobsCount});
 });
 
@@ -74,7 +73,6 @@ const viewJob = asyncHandler(async (req, res) => {
       }
     });
   if(job){
-    console.log(job.applications[0].talent)
     res.status(200).json(job);
   } else {
     res.status(404);

@@ -34,10 +34,8 @@ export const getJobPrimaryPhoto  = createAsyncThunk('photos/getJobPrimaryPhoto',
 
 export const getUserPhotos  = createAsyncThunk('photos/getUserPhotos', async (userId, thunkAPI) => {
   try {
-    console.log('hit')
     const userToken = thunkAPI.getState().auth.user.token;
     const responseData = await photoService.getUserPhotos(userToken, userId);
-    console.log(responseData)
     return responseData;
   } catch (error){
     const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();

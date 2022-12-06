@@ -67,7 +67,6 @@ function JobList() {
   useEffect(()=>{
     if(isError){
       toast.error(message)
-      console.log(message)
     }
   }, [isError, message])
   if(isLoading) {

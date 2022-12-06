@@ -57,7 +57,6 @@ const uploadProfilePicture = async(token, data, userId) => {
       Authorization: token
     }
   };
-  console.log(data.uploadPhoto)
   const response = await axios.put(`${API_URL}${userId}/photos`, data.uploadPhoto, config);
   return response.data;
 }

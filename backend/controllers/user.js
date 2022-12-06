@@ -301,7 +301,6 @@ const getT = asyncHandler(async (req, res) => {
 });
 
 const uploadUserProfilePicture = asyncHandler( async(req, res) => {
-  console.log('hit')
   const id = req.params.userId;
   const user = await User.findOne( { _id:id } );
   if(!user) {

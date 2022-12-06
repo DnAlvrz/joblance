@@ -59,7 +59,6 @@ const updateJob = async(token, jobData)=> {
       Authorization: token
     }
   }
-  console.log('hit');
   const response = await axios.put(`${API_URL}${jobData.jobId}`, jobData.formData, config)
   return response.data;
 };

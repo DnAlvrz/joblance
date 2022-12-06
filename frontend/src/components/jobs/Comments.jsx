@@ -5,10 +5,6 @@ import { Button, Comment, Form, Header } from 'semantic-ui-react'
 
 function Comments({offer, offers, onOfferChange, onOfferSubmit}) {
 
-  useEffect(()=>{
-    console.log(offers)
-  },[offers])
-
   return (
     <>
     <Comment.Group>

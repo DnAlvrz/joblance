@@ -18,7 +18,6 @@ const getConversations = asyncHandler(async (req,res)=>  {
         select:'url'}
     }
   }).populate({path:'members',select:' firstname lastname', populate:{path:'photos', select:'url'} });
-  console.log(conversations[0].members)
   if(conversations) {
     res.status(200).json(conversations);
   } else {
@@ -47,7 +46,6 @@ const findOrCreateConversation = asyncHandler(async(req, res) => {
   }).populate('messages').populate({path:'members',select:' firstname lastname', populate:{path:'photos', select:'url'} });
 
   if(!conversation) {
-    console.log('hit')
     const newConversation = await Conversation.create({
       members: [req.user._id, user._id]
     });
