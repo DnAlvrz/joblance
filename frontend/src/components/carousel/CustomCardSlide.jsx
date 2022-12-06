@@ -1,8 +1,8 @@
-import PropTypes from "prop-types";
+
 import { Slide } from "pure-react-carousel";
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button, Card, Header, Image, Rating } from "semantic-ui-react";
+import { Button, Card, Header, Rating } from "semantic-ui-react";
 
 const CustomCardSlide = ({ index, category, profile }) => {
 
@@ -26,13 +26,11 @@ const CustomCardSlide = ({ index, category, profile }) => {
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
-        <div className='ui two buttons'>
-          <Link to={`/user/${profile._id}`}>
-            <Button  basic color='blue'>
-              Profile
-            </Button>
-          </Link>
-        </div>
+        <Link to={`/user/${profile._id}`}>
+          <Button fluid basic color='blue'>
+            Profile
+          </Button>
+        </Link>
       </Card.Content>
     </Card>
     </div>

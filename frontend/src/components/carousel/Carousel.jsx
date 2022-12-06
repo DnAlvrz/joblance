@@ -33,9 +33,9 @@ function Carousel({category, text}) {
     <Header style={{padding:'10px'}}>{text}</Header>
     <CarouselProvider
       naturalSlideWidth={1}
-      naturalSlideHeight={.8}
+      naturalSlideHeight={1}
       totalSlides={userProfiles?.length || 1}
-      visibleSlides={userProfiles/3 || 1}
+      visibleSlides={1}
       style={{ width: '100%' }}
     >
       <Slider>

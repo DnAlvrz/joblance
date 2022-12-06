@@ -7,9 +7,9 @@ function Dashboard() {
 
   return (
   <>
-  <Grid>
+  <Grid stackable>
     <Grid.Row>
-      <Grid.Column width={4}>
+      <Grid.Column width={4} only='tablet computer'>
         <DashboardSideNav />
       </Grid.Column>
       <Grid.Column width={12}>

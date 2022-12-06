@@ -3,8 +3,6 @@ import {Link, useNavigate} from 'react-router-dom' //useNavigate
 import {useDispatch, useSelector} from 'react-redux';
 import {logout} from '../../features/auth/authSlice'
 import { Button, Menu, Container, Dropdown, Image } from 'semantic-ui-react'
-import { useEffect } from 'react';
-import { toast } from 'react-toastify';
 
 function Header() {
   const navigate = useNavigate();
@@ -39,18 +37,18 @@ function Header() {
 
   return (
     <>
-    <Menu secondary  style={{maxWidth:'100%'}}>
+    <Menu stackable secondary  style={{maxWidth:'100%'}}>
       <Container>
       { user? (
         <>
-          <Link to='/dashboard' style={{padding:'10px'}}>
+          <Link to='/dashboard' style={{padding:'20px'}}>
             <Menu.Item
               name='dashboard'
             />
           </Link>
-          <Dropdown text='Jobs' pointing className='link Menu item'>
-            <Dropdown.Menu>
-              <Dropdown.Header> Jobs</Dropdown.Header>
+          <Dropdown text='Jobs' style={{padding:'30px'}} pointing className='item'>
+            <Dropdown.Menu >
+              <Dropdown.Header >Jobs</Dropdown.Header>
               <Link to='/jobs'><Dropdown.Item key='joblist'>Jobs</Dropdown.Item> </Link>
               <Dropdown.Divider />
               <Dropdown.Header>My Jobs</Dropdown.Header>
@@ -58,7 +56,7 @@ function Header() {
               <Link to='/jobs/post'><Dropdown.Item key='postjob'> Post a job </Dropdown.Item></Link>
             </Dropdown.Menu>
           </Dropdown>
-          <Dropdown text='Contracts' pointing className='link Menu item'>
+          <Dropdown text='Contracts' style={{padding:'30px'}} pointing className='item'>
             <Dropdown.Menu>
               <Dropdown.Header> Contracts</Dropdown.Header>
               <Link to='/user/contracts'><Dropdown.Item key='contracts'>Contracts</Dropdown.Item> </Link>
