@@ -12,7 +12,7 @@ function Comments({offer, offers, onOfferChange, onOfferSubmit}) {
       Offers
     </Header>
       { offers?.length > 0 ? (
-        offers.map(offer=> (<Comment>
+        offers.map(offer=> (<Comment key={offers._id}>
           <Comment.Avatar src='/matt.jpg' />
           <Comment.Content>
             <Comment.Author as='a'>{offer.talent?.firstname} {offer.talent?.lastname}</Comment.Author>

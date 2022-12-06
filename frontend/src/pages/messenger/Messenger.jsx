@@ -83,7 +83,7 @@ function Messenger() {
     <div className='messenger'>
       <div className="chatMenu">
           <div className="chatMenuWrapper">
-            <input placeholder='Search conversation' className='chatMenuInput' />
+            {/* <input placeholder='Search conversation' className='chatMenuInput' /> */}
             <ConversationList setMessages={setMessages} setCurrentChat={setCurrentChat}/>
 
           </div>

@@ -16,6 +16,7 @@ function BasicInfo({profile}) {
   const [selectedFile, setSelectedFile] = useState();
   const [uploadPhoto, setUploadPhoto] = useState();
   const {photos, photoError, photoMessage} = useSelector((state)=>state.photos);
+
   const onFileChange = (e) => {
     const files = e.target.files;
 
@@ -99,6 +100,7 @@ function BasicInfo({profile}) {
           {/* <List.Item icon='users' content='Painters Club' /> */}
           <List.Item icon='marker' content={profile?.address} />
           <List.Item icon='mail' content={profile?.email}/>
+          <List.Item icon='user circle' content={profile?.status}/>
         </List>
       </Container>
     </>

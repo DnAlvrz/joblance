@@ -20,7 +20,7 @@ function ContractItem({contract}) {
       </List.Content>
       <List.Content>
         <List.Header>
-          <Link to='/jobs'>{contract?.job.title}</Link>
+          <Link to={`/jobs/${contract?.job?._id}`}>{contract?.job.title}</Link>
         </List.Header>
         <List.Description>
           <p style={{padding:'0px', margin:'5px 0'}}>

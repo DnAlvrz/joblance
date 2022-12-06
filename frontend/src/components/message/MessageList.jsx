@@ -7,7 +7,6 @@ function MessageList({ messages}) {
   const {user} = useSelector((state)=> state.auth);
 
   useEffect(()=> {
-
     scrollRef.current?.scrollIntoView({behavior:"smooth"})
   }, [messages, ]);
 
@@ -16,9 +15,7 @@ function MessageList({ messages}) {
     { messages.length > 0 ?
       messages.map((msg) =>
         <div ref={scrollRef} key={msg._id}  >
-          {msg.sender._id === user.id}
-
-          <Message  key={msg._id} user={user}  msg={msg} own={msg.sender._id === user.id}/>
+          <Message key={msg._id} user={user}  msg={msg} own={msg.sender._id === user.id}/>
         </div>)
       : <span> No messages yet. Message to start a conversation</span>
     }

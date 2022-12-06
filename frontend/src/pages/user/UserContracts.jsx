@@ -43,7 +43,7 @@ function UserContracts() {
       <Tab.Pane key={'allcontracts'} style={{minHeight: '300px'}}>
         <List style={{minHeight:'300px'}} animated   divided relaxed>
           {
-            contracts.map(contract => <ContractItem key={contract.id} contract={contract} />)
+            contracts.map(contract => <ContractItem key={contract._id} contract={contract} />)
           }
         </List>
       </Tab.Pane> },
@@ -51,7 +51,7 @@ function UserContracts() {
       <Tab.Pane key={'active'} style={{minHeight: '300px'}}>
         <List style={{minHeight:'300px'}} animated   divided relaxed>
           {
-            ongoing.map(contract =><ContractItem key={contract.id}  contract={contract}/> )
+            ongoing.map(contract =><ContractItem key={contract._id}  contract={contract}/> )
           }
 
         </List>
@@ -60,7 +60,7 @@ function UserContracts() {
       <Tab.Pane key={'finished'} style={{minHeight: '300px'}}>
         <List style={{minHeight:'300px'}} animated   divided relaxed>
           {
-            finished.map(contract=> <ContractItem key={contract.id} contract={contract}/>)
+            finished.map(contract=> <ContractItem key={contract._id} contract={contract}/>)
           }
 
         </List>
@@ -77,7 +77,7 @@ function UserContracts() {
       <Tab.Pane key={'applications'} style={{minHeight: '300px'}}>
         <List style={{minHeight:'300px'}} animated   divided relaxed>
           {
-            applications.map(application => <ApplicationItem key={application.id} application={application}/>)
+            applications.map(application => <ApplicationItem key={application._id} application={application}/>)
           }
         </List>
       </Tab.Pane> },
