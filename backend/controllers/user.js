@@ -63,6 +63,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
     avgRating
   }
   if(user){
+    console.log(userData)
     res.status(200).json(userData);
   } else {
     res.status(404);

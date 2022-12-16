@@ -42,38 +42,38 @@ export const authSlice = createSlice({
   initialState: initialState,
   reducers: {
     reset: (state) => {
-      state.isError=false;
-      state.isLoading = false;
-      state.isSuccess = false;
-      state.message= '';
+      state.authError=false;
+      state.authLoading = false;
+      state.authSuccess = false;
+      state.authMessage= '';
     }
   },
   extraReducers: (builder) => {
     builder
-      .addCase(register.pending, (state)=>{state.isLoading=true})
+      .addCase(register.pending, (state)=>{state.authLoading=true})
       .addCase(register.fulfilled, (state, action)=> {
-        state.isLoading = false;
-        state.isSuccess = true;
+        state.authLoading = false;
+        state.authSuccess = true;
         state.user = action.payload.user;
 
       })
       .addCase(register.rejected, (state, action)=> {
-        state.isLoading = false
-        state.isError = true
-        state.message = action.payload
+        state.authLoading = false
+        state.authError = true
+        state.authMessage = action.payload
         state.user=null
       })
-      .addCase(login.pending, (state)=>{state.isLoading=true})
+      .addCase(login.pending, (state)=>{state.authLoading=true})
       .addCase(login.fulfilled, (state, action)=> {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.message = action.payload.message
+        state.authLoading = false;
+        state.authSuccess = true;
+        state.authMessage = action.payload.message
         state.user = action.payload.user;
       })
       .addCase(login.rejected, (state, action)=> {
-        state.isLoading = false
-        state.isError = true
-        state.message = action.payload
+        state.authLoading = false
+        state.authError = true
+        state.authMessage = action.payload
         state.user=null
       })
       .addCase(logout.fulfilled, (state)=> {

@@ -30,7 +30,7 @@ function Header() {
     { key: 'sign-out', text: 'Sign Out', onClick: e=>{onLogout()}},
   ]
 
-  const onLogout = () => {
+  const onLogout = (e) => {
     dispatch(logout());
     navigate('/login')
   };

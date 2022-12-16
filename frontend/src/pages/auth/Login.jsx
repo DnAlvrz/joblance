@@ -27,12 +27,10 @@ function Login() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-
     const userCredentials = {
       email,
       password
     };
-
     dispatch(login(userCredentials));
 
   };
@@ -46,7 +44,9 @@ function Login() {
       navigate('/jobs')
     }
 
-    dispatch(reset());
+    return () => {
+      dispatch(reset())
+    };
   },[user, navigate, dispatch, authError, authSuccess, authMessage]);
 
 

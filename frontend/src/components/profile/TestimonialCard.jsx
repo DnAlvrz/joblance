@@ -1,20 +1,26 @@
+import { useState } from 'react';
 import { Card, Rating } from 'semantic-ui-react'
 
-function TestimonialCard() {
+function TestimonialCard({ratings}) {
+  const [testimonials, setTestimonials] = useState(ratings?.filter(rating => rating.rating >= 4));
+
   return (
     <>
-    <Card>
+    {testimonials?.map((testimonial) =>
+    <Card key={testimonial._id}>
       <Card.Content>
-        <Card.Header>Matthew Harris</Card.Header>
-        <Card.Meta>Local Resident</Card.Meta>
+        <Card.Header></Card.Header>
+        <Card.Meta>{testimonial.user.firstname}  {testimonial.user.lastname} </Card.Meta>
         <Card.Description>
-          <Rating size='tiny' maxRating={5} defaultRating={5} icon='star' disabled/>
+          <Rating size='tiny' maxRating={5} defaultRating={testimonial.rating} icon='star' disabled/>
           <p>
-            Great work! He finished it in just a few hours! 5 stars bro!
+            {testimonial.text}
           </p>
         </Card.Description>
       </Card.Content>
-    </Card>
+    </Card>)
+    }
+
     </>
   )
 }

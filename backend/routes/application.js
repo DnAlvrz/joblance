@@ -5,7 +5,6 @@ const {
   updateApplication,
   deleteApplication,
   getUserApplications,
-
   rejectApplication
 } = require('../controllers/application')
 

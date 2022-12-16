@@ -29,6 +29,7 @@ const Profile = () => {
   };
   const [education, setEducation] = useState(initialEducationState);
 
+
   const options = [
     { key: 'asdsadasd1', text: 'job 1', value: 1 },
     { key: 'asdasdasdasd', text: 'job 2', value: 2 },
@@ -127,7 +128,7 @@ const Profile = () => {
                 Testimonials
               </Header>
               <Card.Group>
-                <TestimonialCard />
+                <TestimonialCard ratings={userProfile?.profile.ratings} />
               </Card.Group>
             </Container>
           </Segment>
