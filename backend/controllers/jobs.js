@@ -9,7 +9,7 @@ const listJobs = asyncHandler(async (req, res) => {
   const offset = page > 1 ? (page -1) * limit : 0;
   const jobs = await Job.find({
      isOpen:true,
-     isVerified: true,
+     isVerified: false,
      worktype: {$in: req.user.profile.skills},
      geolocation:{$near:{$geometry: {type:'point', coordinates:[lat, lng]}}}},
      {
@@ -28,7 +28,7 @@ const listJobs = asyncHandler(async (req, res) => {
      .limit(limit);
   const jobsCount = await Job.count({
     isOpen:true,
-    isVerified:true,
+    isVerified:false,
     worktype: {$in: req.user.profile.skills},
     geolocation:{$near:{$geometry: {type:'point', coordinates:[lat, lng]}}}
   });
@@ -170,13 +170,14 @@ const updateJob = asyncHandler(async (req, res) => {
 
 const deleteJob = asyncHandler(async (req, res) => {
   const id = req.params.id;
-  const jobMatch = await Job.findOne({id});
+  console.log(id)
+  const jobMatch = await Job.findOne({_id:id});
   if(!jobMatch) {
     res.status(400);
     throw new Error('Job not found');
   }
-
-  if (jobMatch.user._id.toString() !== req.user._id.toString()) {
+  console.log(jobMatch.user.toString(),  req.user._id.toString())
+  if (jobMatch.user.toString() !== req.user._id.toString()) {
     res.status(401);
     throw new Error('User not authorized');
   }
