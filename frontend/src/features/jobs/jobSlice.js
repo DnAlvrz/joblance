@@ -9,6 +9,7 @@ const initialState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
+  jobStatusCode: 200,
   message: ''
 };
 
@@ -89,7 +90,7 @@ export const jobSlice = createSlice({
       .addCase(createJob.fulfilled, (state, action)=> {
         state.isLoading=false
         state.isSuccess = true;
-        state.isError = false
+        state.isError = false;
         state.jobs.push(action.payload)
       })
       .addCase(createJob.rejected, (state, action)=> {
@@ -106,6 +107,7 @@ export const jobSlice = createSlice({
         state.isLoading=false
         state.jobs = action.payload.jobs
         state.count = action.payload.jobsCount
+        console.log(action)
       })
       .addCase(getOpenJobs.rejected, (state, action)=> {
         state.isLoading=false;
@@ -118,11 +120,14 @@ export const jobSlice = createSlice({
       })
       .addCase(getJob.fulfilled, (state, action)=> {
         state.isLoading=false
+        state.jobStatusCode = action.payload.status
         state.job = action.payload
+
       })
       .addCase(getJob.rejected, (state, action)=> {
         state.isLoading=false;
         state.isError = true;
+        state.jobStatusCode=404
         state.message = action.payload
       })
       // Update Job

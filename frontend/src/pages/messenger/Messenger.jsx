@@ -85,7 +85,6 @@ function Messenger() {
           <div className="chatMenuWrapper">
             {/* <input placeholder='Search conversation' className='chatMenuInput' /> */}
             <ConversationList setMessages={setMessages} setCurrentChat={setCurrentChat}/>
-
           </div>
       </div>
       <div className="chatBox">

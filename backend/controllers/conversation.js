@@ -99,7 +99,6 @@ const createConversation = asyncHandler(async (req,res)=>  {
     res.status(400);
     throw new Error('Something went wrong.');
   }
-
   res.status(201).json(newConversation);
 });
 

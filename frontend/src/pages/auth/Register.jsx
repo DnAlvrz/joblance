@@ -109,6 +109,7 @@ function Register() {
               label='First Name'
               placeholder='First Name'
               type='text'
+              required={true}
             />
             <Form.Input
               fluid
@@ -116,17 +117,18 @@ function Register() {
               name='lastname'
               label='Last Name'
               placeholder='Last Name'
+              required={true}
               type='text'
             />
           </Form.Group>
           <Form.Group widths='equal'>
-            <Form.Input name='address' label='Address' onChange={onChange} placeholder='Address' type='text' />
-            <Form.Input name='phone' label='Phone Number' onChange={onChange} placeholder='Phone No.' type='text' />
-            <Form.Input name='email' label='Email' onChange={onChange} placeholder='Email address' type='email' />
+            <Form.Input name='address' required={true} label='Address' onChange={onChange} placeholder='Address' type='text' />
+            <Form.Input name='phone' required={true}  label='Phone Number' onChange={onChange} placeholder='Phone No.' type='text' />
+            <Form.Input name='email' required={true} label='Email' onChange={onChange} placeholder='Email address' type='email' />
           </Form.Group>
           <Form.Group widths='equal'>
-            <Form.Input name='password' onChange={onChange} label='Password' type='password' />
-            <Form.Input label='Confirm password' onChange={onChange} type='password' name='password2'/>
+            <Form.Input name='password' required={true} onChange={onChange} label='Password' type='password' />
+            <Form.Input label='Confirm password' required={true} onChange={onChange} type='password' name='password2'/>
           </Form.Group>
           <Form.Select
             fluid
@@ -134,10 +136,12 @@ function Register() {
             name='role'
             placeholder='Join as ..'
             options={roles}
+            required={true}
             onChange={onRoleChange}
           />
           <Form.Checkbox  inline label='I agree to the terms and conditions'
             checked={isChecked}
+            required={true}
             onClick={(e) => {setIsChecked(!isChecked)}}
           />
           <Button fluid color='teal'>Register</Button>

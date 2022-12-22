@@ -81,16 +81,17 @@ function Header() {
 
             />
         </Link>
+         {/* 
         <Link to='/dashboard'>
           <Menu.Item
             name='about us'
           />
         </Link>
-        <Link to='/contact'>
+       <Link to='/contact'>
           <Menu.Item
             name='contact'
           />
-        </Link>
+        </Link> */}
         <Link to='/help'>
           <Menu.Item
             name='help'

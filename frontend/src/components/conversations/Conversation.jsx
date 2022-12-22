@@ -17,7 +17,7 @@ function Conversation({conversation}) {
     <>
       <div className="conversation" key={conversation._id}>
         <img
-          src={sender?.photos[sender?.photos?.length-1]?.url || 'square-image.png'}
+          src={sender?.photos ?  sender?.photos[sender?.photos?.length-1]?.url : 'square-image.png'}
           alt="John Doe"
           className='conversationImage'
         />

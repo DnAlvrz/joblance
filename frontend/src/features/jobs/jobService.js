@@ -9,7 +9,7 @@ const getJob = async (token, jobId ) => {
     }
   };
   const response = await axios.get(`${API_URL}view/${jobId}`, config);
-  return response.data;
+  return {...response.data, status: response.status};
 };
 
 const createJob = async(jobData, token) => {
@@ -39,7 +39,6 @@ const getJobs = async(token, data) => {
     }
   };
   const response = await axios.get(`${API_URL}/?page=${data.activePage}&limit=10&lat=${data.userLocation.lat}&lng=${data.userLocation.lng}`, config);
-  console.log(response)
   return response.data;
 };
 

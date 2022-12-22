@@ -1,7 +1,7 @@
 import { useParams, useNavigate} from 'react-router-dom'
 import { useSelector, useDispatch} from 'react-redux'
 import { useEffect, useState} from 'react'
-import {Grid, Dimmer, Loader, Divider, Header, Segment} from 'semantic-ui-react';
+import {Grid, Dimmer, Loader, Divider, Header, Segment, Card} from 'semantic-ui-react';
 import { toast } from 'react-toastify';
 import {getJob, reset as jobReset} from '../../features/jobs/jobSlice';
 import { getJobPhotos, reset as photoReset } from '../../features/photos/photoSlice';
@@ -16,7 +16,7 @@ function Job() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {user} = useSelector((state) => state.auth);
-  const {job, isLoading, isSuccess, isError, message,} = useSelector((state) => state.jobs);
+  const {job, jobStatusCode, isLoading, isSuccess, isError, message,} = useSelector((state) => state.jobs);
   const {applicationsError, applicationsMessage, applicationsLoading, applicationsSuccess } = useSelector((state) => state.application);
   const {offerError, offerSuccess, offerMessage} = useSelector((state)=> state.offer);
   const {photos, photoError, photoLoading, photoMessage} = useSelector((state)=>state.photos)
@@ -39,6 +39,9 @@ function Job() {
   useEffect (() => {
     dispatch(getJob(id));
     dispatch(getJobPhotos(id));
+    if(!job){
+      navigate('/404')
+    }
     if(offerError) {
       toast.error(offerMessage);
     }
@@ -51,6 +54,7 @@ function Job() {
     if(applicationsSuccess){
       toast.success('Application sent')
     }
+    
     if(applicationsError) {
       toast.error(applicationsMessage);
     }
@@ -76,6 +80,14 @@ function Job() {
     </>
     )
   }
+  
+  if( jobStatusCode === 404) {
+    return (
+      <Card style={{}}>
+        <Header>Job not found</Header>
+      </Card>
+    )
+  }
 
   return (
     <>
@@ -83,7 +95,10 @@ function Job() {
         <Grid stackable>
           <Grid.Row>
             <Grid.Column  width={11}>
-              <Header as='h1' color='grey'>{job?.title}</Header>
+             <Header as='h1' color='grey'>
+              {job?.title  ? job?.title : 'Job not found'
+              }
+             </Header> 
               <Divider fitted />
               <Grid>
                 <Grid.Row style={{paddingTop:'30px'}}>
@@ -101,22 +116,33 @@ function Job() {
                 </Grid.Row>
               </Grid>
               <div style={{margin:'20px 0px'}}>
-                {photoLoading ? (
+                { photoLoading ? (
                   <Dimmer>
                     <Loader>Loading</Loader>
                   </Dimmer>
                 ) : <></>}
-                <JobPhotoCarousel photos={photos} text={'Job Photos'} />
+                {
+                  photos.length > 0 ?  <JobPhotoCarousel photos={photos} text={'Job Photos'} /> : <Header>No Photos</Header>
+                }
+               
               </div>
-              <Map draggable={false} height='300px' width='100%' coords={{ lng:job?.geolocation?.coordinates[0], lat:job?.geolocation?.coordinates[1]}}/>
+              {
+                job ?  <Map draggable={false} height='300px' width='100%' coords={{ lng:job?.geolocation?.coordinates[0] || 0, lat:job?.geolocation?.coordinates[1] || 0}}/> : <></>
+              }
+              
             </Grid.Column>
           <Grid.Column width={5}>
-            <ApplicationForm applicationsLoading={applicationsLoading} user={user} jobUser={job.user} jobId={job._id} />
+             {
+              job ?  <ApplicationForm applicationsLoading={applicationsLoading} user={user} jobUser={job.user} jobId={job._id} /> : <></>
+             }
+            
           </Grid.Column>
           </Grid.Row>
           <Grid.Row centered>
-            <Grid.Column  width={11}>
-              <Comments offers={job.offers} offer={offer} onOfferChange={onOfferChange} onOfferSubmit={onOfferSubmit} />
+            <Grid.Column  width={11}> {
+              job?  <Comments offers={job?.offers} offer={offer} onOfferChange={onOfferChange} onOfferSubmit={onOfferSubmit} /> : <></>
+            }
+             
             </Grid.Column>
           </Grid.Row>
         </Grid>

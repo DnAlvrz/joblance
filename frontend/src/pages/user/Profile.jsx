@@ -109,12 +109,15 @@ const Profile = () => {
       <Grid.Row >
         <Grid.Column width={4}>
           <Segment color='teal'>
+             
             <BasicInfo profile={userProfile}/>
           </Segment>
         </Grid.Column>
         <Grid.Column width={10}>
-          <Segment color='red'>
-            <ContactButtons user={user} id={id} options={options} />
+          <Segment color='red'> {
+            user.id != userProfile?.user ? <ContactButtons user={user} id={id} options={options} /> : <></>
+          }
+            
             <Container  style={{padding:'20px', marginTop:'30px'}} textAlign='justified'>
               <AboutSection profile={userProfile} handleAboutTextChange={handleAboutTextChange} handleAboutSubmit={handleAboutSubmit} />
               <Divider />
@@ -127,9 +130,16 @@ const Profile = () => {
               <Header as='h4' color='red'>
                 Testimonials
               </Header>
-              <Card.Group>
-                <TestimonialCard ratings={userProfile?.profile.ratings} />
-              </Card.Group>
+                {
+                  userProfile?.profile?.ratings?.length > 0 ? 
+                  (<Card.Group>
+                    <TestimonialCard ratings={userProfile?.profile.ratings} />
+                  </Card.Group>) :
+                  <Header as='h5' textAlign='center'>
+                  No ratings yet.
+                  </Header> 
+                }
+                
             </Container>
           </Segment>
         </Grid.Column>

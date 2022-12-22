@@ -17,6 +17,7 @@ import Messenger from "./pages/messenger/Messenger";
 import Footer from "./components/includes/Footer";
 import Profile from "./pages/user/Profile";
 import UserJobView from "./pages/user/UserJobView";
+import UsersNotFound from "./pages/user/UserNotFound";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import UserContracts from "./pages/user/UserContracts";
 import Help from "./pages/Help";
@@ -33,19 +34,21 @@ function App() {
             <Route path="/login" element={<Login/>} />
             <Route path="/register" element={<Register/>} />
             <Route path="/dashboard" element={<Dashboard/>} />
-            <Route path="/contact" element={<ContactUs/>} />
-            <Route path="/chat" element={<Messenger/>} />
+            {/* <Route path="/contact" element={<ContactUs/>} /> */}
+            <Route ex path="/chat" element={<Messenger/>} />
             <Route path="/help" element={<Help/>} />
             <Route path="/jobs">
-              <Route index element={<JobList/>} />
-              <Route path=":id" element={<Job/>} />
-              <Route path="post" element={<PostJob/>} />
+              <Route exact index element={<JobList/>} />
+              <Route exact path=":id" element={<Job/>} />
+              <Route exact path="post" element={<PostJob/>} />
+              <Route path='*' component={UsersNotFound} />
             </Route>
             <Route path="/user">
-              <Route path=':id' element={<Profile/>} />
-              <Route path="jobs" element={<UserJobs/>} />
-              <Route path="contracts" element={<UserContracts/>} />
-              <Route path="jobs/:jobId" element={<UserJobView/>} />
+              <Route exact path=':id' element={<Profile/>} />
+              <Route exact path="jobs" element={<UserJobs/>} />
+              <Route exact path="contracts" element={<UserContracts/>} />
+              <Route exact path="jobs/:jobId" element={<UserJobView/>} />
+              <Route path='*' component={UsersNotFound} />
             </Route>
             <Route path="*" element={<NotFound/>} />
           </Routes>
