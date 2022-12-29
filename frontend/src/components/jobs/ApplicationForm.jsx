@@ -40,7 +40,7 @@ const ApplicationForm = ({applicationsLoading, jobId, user,jobUser}) => {
         value={applicationMessage}
       />
       {
-        jobUser === user.id ? (
+        jobUser === user.id || !jobId ? (
         <Button fluid disabled secondary>Locked</Button>
         ) : (
         <Button loading={applicationsLoading} fluid onClick={onSubmit} disabled={applicationMessage.length === 0 } secondary> Submit </Button>

@@ -142,7 +142,6 @@ function Job() {
             <Grid.Column  width={11}> {
               job?  <Comments offers={job?.offers} offer={offer} onOfferChange={onOfferChange} onOfferSubmit={onOfferSubmit} /> : <></>
             }
-             
             </Grid.Column>
           </Grid.Row>
         </Grid>

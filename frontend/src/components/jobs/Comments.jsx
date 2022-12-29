@@ -1,5 +1,5 @@
 import Moment from 'react-moment'
-import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { Button, Comment, Form, Header } from 'semantic-ui-react'
 
 
@@ -12,10 +12,11 @@ function Comments({offer, offers, onOfferChange, onOfferSubmit}) {
       Offers
     </Header>
       { offers?.length > 0 ? (
-        offers.map(offer=> (<Comment key={offers._id}>
-          <Comment.Avatar src='/matt.jpg' />
+        offers.map(offer=> (
+        <Comment key={offer._id} >
+          <Comment.Avatar src={offer?.talent?.photos[offer?.talent?.photos.length-1].url || '/matt.jpg'} />
           <Comment.Content>
-            <Comment.Author as='a'>{offer.talent?.firstname} {offer.talent?.lastname}</Comment.Author>
+            <Comment.Author> <Link to={`/user/${offer?.talent?._id}`}> {offer.talent?.firstname} {offer.talent?.lastname} </Link></Comment.Author>
             <Comment.Metadata>
               <Moment interval={3000} fromNow ago>{offer.createdAt}</Moment> ago
             </Comment.Metadata>

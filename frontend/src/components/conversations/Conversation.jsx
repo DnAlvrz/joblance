@@ -17,8 +17,8 @@ function Conversation({conversation}) {
     <>
       <div className="conversation" key={conversation._id}>
         <img
-          src={sender?.photos ?  sender?.photos[sender?.photos?.length-1]?.url : 'square-image.png'}
-          alt="John Doe"
+          src={(sender?.photos !== null || sender?.photos !== undefined ) && sender?.photos > 0  ? sender?.photos[sender?.photos?.length-1]?.url : 'square-image.png'}
+          alt={sender.firstname + ' '  + sender.lastname}
           className='conversationImage'
         />
         <span className="conversationName">{sender.firstname} {sender.lastname}</span>

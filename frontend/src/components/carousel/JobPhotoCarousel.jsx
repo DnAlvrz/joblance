@@ -17,7 +17,7 @@ function JobPhotoCarousel({text, photos}) {
     >
       <Slider>
         {
-          photos?.map(photo=> <PhotoSlide src={photo} />)
+          photos?.map((photo, indexC)=> <PhotoSlide key={indexC} src={photo} />)
         }
       </Slider>
         {

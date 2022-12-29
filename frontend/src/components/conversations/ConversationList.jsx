@@ -17,12 +17,15 @@ function ConversationList({setCurrentChat,setMessages}) {
 
   return (
     <>
-    {conversations?.map(conversation =>
-      <div onClick={()=> {
-        setCurrentChat(conversation);
-        setMessages(conversation.messages);
-      }}>
-        <Conversation key={conversation._id} conversation={conversation} />
+    {conversations?.map((conversation) =>
+      <div 
+        onClick={()=> {
+          setCurrentChat(conversation);
+          setMessages(conversation.messages);
+        }}
+        key={conversation._id}
+      >
+        <Conversation conversation={conversation} />
       </div>
     )}
   </>

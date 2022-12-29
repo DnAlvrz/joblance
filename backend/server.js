@@ -57,6 +57,15 @@ app.use('/api/v1/ratings/', passport.authenticate('jwt', {session:false}), ratin
 app.use('/api/v1/offers/', passport.authenticate('jwt', {session:false}), offerRouter);
 app.use('/api/v1/applications/',passport.authenticate('jwt', {session:false}), applicationRouter);
 
+// serve front end
+if(process.env.NODE_ENV==='production') {
+  app.use(express.static(path.join(__dirname, '../frontend/build')));
+  app.get('*', (req,res) => {
+    return res.sendFile(
+      path.resolve(__dirname, '../', 'frontend', 'build', 'index.html')
+      );
+  })
+}
 app.use(errorHandler);
 
 

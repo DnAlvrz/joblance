@@ -56,13 +56,13 @@ export const chatSlice = createSlice({
   extraReducers: (builder)=> {
     builder
       // Get jobs
-      .addCase(getConversations.pending, (state)=> {state.isLoading=true})
-      .addCase(getConversations.fulfilled, (state, action)=> {
+      .addCase(getConversations.pending, (state) => {state.isLoading=true})
+      .addCase(getConversations.fulfilled, (state, action) => {
         state.isLoading=false;
         state.isError = false;
         state.conversations = action.payload;
       })
-      .addCase(getConversations.rejected, (state, action)=> {
+      .addCase(getConversations.rejected, (state, action) => {
         state.isLoading=false;
         state.isError = true;
         state.message = action.payload;

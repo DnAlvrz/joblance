@@ -55,7 +55,7 @@ function Messenger() {
     return () => {
       dispatch(reset())
     }
-  },[navigate, user]);
+  },[navigate, dispatch, user]);
 
 
   const handleSubmit = async (e) => {
@@ -75,7 +75,6 @@ function Messenger() {
       receiverId:receiver._id,
       text:newMessage
     });
-
     setMessages([...messages, msgData]);
   };
 

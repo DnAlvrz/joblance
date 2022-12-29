@@ -69,10 +69,15 @@ const viewJob = asyncHandler(async (req, res) => {
       path: 'offers',
       populate: {
         path:'talent',
-        select: 'firstname lastname photos'
+        select: 'firstname lastname',
+        populate: {
+          path:'photos',
+          select: 'url'
+        }
       }
     });
   if(job){
+    console.log(job.offers[0].talent.photos[0]);
     res.status(200).json(job);
 
   } else {
