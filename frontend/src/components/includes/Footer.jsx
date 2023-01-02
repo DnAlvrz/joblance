@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Container, Grid, Header, Icon, List, Segment } from 'semantic-ui-react'
 
 function Footer() {
@@ -8,32 +9,11 @@ function Footer() {
       <Grid divided inverted stackable>
         <Grid.Row>
           <Grid.Column width={3}>
-            <Header inverted as='h4' content='About' />
+            <Header inverted as='h4' content='Support' />
             <List link inverted>
-            <List.Item as='a'>About us</List.Item>
-              <List.Item as='a'>Collaborate with us</List.Item>
-              <List.Item as='a'>How To Access</List.Item>
-              <List.Item as='a'>Contact Us</List.Item>
-
-            </List>
-          </Grid.Column>
-          <Grid.Column width={3}>
-            <Header inverted as='h4' content='Services' />
-            <List link inverted>
-              <List.Item as='a'>Help us improve</List.Item>
-              <List.Item as='a'>Sitemap</List.Item>
-
-              <List.Item as='a'>FAQs</List.Item>
-              <List.Item as='a'>Careers</List.Item>
-            </List>
-          </Grid.Column>
-          <Grid.Column width={3}>
-            <Header inverted as='h4' content='Others' />
-            <List link inverted>
-              <List.Item as='a'>Training</List.Item>
-              <List.Item as='a'>Services</List.Item>
-              <List.Item as='a'>Sponsor/Donations</List.Item>
-              <List.Item as='a'>Favorites</List.Item>
+              <Link to='/help'>
+              <List.Item as='a'>Help</List.Item>
+              </Link>
             </List>
           </Grid.Column>
           <Grid.Column width={4}>

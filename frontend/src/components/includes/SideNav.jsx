@@ -12,10 +12,9 @@ function SideNav() {
 
   }, [activeItem])
   return (
-
     <Menu vertical>
         <Menu.Item>
-          <Menu.Header>Filter</Menu.Header>
+          <Menu.Header>Shortcuts</Menu.Header>
           <Menu.Menu>
             <Link to= '/jobs'>
             <Menu.Item
@@ -43,65 +42,18 @@ function SideNav() {
             </Link>
           </Menu.Menu>
         </Menu.Item>
-
-        <Menu.Item>
-          <Menu.Header>Talents</Menu.Header>
-
-          <Menu.Menu>
-            <Menu.Item
-              name='Search'
-              active={activeItem === 'rails'}
-              onClick={ handleItemClick}
-            />
-            <Menu.Item
-              name='View'
-              active={activeItem === 'python'}
-              onClick={ handleItemClick}
-            />
-            <Menu.Item
-              name='Invite'
-              active={activeItem === 'php'}
-              onClick={ handleItemClick}
-            />
-          </Menu.Menu>
-        </Menu.Item>
-
-        <Menu.Item>
-          <Menu.Header>Contracts</Menu.Header>
-
-          <Menu.Menu>
-            <Menu.Item
-              name='shared'
-              active={activeItem === 'shared'}
-              onClick={ handleItemClick}
-            />
-            <Menu.Item
-              name='dedicated'
-              active={activeItem === 'dedicated'}
-              onClick={ handleItemClick}
-            />
-          </Menu.Menu>
-        </Menu.Item>
-
         <Menu.Item>
           <Menu.Header>Support</Menu.Header>
 
           <Menu.Menu>
+          <Link to= '/help'>
             <Menu.Item
-              name='email'
-              active={activeItem === 'email'}
+              as='span'
+              name='Help'
+              active={activeItem === 'help'}
               onClick={ handleItemClick}
-            >
-              E-mail Support
-            </Menu.Item>
-
-            <Menu.Item
-              name='faq'
-              active={activeItem === 'faq'}
-              onClick={ handleItemClick}
-            >
-              FAQs
-            </Menu.Item>
+            />
+            </Link>
           </Menu.Menu>
         </Menu.Item>
       </Menu>

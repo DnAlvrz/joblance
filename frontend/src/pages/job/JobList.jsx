@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react'
 import { useSelector, useDispatch} from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import {Item, Message, Container, Dimmer, Loader, Pagination, Menu, Dropdown, Input, Grid} from 'semantic-ui-react'
+import {Item, Message, Container, Dimmer, Loader, Pagination, Grid} from 'semantic-ui-react'
 import { toast } from 'react-toastify'
 import {getOpenJobs, reset} from '../../features/jobs/jobSlice'
 import {reset as photoReset} from '../../features/photos/photoSlice'
@@ -26,24 +26,6 @@ function JobList() {
       dispatch(getOpenJobs({activePage, userLocation}));
     });
   }, [dispatch])
-
-  const options = [
-    { key: 'ncr', text: 'NCR', value: 1 },
-    { key: 'car', text: 'CAR', value: 1 },
-    { key: '1', text: 'Region I', value: 1 },
-    { key: '2', text: 'Region II', value: 2 },
-    { key: '3', text: 'Region IV-A', value: 4 },
-    { key: '4', text: 'Mimaropa', value: 4.5 },
-    { key: '5', text: 'Region V', value: 3 },
-    { key: '6', text: 'Region VI', value: 3 },
-    { key: '7', text: 'Region VII', value: 3 },
-    { key: '8', text: 'Region VIII', value: 3 },
-    { key: '9', text: 'Region IX', value: 3 },
-    { key: '10', text: 'Region XI', value: 3 },
-    { key: '11', text: 'Region XII', value: 3 },
-    { key: '12', text: 'Region XII', value: 3 },
-    { key: '13', text: 'Region X', value: 3 },
-  ]
 
   const pageChange = (event, data)=>{
     setActivePage(data.activePage);
@@ -87,7 +69,7 @@ function JobList() {
           <SideNav />
         </Grid.Column>
         <Grid.Column width={13}>
-          <Menu>
+          {/* <Menu>
             <Input  style={{width:'100%', padding:'2px'}} placeholder='Search...' icon='search'/>
             <Menu.Menu position='right'>
               <Dropdown
@@ -98,7 +80,7 @@ function JobList() {
                 options={options}
               />
             </Menu.Menu>
-          </Menu>
+          </Menu> */}
           <Message  size='large'>
             {count} jobs
             <Item.Group divided>

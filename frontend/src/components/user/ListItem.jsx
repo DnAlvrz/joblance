@@ -1,9 +1,10 @@
 
 import { Link } from 'react-router-dom';
 import { Button, Dropdown, Grid, Icon, List } from 'semantic-ui-react'
+import { useNavigate } from 'react-router-dom';
 
 function ListItem({setCurrentJob,job, modalDispatch}) {
-
+  const navigate = useNavigate();
   return (
     <>
     <List.Item key={job._id} style={{padding:'10px'}}>
@@ -18,6 +19,12 @@ function ListItem({setCurrentJob,job, modalDispatch}) {
                   }}>
                   <Icon name='edit' />
                   Edit
+                </Button>
+                <Button color='blue' onClick={(e)=> {
+                  navigate('/jobs/'+job._id)
+                  }}>
+                  <Icon name='eye' />
+                  View
                 </Button>
                 <Button color='red' onClick={(e)=> {
                   setCurrentJob(job);

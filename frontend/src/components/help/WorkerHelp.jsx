@@ -42,7 +42,7 @@ function WorkerHelp() {
       <p>
         You can message the client and arrange the time and date for the job order.
       </p>
-      <Image fluid src='worker-message-1.png' />
+      <Image fluid src='/help/worker-message-1.png' />
     </Message>
     <Header>Step 6</Header>
     <Message>
@@ -50,7 +50,7 @@ function WorkerHelp() {
       <p>
       You can apply again to other jobs as soon as you finish a contract or you may apply to as many jobs as you can handle.
       </p>
-      <Image fluid src='worker-job-list.png' />
+      <Image fluid src='/help/worker-job-list.png' />
     </Message>
     </>
   )
