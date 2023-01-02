@@ -24,7 +24,7 @@ function PostJob() {
     title:'',
     description: '',
     budget: '',
-    location: '',
+    address: '',
     duration: '',
     city: '',
     worktype: ''

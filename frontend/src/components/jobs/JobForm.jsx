@@ -13,9 +13,9 @@ function JobForm({onChange, onChangeWorktype, formData}) {
   const workTypes = [
     { key: 'msn', value: 'mason', text: 'Masonry' },
     { key: 'cnstrctn', value: 'construction', text: 'Construction' },
-    { key: 'crpnty', value: 'carpentry', text: 'Capentry' },
-    { key: 'plmb', value: 'plumbing', text: 'Pumbling' },
-    { key: 'elctrcn', value: 'electricity', text: 'Electricity' },
+    { key: 'crpnty', value: 'carpentry', text: 'Carpentry' },
+    { key: 'plmb', value: 'plumbing', text: 'Plumbling' },
+    { key: 'elctrcn', value: 'electricity', text: 'Electrical' },
   ]
 
   return (

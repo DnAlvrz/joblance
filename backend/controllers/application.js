@@ -86,7 +86,6 @@ const rejectApplication = asyncHandler(async( req, res) => {
 
 const getUserApplications = asyncHandler(async( req, res) => {
   const userId = req.params.userId
-  console.log(userId);
   const applications = await Application.find({talent:userId}).populate({
     path:'job',
     populate: {

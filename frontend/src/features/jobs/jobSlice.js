@@ -107,7 +107,6 @@ export const jobSlice = createSlice({
         state.isLoading=false
         state.jobs = action.payload.jobs
         state.count = action.payload.jobsCount
-        console.log(action)
       })
       .addCase(getOpenJobs.rejected, (state, action)=> {
         state.isLoading=false;

@@ -90,7 +90,7 @@ const createJob = asyncHandler( async(req, res) => {
   const {
     title,
     description,
-    location,
+    address,
     lat,
     lng,
     budget,
@@ -98,11 +98,10 @@ const createJob = asyncHandler( async(req, res) => {
     worktype,
     city
   } = req.body;
-
   if(
       !title ||
       !description ||
-      !location ||
+      !address ||
       !lat ||
       !lng ||
       !budget ||
@@ -117,7 +116,7 @@ const createJob = asyncHandler( async(req, res) => {
   const job = await Job.create( {
     title,
     description,
-    address:location,
+    address,
     lat,
     geolocation: {type:'Point', coordinates:[lng, lat]},
     budget,
@@ -174,13 +173,11 @@ const updateJob = asyncHandler(async (req, res) => {
 
 const deleteJob = asyncHandler(async (req, res) => {
   const id = req.params.id;
-  console.log(id)
   const jobMatch = await Job.findOne({_id:id});
   if(!jobMatch) {
     res.status(400);
     throw new Error('Job not found');
   }
-  console.log(jobMatch.user.toString(),  req.user._id.toString())
   if (jobMatch.user.toString() !== req.user._id.toString()) {
     res.status(401);
     throw new Error('User not authorized');
