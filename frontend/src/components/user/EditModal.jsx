@@ -14,7 +14,8 @@ function EditModal({job, open, modalDispatch}) {
     title:'',
     description: '',
     budget: '',
-    location: '',
+    address: '',
+	city: '',
     duration: '',
   }); 
 
@@ -42,7 +43,8 @@ function EditModal({job, open, modalDispatch}) {
 				title:job.title,
 				description: job.description,
 				budget: job.budget,
-				location: job.location,
+				address: job.address,
+				city: job.city,
 				duration: job.duration,
 			}))
 		}

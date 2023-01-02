@@ -123,7 +123,7 @@ const toggleContract = asyncHandler(async (req, res) => {
 
 const getUserContracts = asyncHandler(async(req, res)=> {
   const userId = req.params.userId;
-  const contracts = await Contract.find({user:userId})
+  const contracts = await Contract.find({talent:userId})
     .populate({
       path:'job',
       select:'title budget createdAt duration'

@@ -2,7 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv').config();
 const colors = require('colors');
 const connectDatabase = require('./config/db');
-const port = process.env.PORT || 5000;
+const port = process.env.HTTP_PORT || 5000;
 const app = express();
 const cors = require('cors');
 const morgan = require('morgan')
@@ -11,6 +11,9 @@ const path = require('path');
 const cluster = require('cluster');
 const totalCPUs = require('os').cpus().length;
 const createRoles = require('./util/createRoles')
+const http = require('http');
+const https = require('https');
+const fs = require('fs');
 
 // Middle ware
 const errorHandler = require('./middleware/error');
@@ -68,25 +71,18 @@ if(process.env.NODE_ENV==='production') {
 }
 app.use(errorHandler);
 
+const options = {
+  key: fs.readFileSync("server.key"),
+  cert: fs.readFileSync("server.cert"),
+};
 
-if (cluster.isMaster){
-  console.log(`Number of CPUs is ${totalCPUs}`);
-  console.log(`Master ${process.pid} is running`);
+https.createServer(options, app).listen(process.env.HTTPS_PORT, function(){
+  console.log(`listening on *:${process.env.HTTPS_PORT}`);
+});
+http.createServer(app).listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`.blue.underline);
+});
 
-  for(let i = 0; i < totalCPUs; i++){
-    cluster.fork();
-  }
-
-  cluster.on("exit", (worker, code, signal) => {
-    console.log(`worker ${worker.process.pid} died`);
-    cluster.fork();
-  });
-  createRoles.findOrCreateAdmin();
-} else {
-  app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`.blue.underline);
-  });
-}
 
 
 

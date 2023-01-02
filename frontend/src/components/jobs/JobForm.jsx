@@ -5,7 +5,7 @@ function JobForm({onChange, onChangeWorktype, formData}) {
     title,
     description,
     budget,
-    location,
+    address,
     duration,
     city,
   } = formData;
@@ -61,8 +61,8 @@ function JobForm({onChange, onChangeWorktype, formData}) {
           label='Location'
           placeholder='Location'
           onChange={onChange}
-          name='location'
-          value={location}
+          name='address'
+          value={address}
         />
         <Form.Input
           fluid

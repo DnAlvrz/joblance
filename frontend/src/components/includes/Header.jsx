@@ -15,7 +15,7 @@ function Header() {
     </span>
   )
 
-  const options = [
+  const workerOptions = [
     {
       key: 'user',
       text: (
@@ -27,6 +27,21 @@ function Header() {
     },
     { key: 'profile', as:'a', href: user?.session === 'laborer' ? `/user/${user.id}` : '', text: 'Your Profile', disabled: user?.session === 'client' },
     { key: 'message', text: 'Messages', onClick: e=>{navigate(`/chat`)} },
+    { key: 'help', text: 'Help', onClick: e=>{navigate(`/help`)} },
+    { key: 'sign-out', text: 'Sign Out', onClick: e=>{onLogout()}},
+  ]
+  const clientOptions = [
+    {
+      key: 'user',
+      text: (
+        <span>
+          Signed in as <strong>{user?.firstname} {user?.lastname} </strong>
+        </span>
+      ),
+      disabled: true,
+    },
+    { key: 'message', text: 'Messages', onClick: e=>{navigate(`/chat`)} },
+    { key: 'help', text: 'Help', onClick: e=>{navigate(`/help`)} },
     { key: 'sign-out', text: 'Sign Out', onClick: e=>{onLogout()}},
   ]
 
@@ -46,23 +61,30 @@ function Header() {
               name='dashboard'
             />
           </Link>
-          <Dropdown text='Jobs' style={{padding:'30px'}} pointing className='item'>
-            <Dropdown.Menu >
-              <Dropdown.Header >Jobs</Dropdown.Header>
-              <Link to='/jobs'><Dropdown.Item key='joblist'>Jobs</Dropdown.Item> </Link>
-              <Dropdown.Divider />
-              <Dropdown.Header>My Jobs</Dropdown.Header>
-              <Link to='/user/jobs'> <Dropdown.Item key='userjobs'>My Jobs </Dropdown.Item></Link>
-              <Link to='/jobs/post'><Dropdown.Item key='postjob'> Post a job </Dropdown.Item></Link>
-            </Dropdown.Menu>
-          </Dropdown>
+          {
+            user.session === 'client' ? (
+              <>
+              <Dropdown text='Jobs' style={{padding:'30px'}} pointing className='item'>
+                <Dropdown.Menu >
+                  <Dropdown.Header >Jobs</Dropdown.Header>
+                  <Link to='/jobs'><Dropdown.Item key='joblist'>Jobs</Dropdown.Item> </Link>
+                  <Dropdown.Divider />
+                  <Dropdown.Header>My Jobs</Dropdown.Header>
+                  <Link to='/user/jobs'> <Dropdown.Item key='userjobs'>My Jobs </Dropdown.Item></Link>
+                  <Link to='/jobs/post'><Dropdown.Item key='postjob'> Post a job </Dropdown.Item></Link>
+                </Dropdown.Menu>
+              </Dropdown>
+              </>
+            ):<></>
+          }
+          
+          {
+            user.session === 'laborer' ? (
+            <> 
           <Dropdown text='Contracts' style={{padding:'30px'}} pointing className='item'>
             <Dropdown.Menu>
               <Dropdown.Header> Contracts</Dropdown.Header>
               <Link to='/user/contracts'><Dropdown.Item key='contracts'>Contracts</Dropdown.Item> </Link>
-              <Dropdown.Divider />
-              <Dropdown.Header>My Jobs</Dropdown.Header>
-              <Link to='/user/jobs'> <Dropdown.Item key='UserContracts'>My Contracts </Dropdown.Item></Link>
             </Dropdown.Menu>
           </Dropdown>
           <Dropdown disabled text='Reports' pointing className='link Menu item'>
@@ -72,6 +94,10 @@ function Header() {
               <Dropdown.Header>My Jobs</Dropdown.Header>
             </Dropdown.Menu>
           </Dropdown>
+            
+            </>)  : <></>
+          }
+         
         </>
         ) : (
       <>
@@ -117,7 +143,8 @@ function Header() {
             </>
           ) : (
             <>
-              <Dropdown style={{padding:'10px'}} trigger={trigger} options={options} />
+              <Dropdown style={{padding:'10px'}} trigger={trigger} options={user?.session ==='laborer' ? workerOptions : clientOptions}
+               />
             </>
           )
           }

@@ -14,7 +14,7 @@ function Comments({offer, offers, onOfferChange, onOfferSubmit}) {
       { offers?.length > 0 ? (
         offers.map(offer=> (
         <Comment key={offer._id} >
-          <Comment.Avatar src={offer?.talent?.photos[offer?.talent?.photos.length-1].url || '/matt.jpg'} />
+          <Comment.Avatar src={offer.talent.photos.length > 0 ? offer?.talent?.photos[offer?.talent?.photos.length-1].url : '/matt.jpg'} />
           <Comment.Content>
             <Comment.Author> <Link to={`/user/${offer?.talent?._id}`}> {offer.talent?.firstname} {offer.talent?.lastname} </Link></Comment.Author>
             <Comment.Metadata>

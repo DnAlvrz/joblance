@@ -21,7 +21,7 @@ import UsersNotFound from "./pages/user/UserNotFound";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import UserContracts from "./pages/user/UserContracts";
 import Help from "./pages/Help";
-import ContactUs from "./pages/ContactUs";
+
 function App() {
   return (
     <>

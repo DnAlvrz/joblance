@@ -16,3 +16,5 @@ TODO.md
 uploads/
 files/
 .http
+.cert
+.key

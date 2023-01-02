@@ -96,17 +96,18 @@ function Job() {
           <Grid.Row>
             <Grid.Column  width={11}>
              <Header as='h1' color='grey'>
-              {job?.title  ? job?.title : 'Job not found'
-              }
+              {job?.title  ? job?.title : 'Job not found'}
+              
              </Header> 
               <Divider fitted />
               <Grid>
                 <Grid.Row style={{paddingTop:'30px'}}>
                   <Grid.Column floated='left' width={5}>
-                    <Header color='blue' sub>₱ {job?.budget} <span> · {job?.duration}</span></Header>
+                    <Header color='blue'>₱ {job?.budget} <span> · {job?.duration}</span></Header>
+                    <Header color='blue' as='h3'>{job?.city}</Header>
                   </Grid.Column>
                   <Grid.Column floated='right' width={6}>
-                    <Header sub>{job?.location}</Header>
+                    <Header sub>{job?.address}</Header>
                   </Grid.Column>
                 </Grid.Row>
                 <Grid.Row style={{marginBottom:'30px'}}>

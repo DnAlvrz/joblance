@@ -3,24 +3,11 @@ import { Button, Dropdown, Form } from 'semantic-ui-react';
 
 function SkillsForm({onSkillsChange, handleSkillsSubmit}) {
   const skills = [
-    { key: 'carpentry', text: 'Carpentry', value: 'carpentry' },
-    { key: 'masonry', text: 'Masonry', value: 'masonry' },
-    { key: 'design', text: 'Graphic Design', value: 'design' },
-    { key: 'ember', text: 'Ember', value: 'ember' },
-    { key: 'html', text: 'HTML', value: 'html' },
-    { key: 'ia', text: 'Information Architecture', value: 'ia' },
-    { key: 'javascript', text: 'Javascript', value: 'javascript' },
-    { key: 'mech', text: 'Mechanical Engineering', value: 'mech' },
-    { key: 'meteor', text: 'Meteor', value: 'meteor' },
-    { key: 'node', text: 'NodeJS', value: 'node' },
-    { key: 'plumbing', text: 'Plumbing', value: 'plumbing' },
-    { key: 'python', text: 'Python', value: 'python' },
-    { key: 'rails', text: 'Rails', value: 'rails' },
-    { key: 'react', text: 'React', value: 'react' },
-    { key: 'repair', text: 'Kitchen Repair', value: 'repair' },
-    { key: 'ruby', text: 'Ruby', value: 'ruby' },
-    { key: 'ui', text: 'UI Design', value: 'ui' },
-    { key: 'ux', text: 'User Experience', value: 'ux' },
+    { key: 'msn', value: 'mason', text: 'Masonry' },
+    { key: 'cnstrctn', value: 'construction', text: 'Construction' },
+    { key: 'crpnty', value: 'carpentry', text: 'Capentry' },
+    { key: 'plmb', value: 'plumbing', text: 'Pumbling' },
+    { key: 'elctrcn', value: 'electricity', text: 'Electricity' },
   ];
   return (
     <>

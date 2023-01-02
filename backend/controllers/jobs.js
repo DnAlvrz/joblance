@@ -77,7 +77,6 @@ const viewJob = asyncHandler(async (req, res) => {
       }
     });
   if(job){
-    console.log(job.offers[0].talent.photos[0]);
     res.status(200).json(job);
 
   } else {
